@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── SIDEBAR TOGGLE ── */
+.sidebar{transition:width 0.3s ease;}
+.sidebar.collapsed{width:60px;}
+.sidebar.collapsed .sb-logo-sub,
+.sidebar.collapsed .sb-sub,
+.sidebar.collapsed .sb-uname,
+.sidebar.collapsed .sb-urole,
+.sidebar.collapsed .sb-sec,
+.sidebar.collapsed .sb-link span:not(.sb-link-icon),
+.sidebar.collapsed .sb-badge,
+.sidebar.collapsed .sb-logout span:last-child{display:none;}
+.sidebar.collapsed .sb-link{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user > div:last-child{display:none;}
+.sidebar.collapsed .sb-logout{justify-content:center;padding:12px;}
+.sidebar.collapsed + .main{margin-left:60px;}
+.sb-toggle{
+  position:absolute;top:50%;right:-14px;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer!important;z-index:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:all 0.2s;
+  color:var(--muted);
+}
+.sb-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.sidebar{position:relative;}
+
+
+/* Notification bell */
+.sb-bell{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;position:relative;}
+.sb-bell:hover{color:var(--text);background:var(--surface2);}
+.notif-badge{position:absolute;right:16px;top:50%;transform:translateY(-50%);min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Pay Rent</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Paystack -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+:root{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--accent3:#f59e0b;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}
+button,[onclick],a{cursor:pointer!important;}
+input,select,textarea{cursor:text!important;}
+select{cursor:pointer!important;}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:300;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,0.05);}
+.nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+.nav-logo-mark{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.2em;color:var(--accent);line-height:1;}
+.nav-logo-sub{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-user{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);}
+.nav-avatar{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;font-family:'Syne',sans-serif;overflow:hidden;flex-shrink:0;}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;}
+.nav-username{font-size:12px;color:var(--text);}
+.btn-back{padding:7px 14px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.btn-back:hover{border-color:var(--accent);color:var(--accent);}
+
+/* PROGRESS */
+.progress-wrap{max-width:820px;margin:28px auto;padding:0 24px;}
+.progress-steps{display:flex;align-items:center;}
+.step-item{display:flex;align-items:center;flex:1;}
+.step-circle{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Syne',sans-serif;border:2px solid var(--border);background:var(--surface);color:var(--muted);transition:all 0.35s;flex-shrink:0;}
+.step-circle.active{border-color:var(--accent2);background:rgba(124,58,237,0.1);color:var(--accent2);box-shadow:0 0 16px rgba(124,58,237,0.2);}
+.step-circle.done{border-color:var(--success);background:rgba(5,150,105,0.1);color:var(--success);}
+.step-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-left:8px;transition:color 0.3s;}
+.step-label.active{color:var(--text);}
+.step-connector{flex:1;height:2px;margin:0 10px;background:var(--border);border-radius:1px;position:relative;overflow:hidden;}
+.step-connector.done::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--success),var(--accent));animation:fl 0.5s ease both;}
+@keyframes fl{from{width:0}to{width:100%}}
+
+/* LAYOUT */
+.main-grid{max-width:820px;margin:0 auto 60px;padding:0 24px;display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+
+/* SUMMARY CARD */
+.summary-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:sticky;top:80px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.sum-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;}
+.sum-body{padding:16px;}
+.sum-prop{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:3px;}
+.sum-addr{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.sum-divider{height:1px;background:var(--border);margin:12px 0;}
+.sum-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.sl{font-size:11px;color:var(--muted);}
+.sv{font-size:12px;color:var(--text);}
+.sv.accent{color:var(--accent);}
+.sum-total{margin-top:12px;padding:12px;border-radius:10px;background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.15);display:flex;justify-content:space-between;align-items:center;}
+.total-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+.total-amt{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);letter-spacing:0.04em;}
+.sum-landlord{display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px;border-radius:9px;background:var(--surface2);}
+.ll-av{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;overflow:hidden;}
+.ll-av img{width:100%;height:100%;object-fit:cover;}
+.ll-name{font-size:12px;font-weight:600;}
+.ll-tag{font-size:10px;color:var(--muted);}
+
+/* PAY PANEL */
+.pay-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.pay-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));}
+.pay-step{display:none;padding:28px;}
+.pay-step.active{display:block;animation:sIn 0.3s ease both;}
+@keyframes sIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-heading{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;margin-bottom:4px;}
+.step-sub{font-size:12px;color:var(--muted);margin-bottom:22px;}
+
+/* METHOD CARDS */
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.method-card{padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--surface2);cursor:pointer;transition:all 0.2s;text-align:center;}
+.method-card:hover{border-color:rgba(124,58,237,0.3);}
+.method-card.selected{border-color:var(--accent2);background:rgba(124,58,237,0.06);}
+.method-icon{font-size:24px;margin-bottom:6px;}
+.method-name{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;}
+.method-desc{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* FORM */
+.fl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.fi,.fs{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+.fi:focus,.fs:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(124,58,237,0.07);}
+.fg{margin-bottom:14px;}
+.phone-wrap{display:flex;}
+.phone-pre{padding:10px 10px;background:#e8eef5;border:1px solid #e2e8f0;border-right:none;border-radius:9px 0 0 9px;font-size:12px;color:var(--muted);white-space:nowrap;display:flex;align-items:center;}
+.phone-wrap .fi{border-radius:0 9px 9px 0;}
+
+/* MoMo network */
+.net-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.net-card{padding:10px 6px;border-radius:9px;border:2px solid var(--border);background:var(--surface2);cursor:pointer;text-align:center;transition:all 0.2s;}
+.net-card:hover{border-color:rgba(245,158,11,0.4);}
+.net-card.selected{border-color:var(--accent3);background:rgba(245,158,11,0.07);}
+.net-icon{font-size:18px;margin-bottom:3px;}
+.net-name{font-size:10px;color:var(--muted);letter-spacing:0.08em;}
+
+/* Security badges */
+.sec-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.sec-badge{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);font-size:10px;color:var(--muted);}
+.sec-badge .dot{color:var(--success);}
+
+/* Paystack info */
+.paystack-info{background:rgba(14,165,233,0.04);border:1px solid rgba(14,165,233,0.15);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;}
+.paystack-info-icon{font-size:20px;flex-shrink:0;}
+.paystack-info-text{font-size:12px;color:var(--muted);line-height:1.7;}
+.paystack-info-text strong{color:var(--text);}
+
+/* Next button */
+.next-btn{width:100%;padding:13px;border-radius:11px;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;transition:all 0.25s;background:linear-gradient(135deg,var(--accent2),#9333ea);color:#fff;box-shadow:0 0 20px rgba(124,58,237,0.3);margin-top:6px;}
+.next-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.5);transform:translateY(-1px);}
+.next-btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+.next-btn.pay{background:linear-gradient(135deg,#059669,var(--success));box-shadow:0 0 20px rgba(5,150,105,0.3);}
+.next-btn.pay:hover{box-shadow:0 0 36px rgba(5,150,105,0.5);}
+
+/* Review */
+.review-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);}
+.review-row:last-child{border-bottom:none;}
+.rv-lbl{font-size:12px;color:var(--muted);}
+.rv-val{font-size:12px;color:var(--text);}
+.rv-val.big{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);letter-spacing:0.04em;}
+
+/* SUCCESS */
+.success-screen{display:none;flex-direction:column;align-items:center;text-align:center;padding:48px 28px;}
+.success-screen.visible{display:flex;animation:sIn 0.5s ease both;}
+.success-orbit{position:relative;width:110px;height:110px;margin-bottom:24px;}
+.success-core{position:absolute;inset:14px;border-radius:18px;background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.3);display:flex;align-items:center;justify-content:center;font-size:36px;animation:popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) 0.2s both;}
+@keyframes popIn{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+.orbit-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(5,150,105,0.2);animation:spin 8s linear infinite;}
+.orbit-ring::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:var(--success);}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.04em;margin-bottom:6px;}
+.success-title span{color:var(--success);}
+.success-sub{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:320px;}
+.txn-card{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:20px;text-align:left;}
+.txn-amount-big{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--success);letter-spacing:0.04em;margin-bottom:4px;}
+.txn-status{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--success);margin-bottom:16px;}
+.txn-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.txn-ref{text-align:center;font-size:11px;color:var(--muted);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.txn-ref strong{color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;}
+.txn-detail-row{display:flex;justify-content:space-between;margin-bottom:7px;font-size:12px;}
+.tdl{color:var(--muted);}
+.tdv{color:var(--text);}
+.success-btns{display:flex;gap:10px;width:100%;}
+.s-btn{flex:1;padding:12px;border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;transition:all 0.2s;}
+.s-btn-receipt{background:var(--accent);color:#fff;box-shadow:0 0 16px rgba(14,165,233,0.25);}
+.s-btn-receipt:hover{box-shadow:0 0 28px rgba(14,165,233,0.45);}
+.s-btn-home{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.s-btn-home:hover{color:var(--text);border-color:var(--text);}
+
+/* PAYSTACK BADGE */
+.powered-by{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;font-size:11px;color:var(--muted);}
+.powered-by strong{color:#00c3f7;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+@media(max-width:768px){
+  .navbar{padding:0 16px;height:56px;}
+  .nav-username{display:none;}
+  .progress-wrap{padding:0 16px;margin:16px auto;}
+  .step-label{display:none;}
+  .main-grid{grid-template-columns:1fr;padding:0 16px;}
+  .summary-card{position:static;order:2;}
+  .pay-panel{order:1;}
+  .pay-step{padding:20px 16px;}
+  .method-grid{grid-template-columns:1fr;}
+  .success-btns{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" href="singularity-tenant.html">
+    <div class="nav-logo-mark">Singularity</div>
+    <div class="nav-logo-sub">Rentals</div>
+  </a>
+  <div class="nav-right">
+    <div class="nav-user">
+      <div class="nav-avatar" id="nav-av">?</div>
+      <span class="nav-username" id="nav-name">Loading…</span>
+    </div>
+    <a class="btn-back" href="singularity-tenant.html">← Listings</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-item">
+      <div class="step-circle active" id="sc-1">1</div>
+      <div class="step-label active" id="sl-1">Choose Method</div>
+    </div>
+    <div class="step-connector" id="con-1"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc-2">2</div>
+      <div class="step-label" id="sl-2">Your Details</div>
+    </div>
+    <div class="step-connector" id="con-2"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc-3">3</div>
+      <div class="step-label" id="sl-3">Confirm & Pay</div>
+    </div>
+    <div class="step-connector" id="con-3"></div>
+    <div class="step-item">
+      <div class="step-circle" id="sc-4">4</div>
+      <div class="step-label" id="sl-4">Receipt</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- PAY PANEL -->
+  <div class="pay-panel">
+
+    <!-- STEP 1: Choose Method -->
+    <div class="pay-step active" id="step-1">
+      <div class="step-heading">Payment Method</div>
+      <div class="step-sub">Choose how you'd like to pay your rent. All payments are processed securely by Paystack.</div>
+
+      <div class="method-grid">
+        <div class="method-card" id="m-momo" onclick="selectMethod('momo')">
+          <div class="method-icon">📱</div>
+          <div class="method-name">Mobile Money</div>
+          <div class="method-desc">MTN, Vodafone, AirtelTigo</div>
+        </div>
+        <div class="method-card" id="m-card" onclick="selectMethod('card')">
+          <div class="method-icon">💳</div>
+          <div class="method-name">Card</div>
+          <div class="method-desc">Debit or Credit Card</div>
+        </div>
+        <div class="method-card" id="m-bank" onclick="selectMethod('bank')">
+          <div class="method-icon">🏦</div>
+          <div class="method-name">Bank Transfer</div>
+          <div class="method-desc">Direct bank payment</div>
+        </div>
+      </div>
+
+      <div class="sec-row">
+        <div class="sec-badge"><span class="dot">🔒</span> SSL Encrypted</div>
+        <div class="sec-badge"><span class="dot">✓</span> Paystack Secured</div>
+        <div class="sec-badge"><span class="dot">🧾</span> Auto Receipt</div>
+        <div class="sec-badge"><span class="dot">🇬🇭</span> Ghana Payments</div>
+      </div>
+
+      <button class="next-btn" id="btn-1" onclick="goStep(2)" disabled>Continue →</button>
+    </div>
+
+    <!-- STEP 2: Details -->
+    <div class="pay-step" id="step-2">
+
+      <!-- MoMo form -->
+      <div id="form-momo" style="display:none">
+        <div class="step-heading">Mobile Money</div>
+        <div class="step-sub">Enter your MoMo details. You'll receive a prompt on your phone to confirm.</div>
+
+        <div class="fg">
+          <label class="fl">Network Provider</label>
+          <div class="net-grid">
+            <div class="net-card selected" id="net-mtn" onclick="selectNet('mtn')">
+              <div class="net-icon">🟡</div><div class="net-name">MTN</div>
+            </div>
+            <div class="net-card" id="net-voda" onclick="selectNet('voda')">
+              <div class="net-icon">🔴</div><div class="net-name">Vodafone</div>
+            </div>
+            <div class="net-card" id="net-airtel" onclick="selectNet('airtel')">
+              <div class="net-icon">🔵</div><div class="net-name">AirtelTigo</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label class="fl">MoMo Phone Number</label>
+          <div class="phone-wrap">
+            <div class="phone-pre">🇬🇭 +233</div>
+            <input type="tel" class="fi" id="momo-number" placeholder="XX XXX XXXX" maxlength="10" oninput="checkStep2()">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">Account Name</label>
+          <input type="text" class="fi" id="momo-name" placeholder="Name on MoMo account" oninput="checkStep2()">
+        </div>
+
+        <div class="paystack-info">
+          <div class="paystack-info-icon">💡</div>
+          <div class="paystack-info-text">After clicking Pay, you will receive a <strong>mobile money prompt</strong> on your phone. Enter your MoMo PIN to complete the payment. Do not close this page.</div>
+        </div>
+      </div>
+
+      <!-- Card form -->
+      <div id="form-card" style="display:none">
+        <div class="step-heading">Card Payment</div>
+        <div class="step-sub">Paystack will securely collect your card details. Your card information never touches our servers.</div>
+
+        <div class="fg">
+          <label class="fl">Email for Receipt</label>
+          <input type="email" class="fi" id="card-email" placeholder="you@email.com" oninput="checkStep2()">
+        </div>
+
+        <div class="paystack-info">
+          <div class="paystack-info-icon">🔒</div>
+          <div class="paystack-info-text">Clicking Pay will open a <strong>secure Paystack checkout window</strong> where you enter your card details. This is PCI DSS Level 1 certified — the same standard used by banks.</div>
+        </div>
+      </div>
+
+      <!-- Bank form -->
+      <div id="form-bank" style="display:none">
+        <div class="step-heading">Bank Transfer</div>
+        <div class="step-sub">Paystack will provide you with account details to complete the transfer.</div>
+
+        <div class="fg">
+          <label class="fl">Email for Receipt</label>
+          <input type="email" class="fi" id="bank-email" placeholder="you@email.com" oninput="checkStep2()">
+        </div>
+
+        <div class="paystack-info">
+          <div class="paystack-info-icon">🏦</div>
+          <div class="paystack-info-text">Clicking Pay will open a <strong>secure Paystack window</strong> with bank account details for the transfer. The payment will be automatically confirmed once received.</div>
+        </div>
+      </div>
+
+      <button class="next-btn" id="btn-2" onclick="goStep(3)" disabled>Continue →</button>
+    </div>
+
+    <!-- STEP 3: Confirm & Pay -->
+    <div class="pay-step" id="step-3">
+      <div class="step-heading">Confirm & Pay</div>
+      <div class="step-sub">Review your payment details before proceeding.</div>
+
+      <div style="margin-bottom:20px">
+        <div class="review-row"><span class="rv-lbl">Property</span><span class="rv-val" id="rv-prop">—</span></div>
+        <div class="review-row"><span class="rv-lbl">Payment Period</span><span class="rv-val" id="rv-period">—</span></div>
+        <div class="review-row"><span class="rv-lbl">Payment Method</span><span class="rv-val" id="rv-method">—</span></div>
+        <div class="review-row"><span class="rv-lbl">Paystack Fee (1%)</span><span class="rv-val" id="rv-fee">—</span></div>
+        <div class="review-row"><span class="rv-lbl">Total</span><span class="rv-val big" id="rv-total">—</span></div>
+      </div>
+
+      <div class="paystack-info">
+        <div class="paystack-info-icon">🛡</div>
+        <div class="paystack-info-text">This payment is processed by <strong>Paystack</strong> (a Stripe company), licensed by the Bank of Ghana. Your money is protected.</div>
+      </div>
+
+      <button class="next-btn pay" id="btn-3" onclick="initiatePaystackPayment()">
+        🔐 Pay Now with Paystack
+      </button>
+
+      <div class="powered-by">Secured by <strong>Paystack</strong> · PCI DSS Level 1</div>
+    </div>
+
+    <!-- STEP 4: Success -->
+    <div class="pay-step" id="step-4">
+      <div class="success-screen" id="success-screen">
+        <div class="success-orbit">
+          <div class="orbit-ring"></div>
+          <div class="success-core">✅</div>
+        </div>
+        <div class="success-title">Payment <span>Confirmed!</span></div>
+        <div class="success-sub">Your rent payment has been successfully processed and confirmed by Paystack.</div>
+
+        <div class="txn-card">
+          <div class="txn-amount-big" id="txn-amount">GHS —</div>
+          <div class="txn-status"><div class="txn-dot"></div> Payment Confirmed</div>
+          <div class="txn-ref">Ref: <strong id="txn-ref">—</strong></div>
+          <div class="txn-detail-row"><span class="tdl">Property</span><span class="tdv" id="txn-prop">—</span></div>
+          <div class="txn-detail-row"><span class="tdl">Period</span><span class="tdv" id="txn-period">—</span></div>
+          <div class="txn-detail-row"><span class="tdl">Method</span><span class="tdv" id="txn-method">—</span></div>
+          <div class="txn-detail-row"><span class="tdl">Date & Time</span><span class="tdv" id="txn-datetime">—</span></div>
+          <div class="txn-detail-row"><span class="tdl">Landlord</span><span class="tdv" id="txn-landlord">—</span></div>
+        </div>
+
+        <div class="success-btns">
+          <button class="s-btn s-btn-receipt" onclick="viewReceipt()">🧾 View Receipt</button>
+          <button class="s-btn s-btn-home" onclick="location.href='singularity-tenant.html'">← Back to Listings</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pay-panel -->
+
+  <!-- SUMMARY CARD -->
+  <div class="summary-card">
+    <div class="sum-img" id="sum-img" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe)">🏠</div>
+    <div class="sum-body">
+      <div class="sum-prop" id="sum-prop">Loading…</div>
+      <div class="sum-addr" id="sum-addr">—</div>
+      <div class="sum-divider"></div>
+      <div class="sum-row"><span class="sl">Monthly Rent</span><span class="sv accent" id="sum-rent">—</span></div>
+      <div class="sum-row" id="sum-advance-row" style="display:none"><span class="sl">Advance</span><span class="sv" id="sum-advance">—</span></div>
+      <div class="sum-row"><span class="sl">Paystack Fee</span><span class="sv" id="sum-fee">—</span></div>
+      <div class="sum-total">
+        <span class="total-lbl">Total Due</span>
+        <span class="total-amt" id="sum-total">—</span>
+      </div>
+      <div class="sum-landlord">
+        <div class="ll-av" id="sum-ll-av">K</div>
+        <div>
+          <div class="ll-name" id="sum-ll-name">—</div>
+          <div class="ll-tag">Property Owner · ✓ Verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-grid -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   CONFIG
+══════════════════════════════════════ */
+const PAYSTACK_KEY = 'pk_test_e675a90c6aa4161a9332cfb8cafac3c34c301d6f';
+let currentListing = null, currentRequest = null, currentLandlord = null;
+let selectedMethod = null, selectedNet = 'mtn';
+let rentAmount = 0, feeAmount = 0, totalAmount = 0;
+let paystackRef = null;
+
+/* ══════════════════════════════════════
+   INIT — Load Supabase then auth
+══════════════════════════════════════ */
+
+
+async function initPage() {
+  const {data:{session}}=await sb.auth.getSession();
+  const user=session?.user||null;
+  if (!user) { location.href = 'index.html'; return; }
+  currentUser = user;
+
+  const { data: p } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  if (!p) { location.href = 'index.html'; return; }
+  currentProfile = p;
+
+  // Update navbar
+  const fn = p.full_name || 'User';
+  document.getElementById('nav-name').textContent = fn;
+  const av = document.getElementById('nav-av');
+  if (p.profile_photo) av.innerHTML = `<img src="${p.profile_photo}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+  else av.textContent = fn.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+
+  // Role check — landlord sees different view
+  if (p.role === 'landlord') {
+    showLandlordView(p);
+    return;
+  }
+
+  // Pre-fill email fields
+  if (p.phone || user.email) {
+    const emailFields = ['card-email','bank-email'];
+    emailFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && user.email) el.value = user.email;
+    });
+  }
+  if (p.phone) {
+    const ph = document.getElementById('momo-number');
+    if (ph) {
+      const cleaned = p.phone.replace('+233','').replace(/\s/g,'');
+      ph.value = cleaned;
+    }
+    const mn = document.getElementById('momo-name');
+    if (mn) mn.value = p.full_name || '';
+  }
+
+  // Load listing from URL param or most recent rental request
+  const params = new URLSearchParams(location.search);
+  const listingId = params.get('listing');
+
+  if (listingId) {
+    await loadListing(listingId);
+  } else {
+    // Try to get from most recent rental request
+    const { data: reqs } = await sb.from('rental_requests')
+      .select('*, listings(*), profiles:landlord_id(full_name,phone,profile_photo)')
+      .eq('tenant_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (reqs && reqs[0]) {
+      currentRequest = reqs[0];
+      currentLandlord = reqs[0].profiles;
+      populateSummary(reqs[0].listings, reqs[0].profiles);
+    } else {
+      // No request — show generic payment
+      populateSummaryGeneric();
+    }
+  }
+}
+
+async function loadListing(id) {
+  const { data: l } = await sb.from('listings')
+    .select('*, profiles:landlord_id(full_name, phone, profile_photo)')
+    .eq('id', id).single();
+  if (l) {
+    currentListing = l;
+    currentLandlord = l.profiles;
+    populateSummary(l, l.profiles);
+  }
+}
+
+function populateSummary(listing, landlord) {
+  if (!listing) { populateSummaryGeneric(); return; }
+
+  rentAmount = listing.price || 1800;
+  feeAmount = Math.round(rentAmount * 0.01); // Paystack ~1% fee
+  totalAmount = rentAmount + feeAmount;
+
+  document.getElementById('sum-prop').textContent = listing.title || 'Rental Property';
+  document.getElementById('sum-addr').textContent = '📍 ' + (listing.address || '—');
+
+  if (listing.photos && listing.photos[0]) {
+    document.getElementById('sum-img').innerHTML = `<img src="${listing.photos[0]}" style="width:100%;height:100%;object-fit:cover;">`;
+  } else {
+    document.getElementById('sum-img').textContent = listing.emoji || '🏠';
+  }
+
+  document.getElementById('sum-rent').textContent = 'GHS ' + rentAmount.toLocaleString();
+  document.getElementById('sum-fee').textContent = 'GHS ' + feeAmount.toLocaleString();
+  document.getElementById('sum-total').textContent = 'GHS ' + totalAmount.toLocaleString();
+
+  if (listing.advance_payment) {
+    document.getElementById('sum-advance-row').style.display = 'flex';
+    document.getElementById('sum-advance').textContent = 'GHS ' + listing.advance_payment.toLocaleString();
+  }
+
+  if (landlord) {
+    document.getElementById('sum-ll-name').textContent = landlord.full_name || 'Landlord';
+    const av = document.getElementById('sum-ll-av');
+    if (landlord.profile_photo) av.innerHTML = `<img src="${landlord.profile_photo}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+    else av.textContent = (landlord.full_name || 'L')[0].toUpperCase();
+  }
+}
+
+function populateSummaryGeneric() {
+  rentAmount = 1800;
+  feeAmount = 18;
+  totalAmount = 1818;
+  document.getElementById('sum-prop').textContent = 'Monthly Rent Payment';
+  document.getElementById('sum-addr').textContent = 'Singularity Rentals';
+  document.getElementById('sum-rent').textContent = 'GHS 1,800';
+  document.getElementById('sum-fee').textContent = 'GHS 18';
+  document.getElementById('sum-total').textContent = 'GHS —';
+}
+
+/* ══════════════════════════════════════
+   STEP NAVIGATION
+══════════════════════════════════════ */
+let currentStep = 1;
+
+function goStep(n) {
+  // Mark previous step done
+  const prev = currentStep;
+  document.getElementById('step-' + prev).classList.remove('active');
+  document.getElementById('con-' + prev)?.classList.add('done');
+  const sc = document.getElementById('sc-' + prev);
+  sc.classList.remove('active'); sc.classList.add('done'); sc.textContent = '✓';
+  document.getElementById('sl-' + prev).classList.remove('active');
+
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  document.getElementById('sc-' + n).classList.add('active');
+  document.getElementById('sl-' + n).classList.add('active');
+
+  if (n === 2) {
+    document.getElementById('form-momo').style.display = selectedMethod === 'momo' ? 'block' : 'none';
+    document.getElementById('form-card').style.display = selectedMethod === 'card' ? 'block' : 'none';
+    document.getElementById('form-bank').style.display = selectedMethod === 'bank' ? 'block' : 'none';
+    if (selectedMethod === 'bank' || selectedMethod === 'card') checkStep2();
+  }
+
+  if (n === 3) populateReview();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectMethod(m) {
+  selectedMethod = m;
+  ['momo','card','bank'].forEach(x => document.getElementById('m-' + x).classList.toggle('selected', x === m));
+  document.getElementById('btn-1').disabled = false;
+}
+
+function selectNet(n) {
+  selectedNet = n;
+  ['mtn','voda','airtel'].forEach(x => document.getElementById('net-' + x).classList.toggle('selected', x === n));
+}
+
+function checkStep2() {
+  let valid = false;
+  if (selectedMethod === 'momo') {
+    const num = document.getElementById('momo-number')?.value.replace(/\s/g,'') || '';
+    const name = document.getElementById('momo-name')?.value.trim() || '';
+    valid = num.length >= 9 && name.length > 1;
+  } else if (selectedMethod === 'card') {
+    const email = document.getElementById('card-email')?.value.trim() || '';
+    valid = email.includes('@');
+  } else if (selectedMethod === 'bank') {
+    const email = document.getElementById('bank-email')?.value.trim() || '';
+    valid = email.includes('@');
+  }
+  document.getElementById('btn-2').disabled = !valid;
+}
+
+function populateReview() {
+  const methodLabels = {
+    momo: '📱 Mobile Money (' + selectedNet.toUpperCase() + ')',
+    card: '💳 Debit / Credit Card',
+    bank: '🏦 Bank Transfer'
+  };
+  const prop = document.getElementById('sum-prop').textContent;
+  const period = new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+  document.getElementById('rv-prop').textContent = prop;
+  document.getElementById('rv-period').textContent = period;
+  document.getElementById('rv-method').textContent = methodLabels[selectedMethod] || '—';
+  document.getElementById('rv-fee').textContent = 'GHS ' + feeAmount.toLocaleString();
+  document.getElementById('rv-total').textContent = 'GHS ' + totalAmount.toLocaleString();
+}
+
+/* ══════════════════════════════════════
+   PAYSTACK PAYMENT
+══════════════════════════════════════ */
+function initiatePaystackPayment() {
+  if (!currentUser) { showToast('Please log in to make a payment.', 'err'); return; }
+
+  const email = currentUser.email
+    || document.getElementById('card-email')?.value
+    || document.getElementById('bank-email')?.value
+    || document.getElementById('momo-name')?.value + '@singularity.gh';
+
+  const btn = document.getElementById('btn-3');
+  btn.disabled = true;
+  btn.textContent = '⏳ Opening Paystack…';
+
+  // Build Paystack config
+  const config = {
+    key: PAYSTACK_KEY,
+    email: email,
+    amount: totalAmount * 100, // Paystack uses pesewas (kobo equivalent)
+    currency: 'GHS',
+    ref: 'SING-' + Date.now() + '-' + Math.floor(Math.random() * 10000),
+    metadata: {
+      custom_fields: [
+        { display_name: 'Tenant Name', variable_name: 'tenant_name', value: currentProfile?.full_name || 'Tenant' },
+        { display_name: 'Property', variable_name: 'property', value: document.getElementById('sum-prop').textContent },
+        { display_name: 'Payment Period', variable_name: 'period', value: new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) },
+        { display_name: 'Platform', variable_name: 'platform', value: 'Singularity Rentals' },
+      ]
+    },
+    // MoMo specific
+    ...(selectedMethod === 'momo' ? {
+      channels: ['mobile_money'],
+      mobile_money: {
+        phone: '+233' + document.getElementById('momo-number').value.replace(/\s/g,''),
+        provider: selectedNet === 'mtn' ? 'mtn' : selectedNet === 'voda' ? 'vod' : 'tgo'
+      }
+    } : {}),
+    // Card specific
+    ...(selectedMethod === 'card' ? { channels: ['card'] } : {}),
+    // Bank transfer
+    ...(selectedMethod === 'bank' ? { channels: ['bank_transfer'] } : {}),
+
+    callback: async function(response) {
+      // Payment successful!
+      paystackRef = response.reference;
+      await handlePaymentSuccess(response);
+    },
+    onClose: function() {
+      btn.disabled = false;
+      btn.textContent = '🔐 Pay Now with Paystack';
+      showToast('Payment cancelled. You can try again.', 'err');
+    }
+  };
+
+  try {
+    const handler = PaystackPop.setup(config);
+    handler.openIframe();
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '🔐 Pay Now with Paystack';
+    showToast('Could not open Paystack. Please check your connection.', 'err');
+    console.error('Paystack error:', e);
+  }
+}
+
+async function handlePaymentSuccess(response) {
+  const btn = document.getElementById('btn-3');
+  btn.textContent = '⏳ Confirming payment…';
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + ' · ' + now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  const period = now.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  const methodLabel = { momo: 'Mobile Money (' + selectedNet.toUpperCase() + ')', card: 'Card', bank: 'Bank Transfer' }[selectedMethod] || 'Paystack';
+  const propName = document.getElementById('sum-prop').textContent;
+  const llName = document.getElementById('sum-ll-name').textContent;
+
+  // Save to Supabase
+  try {
+    const paymentData = {
+      tenant_id: currentUser.id,
+      landlord_id: currentRequest?.landlord_id || currentListing?.landlord_id || null,
+      listing_id: currentRequest?.listing_id || currentListing?.id || null,
+      amount: rentAmount,
+      fee: feeAmount,
+      total: totalAmount,
+      method: methodLabel,
+      period: period,
+      status: 'paid',
+      txn_id: response.reference,
+    };
+
+    const { data: savedPayment, error } = await sb.from('payments').insert(paymentData).select().single();
+    if (error) console.warn('DB save error:', error);
+    else console.log('✅ Payment saved:', savedPayment?.id);
+  } catch(e) {
+    console.warn('Could not save payment to DB:', e);
+  }
+
+  // Store receipt data in localStorage for receipt page
+  const receipt = {
+    txnId: response.reference,
+    datetime: dateStr,
+    method: methodLabel,
+    tenant: currentProfile?.full_name || 'Tenant',
+    landlord: llName,
+    property: propName,
+    address: document.getElementById('sum-addr').textContent.replace('📍 ',''),
+    period: period,
+    rent: rentAmount,
+    fee: feeAmount,
+    total: totalAmount,
+    paystackRef: response.reference,
+  };
+  localStorage.setItem('singularity_last_receipt', JSON.stringify(receipt));
+
+  // Update success screen
+  document.getElementById('txn-amount').textContent = 'GHS ' + totalAmount.toLocaleString();
+  document.getElementById('txn-ref').textContent = response.reference;
+  document.getElementById('txn-prop').textContent = propName;
+  document.getElementById('txn-period').textContent = period;
+  document.getElementById('txn-method').textContent = methodLabel;
+  document.getElementById('txn-datetime').textContent = dateStr;
+  document.getElementById('txn-landlord').textContent = llName;
+
+  // Go to step 4
+  document.getElementById('step-3').classList.remove('active');
+  document.getElementById('con-3').classList.add('done');
+  const sc3 = document.getElementById('sc-3');
+  sc3.classList.remove('active'); sc3.classList.add('done'); sc3.textContent = '✓';
+  document.getElementById('sl-3').classList.remove('active');
+  currentStep = 4;
+  document.getElementById('step-4').classList.add('active');
+  document.getElementById('sc-4').classList.add('active');
+  document.getElementById('sl-4').classList.add('active');
+  document.getElementById('success-screen').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function viewReceipt() {
+  location.href = 'singularity-receipt.html';
+}
+
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='ok'?'✓ ':'⚠ ') + msg;
+  t.className = 'toast show ' + (type==='ok'?'ok':'err');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ── Sidebar collapse toggle ──
+function initSidebarToggle() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  
+  // Add toggle button
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle';
+  toggle.id = 'sb-toggle';
+  toggle.textContent = '‹';
+  toggle.title = 'Collapse sidebar';
+  toggle.onclick = toggleSidebar;
+  sidebar.appendChild(toggle);
+  
+  // Restore collapsed state
+  if (localStorage.getItem('sidebar-collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    toggle.textContent = '›';
+    toggle.title = 'Expand sidebar';
+  }
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('sb-toggle');
+  if (!sidebar) return;
+  const isCollapsed = sidebar.classList.toggle('collapsed');
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  toggle.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  localStorage.setItem('sidebar-collapsed', isCollapsed);
+}
+
+
+// ── Landlord payment view ──
+function showLandlordView(profile) {
+  document.querySelector('.progress-wrap').style.display = 'none';
+  document.querySelector('.main-grid').innerHTML = `
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;margin-bottom:4px;color:#0f172a">Payment Overview</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:24px">Payments received from your tenants</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;">
+        <div style="background:#f0fdf4;border:1px solid rgba(5,150,105,0.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#059669;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px">Total Received</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#059669" id="ll-total">GHS 0</div>
+        </div>
+        <div style="background:#eff6ff;border:1px solid rgba(14,165,233,0.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#0ea5e9;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px">Transactions</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#0ea5e9" id="ll-count">0</div>
+        </div>
+        <div style="background:#faf5ff;border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#7c3aed;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px">This Month</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#7c3aed" id="ll-month">GHS 0</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#64748b;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e2e8f0">Recent Payments</div>
+      <div id="ll-payments">
+        <div style="text-align:center;padding:40px 20px;color:#64748b;">
+          <div style="font-size:40px;margin-bottom:12px">💳</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px;color:#0f172a">No payments yet</div>
+          <div style="font-size:13px;line-height:1.7">When your tenants make rent payments through Singularity Rentals, they will appear here. You can also process refunds from this page.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06);height:fit-content;">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;color:#0f172a">Send a Refund</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:18px">Return a payment to a tenant</div>
+
+      <div style="margin-bottom:12px">
+        <label style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px">Tenant Name</label>
+        <input type="text" id="refund-tenant" placeholder="Tenant full name" style="width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;font-family:'DM Mono',monospace;font-size:13px;outline:none;">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px">MoMo Number</label>
+        <div style="display:flex;">
+          <div style="padding:10px;background:#e8eef5;border:1px solid #e2e8f0;border-right:none;border-radius:9px 0 0 9px;font-size:12px;color:#64748b;">🇬🇭 +233</div>
+          <input type="tel" id="refund-phone" placeholder="XX XXX XXXX" style="flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:0 9px 9px 0;padding:10px 13px;font-family:'DM Mono',monospace;font-size:13px;outline:none;">
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px">Amount (GHS)</label>
+        <input type="number" id="refund-amount" placeholder="e.g. 1800" style="width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;font-family:'DM Mono',monospace;font-size:13px;outline:none;">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px">Reason</label>
+        <select id="refund-reason" style="width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;font-family:'DM Mono',monospace;font-size:13px;outline:none;">
+          <option>Overpayment refund</option>
+          <option>Deposit return</option>
+          <option>Cancellation refund</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button onclick="processRefund()" style="width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 20px rgba(5,150,105,0.25);">
+        💸 Process Refund via Paystack
+      </button>
+      <div style="margin-top:10px;font-size:11px;color:#64748b;text-align:center;">Refunds are processed securely through Paystack</div>
+    </div>`;
+
+  // Load real payment data for landlord
+  loadLandlordPayments();
+}
+
+async function loadLandlordPayments() {
+  if (!sb || !currentUser) return;
+  const { data: payments } = await sb.from('payments')
+    .select('*, profiles:tenant_id(full_name)')
+    .eq('landlord_id', currentUser.id)
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  if (!payments || !payments.length) return;
+
+  const total = payments.filter(p=>p.status==='paid').reduce((a,p)=>a+p.amount,0);
+  const thisMonth = payments.filter(p=>{
+    const d = new Date(p.created_at);
+    const now = new Date();
+    return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear() && p.status==='paid';
+  }).reduce((a,p)=>a+p.amount,0);
+
+  document.getElementById('ll-total').textContent = 'GHS ' + total.toLocaleString();
+  document.getElementById('ll-count').textContent = payments.length;
+  document.getElementById('ll-month').textContent = 'GHS ' + thisMonth.toLocaleString();
+
+  document.getElementById('ll-payments').innerHTML = payments.map(p => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f1f5f9;">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#0f172a">${p.profiles?.full_name||'Tenant'}</div>
+        <div style="font-size:11px;color:#64748b;">${p.period} · ${p.method}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:${p.status==='paid'?'#059669':'#f59e0b'}">GHS ${p.amount.toLocaleString()}</div>
+        <div style="font-size:10px;color:${p.status==='paid'?'#059669':'#f59e0b'};text-transform:uppercase;letter-spacing:0.1em;">${p.status}</div>
+      </div>
+    </div>`).join('');
+}
+
+function processRefund() {
+  const tenant = document.getElementById('refund-tenant').value.trim();
+  const phone = document.getElementById('refund-phone').value.trim();
+  const amount = parseInt(document.getElementById('refund-amount').value);
+  const reason = document.getElementById('refund-reason').value;
+
+  if (!tenant || !phone || !amount) {
+    showToast('Please fill in all refund fields.', 'err');
+    return;
+  }
+
+  // Open Paystack for refund/transfer
+  const config = {
+    key: 'pk_test_e675a90c6aa4161a9332cfb8cafac3c34c301d6f',
+    email: currentProfile?.email || currentUser?.email || 'landlord@singularity.gh',
+    amount: amount * 100,
+    currency: 'GHS',
+    ref: 'SING-REFUND-' + Date.now(),
+    metadata: {
+      custom_fields: [
+        { display_name: 'Type', variable_name: 'type', value: 'Landlord Refund' },
+        { display_name: 'Recipient', variable_name: 'recipient', value: tenant },
+        { display_name: 'Reason', variable_name: 'reason', value: reason },
+      ]
+    },
+    callback: function(response) {
+      showToast('Refund of GHS ' + amount.toLocaleString() + ' processed successfully!', 'ok');
+    },
+    onClose: function() {
+      showToast('Refund cancelled.', 'err');
+    }
+  };
+
+  try {
+    const handler = PaystackPop.setup(config);
+    handler.openIframe();
+  } catch(e) {
+    showToast('Could not open Paystack. Please check your connection.', 'err');
+  }
+}
+
+
+// ── Notification bell ──
+async function loadNotifBadge(){
+  if(!window.sb||!currentUser)return;
+  try{
+    const {count}=await window.sb.from('notifications')
+      .select('*',{count:'exact',head:true})
+      .eq('user_id',currentUser.id)
+      .eq('is_read',false);
+    const badge=document.getElementById('notif-badge');
+    if(badge){
+      if(count>0){badge.textContent=count>9?'9+':count;badge.style.display='flex';}
+      else{badge.style.display='none';}
+    }
+  }catch(e){}
+}
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

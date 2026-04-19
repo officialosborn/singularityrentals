@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Find Your Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --surface3: #e8eef5;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --accent: #0ea5e9;
+  --accent2: #7c3aed;
+  --accent3: #f59e0b;
+  --text: #0f172a;
+  --muted: #64748b;
+  --success: #059669;
+  --danger: #dc2626;
+}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(14,165,233,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,165,233,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 700px; height: 700px; background: var(--accent2); top: -300px; right: -200px; animation: drift 14s ease-in-out infinite alternate; }
+  .orb-2 { width: 500px; height: 500px; background: var(--accent); bottom: -200px; left: -150px; animation: drift 18s ease-in-out infinite alternate-reverse; }
+  @keyframes drift { from { transform: translate(0,0); } to { transform: translate(50px,40px); } }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    position: sticky; top: 0;
+    background: rgba(8,11,16,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    z-index: 100;
+  }
+  .logo-mark { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .logo-sub { font-size: 9px; color: #64748b; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 2px; }
+
+  .nav-links { display: flex; gap: 6px; }
+  .nav-link {
+    padding: 7px 16px; border-radius: 8px; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    border: 1px solid transparent; color: #64748b; transition: all 0.2s;
+    background: none;
+    font-family: 'DM Mono', monospace;
+  }
+  .nav-link:hover { color: var(--text); border-color: var(--border); }
+  .nav-link.active { color: var(--accent); border-color: rgba(14,165,233,0.2); background: rgba(14,165,233,0.05); }
+
+  .nav-user { display: flex; align-items: center; gap: 10px; }
+  .avatar-sm {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: white;
+  }
+  .user-name { font-size: 12px; color: var(--text); }
+  .user-role { font-size: 10px; color: var(--success); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── PAGE WRAPPER ── */
+  .page { position: relative; z-index: 1; }
+
+  /* ── HERO SEARCH ── */
+  .hero {
+    padding: 60px 40px 40px;
+    text-align: center;
+  }
+  .hero-tag {
+    display: inline-block;
+    padding: 5px 16px; border-radius: 20px;
+    border: 1px solid rgba(14,165,233,0.25);
+    background: rgba(14,165,233,0.06);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+    animation: fadeDown 0.5s ease both;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1; margin-bottom: 14px;
+    animation: fadeDown 0.5s 0.1s ease both;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub {
+    font-size: 13px; color: #64748b; margin-bottom: 36px;
+    animation: fadeDown 0.5s 0.2s ease both;
+  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:none; } }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex; align-items: center; gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    max-width: 700px; margin: 0 auto 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    animation: fadeDown 0.5s 0.3s ease both;
+  }
+  .search-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(14,165,233,0.08); }
+  .search-icon { padding: 0 16px; color: #64748b; }
+  .search-icon svg { width: 18px; height: 18px; display: block; }
+  .search-input {
+    flex: 1; background: none; border: none; outline: none;
+    padding: 16px 0; font-family: 'DM Mono', monospace; font-size: 13px;
+    color: var(--text);
+  }
+  .search-input::placeholder { color: #64748b; }
+  .search-divider { width: 1px; height: 30px; background: var(--border); }
+  .search-select {
+    background: none; border: none; outline: none;
+    padding: 16px 18px; font-family: 'DM Mono', monospace; font-size: 12px;
+    color: #64748b; cursor: pointer;
+  }
+  .search-select option { background: var(--surface2); }
+  .search-btn {
+    background: var(--accent); color: #000; border: none;
+    padding: 12px 24px; margin: 6px;
+    border-radius: 10px; font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .search-btn:hover { box-shadow: 0 0 24px rgba(14,165,233,0.4); transform: translateY(-1px); }
+
+  /* QUICK FILTERS */
+  .quick-filters {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    animation: fadeDown 0.5s 0.4s ease both;
+  }
+  .qf {
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+    cursor: pointer; border: 1px solid var(--border);
+    background: transparent; color: #64748b;
+    transition: all 0.2s; font-family: 'DM Mono', monospace;
+  }
+  .qf.active, .qf:hover { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.06); }
+
+  /* ── MAIN CONTENT ── */
+  .content-area {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 0;
+    padding: 0 40px 60px;
+  }
+
+  /* ── SIDEBAR FILTERS ── */
+  .filter-sidebar {
+    padding-right: 28px;
+    padding-top: 8px;
+  }
+  .filter-block { margin-bottom: 28px; }
+  .filter-heading {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #64748b; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+
+  .range-wrap { padding: 4px 0; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-bottom: 10px; }
+  .range-val { color: var(--accent); }
+  input[type=range] {
+    -webkit-appearance: none; width: 100%; height: 3px;
+    background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px;
+    border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 8px rgba(14,165,233,0.5);
+  }
+
+  .check-group { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: #64748b; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .check-item:hover { color: var(--text); }
+  .check-box {
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.2s;
+  }
+  .check-item.checked .check-box {
+    background: var(--accent); border-color: var(--accent);
+  }
+  .check-item.checked .check-box::after { content: '✓'; font-size: 10px; color: #000; font-weight: 700; }
+  .check-item.checked { color: var(--text); }
+
+  .amenity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .amenity-chip {
+    padding: 7px 10px; border-radius: 8px; font-size: 11px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: #64748b; cursor: pointer; text-align: center;
+    transition: all 0.2s;
+  }
+  .amenity-chip.on { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.07); }
+
+  .apply-btn {
+    width: 100%; padding: 11px;
+    background: var(--accent); color: #000; border: none;
+    border-radius: 10px; font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .apply-btn:hover { box-shadow: 0 0 20px rgba(14,165,233,0.3); }
+
+  /* ── LISTINGS ── */
+  .listings-area { padding-top: 8px; }
+
+  .results-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .results-count { font-size: 12px; color: #64748b; }
+  .results-count span { color: var(--text); font-weight: 600; }
+  .sort-select {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px;
+    font-family: 'DM Mono', monospace; font-size: 11px; color: #64748b;
+    outline: none; cursor: pointer;
+  }
+  .sort-select option { background: var(--surface2); }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  /* LISTING CARD */
+  .listing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden;
+    cursor: pointer; transition: all 0.3s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .listing-card:hover {
+    border-color: rgba(14,165,233,0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.12), 0 0 40px rgba(14,165,233,0.07);
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+
+  .card-img {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .card-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,11,16,0.9) 0%, transparent 55%);
+  }
+  .card-emoji { font-size: 56px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
+
+  .card-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+  }
+  .badge-available { background: rgba(16,185,129,0.2); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+  .badge-occupied { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+  .badge-pending { background: rgba(245,158,11,0.15); color: var(--accent3); border: 1px solid rgba(245,158,11,0.3); }
+
+  .wishlist-btn {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(8,11,16,0.6); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer; transition: all 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .wishlist-btn:hover, .wishlist-btn.saved { background: rgba(239,68,68,0.2); border-color: var(--danger); }
+
+  .card-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+    padding: 14px 16px 0;
+  }
+  .card-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--accent); }
+  .card-price span { font-size: 12px; font-weight: 400; color: #64748b; font-family: 'DM Mono', monospace; }
+
+  .card-body { padding: 14px 16px 16px; }
+  .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .card-address { font-size: 11px; color: #64748b; margin-bottom: 12px; }
+
+  .card-meta { display: flex; gap: 14px; margin-bottom: 14px; }
+  .meta-pill {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #64748b;
+    background: var(--surface2); border-radius: 6px; padding: 4px 9px;
+  }
+
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag {
+    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 5px;
+    background: var(--surface2); border: 1px solid var(--border); color: #64748b;
+  }
+
+  .card-footer { display: flex; gap: 8px; }
+  .btn-outline {
+    flex: 1; padding: 9px; border-radius: 9px;
+    border: 1px solid var(--border); background: transparent;
+    color: #64748b; font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-select {
+    flex: 2; padding: 9px; border-radius: 9px;
+    background: var(--accent); color: #000; border: none;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-select:hover { box-shadow: 0 0 20px rgba(14,165,233,0.35); transform: translateY(-1px); }
+  .btn-select:disabled {
+    background: var(--surface2); color: #64748b;
+    cursor: not-allowed; box-shadow: none; transform: none;
+  }
+
+  /* ── DETAIL MODAL ── */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
+    z-index: 200; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .detail-modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 22px; width: 640px; max-height: 88vh;
+    overflow-y: auto; transform: translateY(24px) scale(0.97);
+    transition: all 0.25s;
+  }
+  .overlay.open .detail-modal { transform: none; }
+
+  .detail-hero {
+    width: 100%; height: 240px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .detail-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, var(--surface) 0%, transparent 60%);
+  }
+  .detail-emoji { font-size: 80px; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.7)); }
+
+  .detail-body { padding: 4px 28px 28px; }
+  .detail-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+  .detail-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; }
+  .close-btn {
+    width: 34px; height: 34px; border-radius: 9px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: #64748b; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; transition: all 0.2s; flex-shrink: 0;
+  }
+  .close-btn:hover { color: var(--text); border-color: var(--text); }
+
+  .detail-address { font-size: 12px; color: #64748b; margin-bottom: 18px; }
+
+  .detail-price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 20px; }
+  .detail-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: var(--accent); }
+  .detail-price-sub { font-size: 13px; color: #64748b; }
+
+  .detail-stats {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 10px; margin-bottom: 22px;
+  }
+  .d-stat {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 10px; text-align: center;
+  }
+  .d-stat-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; }
+  .d-stat-lbl { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #64748b; margin-top: 4px; }
+
+  .detail-section { margin-bottom: 20px; }
+  .detail-section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #64748b; margin-bottom: 10px; }
+  .detail-desc { font-size: 13px; color: #475569; line-height: 1.7; }
+
+  .amenities-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .amenity-tag {
+    padding: 6px 14px; border-radius: 8px; font-size: 11px;
+    background: var(--surface2); border: 1px solid var(--border); color: #64748b;
+  }
+
+  .landlord-row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px;
+  }
+  .landlord-av {
+    width: 42px; height: 42px; border-radius: 11px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: white;
+    flex-shrink: 0;
+  }
+  .landlord-info-name { font-size: 14px; font-weight: 600; }
+  .landlord-info-label { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+  .detail-actions { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .detail-btn-outline {
+    flex: 1; padding: 12px; border-radius: 11px;
+    border: 1px solid var(--border); background: transparent; color: #64748b;
+    font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .detail-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-btn-primary {
+    flex: 2; padding: 12px; border-radius: 11px;
+    background: var(--accent); color: #000; border: none;
+    font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .detail-btn-primary:hover { box-shadow: 0 0 30px rgba(14,165,233,0.4); transform: translateY(-1px); }
+
+  /* ── REQUEST MODAL ── */
+  .req-modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 22px; width: 480px; max-height: 88vh;
+    overflow-y: auto; padding: 32px;
+    transform: translateY(24px) scale(0.97); transition: all 0.25s;
+  }
+  .overlay.open .req-modal { transform: none; }
+
+  .req-header { margin-bottom: 26px; }
+  .req-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 6px; }
+  .req-sub { font-size: 12px; color: #64748b; }
+
+  .form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #64748b; display: block; margin-bottom: 8px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 11px 14px; color: var(--text);
+    font-family: 'DM Mono', monospace; font-size: 13px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-select option { background: var(--surface); }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-group { margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .summary-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; margin-bottom: 20px;
+  }
+  .summary-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #64748b; margin-bottom: 12px; }
+  .summary-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
+  .summary-row:last-child { margin-bottom: 0; padding-top: 10px; border-top: 1px solid var(--border); font-weight: 600; color: var(--text); }
+  .summary-label { color: #64748b; }
+  .summary-value { color: var(--text); }
+  .summary-row:last-child .summary-value { color: var(--accent); font-family: 'Syne', sans-serif; }
+
+  .req-footer { display: flex; gap: 10px; margin-top: 24px; }
+  .req-btn-cancel {
+    flex: 1; padding: 12px; border-radius: 11px;
+    border: 1px solid var(--border); background: transparent; color: #64748b;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .req-btn-cancel:hover { border-color: var(--text); color: var(--text); }
+  .req-btn-submit {
+    flex: 2; padding: 12px; border-radius: 11px;
+    background: var(--accent); color: #000; border: none;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .req-btn-submit:hover { box-shadow: 0 0 24px rgba(14,165,233,0.35); }
+
+  /* SUCCESS STATE */
+  .success-state {
+    text-align: center; padding: 20px 0;
+  }
+  .success-icon {
+    width: 72px; height: 72px; border-radius: 20px;
+    background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin: 0 auto 20px;
+    animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  @keyframes popIn { from { transform: scale(0.5); opacity:0; } to { transform: scale(1); opacity:1; } }
+  .success-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 8px; }
+  .success-sub { font-size: 13px; color: #64748b; line-height: 1.6; margin-bottom: 24px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 32px; right: 32px;
+    background: var(--surface2); border: 1px solid var(--success);
+    border-radius: 12px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px; font-size: 12px;
+    z-index: 400; transform: translateY(80px); opacity: 0; transition: all 0.3s;
+    color: var(--success); box-shadow: 0 0 24px rgba(16,185,129,0.2);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 60px 20px; color: #64748b; }
+  .empty-state div:first-child { font-size: 48px; margin-bottom: 16px; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ═══════════════════════════
+   MOBILE — singularity-tenant.html
+═══════════════════════════ */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 0 16px; height: 56px; flex-wrap: wrap; position: sticky; }
+  .nav-links { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding: 6px 0; gap: 4px; display: flex; border-top: 1px solid var(--border); background: #ffffff; }
+  .nav-link { font-size: 9px; padding: 6px 10px; white-space: nowrap; }
+  .nav-user { gap: 6px; }
+  .user-name { display: none; }
+  .navbar { height: auto; flex-wrap: wrap; }
+
+  /* Hero */
+  .hero { padding: 80px 20px 32px; }
+  .hero-title { font-size: clamp(28px, 8vw, 44px); }
+  .hero-sub { font-size: 12px; }
+  .hero-tag { font-size: 9px; padding: 4px 12px; margin-bottom: 12px; }
+
+  /* Search bar */
+  .search-bar { flex-wrap: wrap; margin: 0 0 10px; border-radius: 12px; }
+  .search-input { min-width: 0; padding: 12px 12px 12px 0; font-size: 12px; }
+  .search-divider { display: none; }
+  .search-select { display: none; }
+  .search-btn { width: 100%; margin: 0; border-radius: 0 0 10px 10px; padding: 12px; font-size: 11px; }
+
+  /* Quick filters */
+  .quick-filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; gap: 6px; }
+  .qf { white-space: nowrap; }
+
+  /* Content area - hide sidebar, go single column */
+  .content-area { grid-template-columns: 1fr; padding: 0 16px 80px; gap: 0; }
+  .filter-sidebar { display: none; }
+
+  /* Listings grid */
+  .listings-grid { grid-template-columns: 1fr; gap: 14px; }
+  .results-bar { flex-wrap: wrap; gap: 8px; }
+
+  /* Modals */
+  .detail-modal { width: calc(100vw - 24px); max-height: 90vh; }
+  .req-modal { width: calc(100vw - 24px); padding: 24px 18px; max-height: 88vh; }
+  .form-row { grid-template-columns: 1fr; }
+  .detail-stats { grid-template-columns: repeat(2, 1fr); }
+
+  /* Detail hero */
+  .detail-hero { height: 180px; }
+  .detail-body { padding: 4px 18px 20px; }
+  .detail-price { font-size: 26px; }
+  .detail-actions { flex-direction: column; }
+}
+
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div onclick="window.location.href='index.html'" style="cursor:pointer" title="Back to Home">
+    <div class="logo-mark">Singularity</div>
+    <div class="logo-sub">Rentals</div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="setNav(this,'browse')">Browse</button>
+    <button class="nav-link" onclick="setNav(this,'saved')">Saved (0)</button>
+    <button class="nav-link" onclick="setNav(this,'my-room')">My Room</button>
+    <button class="nav-link" onclick="window.location.href='singularity-map.html'">🗺 Map View</button>
+    <button class="nav-link" onclick="window.location.href='singularity-payment.html'">💳 Pay Rent</button>
+    <button class="nav-link" onclick="window.location.href='singularity-receipt.html'">🧾 Receipts</button>
+    <button class="nav-link" onclick="window.location.href='singularity-maintenance.html'">🔧 Maintenance</button>
+  </div>
+  <div class="nav-user">
+    <div class="avatar-sm">AB</div>
+    <div>
+      <div class="user-name">User</div>
+      <div class="user-role" onclick="window.location.href='index.html'" style="cursor:pointer;color:#64748b">🚪 Log Out</div>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">🏠 12 Properties Available in Accra</div>
+    <h1 class="hero-title">Find Your Perfect<br><span>Space to Call Home</span></h1>
+    <p class="hero-sub">Browse verified listings, select your room, and move in — all in one place.</p>
+
+    <div class="search-bar">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <input type="text" class="search-input" placeholder="Search by location, type or keyword..." id="search-input" oninput="applyFilters()">
+      <div class="search-divider"></div>
+      <select class="search-select" id="search-location" onchange="applyFilters()">
+        <option value="">All Areas</option>
+        <option>East Legon</option>
+        <option>Labone</option>
+        <option>Airport Residential</option>
+        <option>Spintex</option>
+        <option>Adenta</option>
+        <option>Osu</option>
+        <option>Cantonments</option>
+        <option>Tema</option>
+      </select>
+      <button class="search-btn" onclick="applyFilters()">Search</button>
+    </div>
+
+    <div class="quick-filters">
+      <button class="qf active" onclick="setQF(this,'all')">All</button>
+      <button class="qf" onclick="setQF(this,'Studio')">Studio</button>
+      <button class="qf" onclick="setQF(this,'1 Bedroom')">1 Bed</button>
+      <button class="qf" onclick="setQF(this,'2 Bedrooms')">2 Beds</button>
+      <button class="qf" onclick="setQF(this,'3 Bedrooms')">3 Beds</button>
+      <button class="qf" onclick="setQF(this,'Entire House')">Full House</button>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- FILTER SIDEBAR -->
+    <aside class="filter-sidebar">
+      <div class="filter-block">
+        <div class="filter-heading">Price Range / Month</div>
+        <div class="range-wrap">
+          <div class="range-labels">
+            <span>₵500</span>
+            <span class="range-val" id="price-val">₵6,000</span>
+          </div>
+          <input type="range" min="500" max="10000" value="6000" step="100" id="price-range" oninput="updatePrice(this.value)">
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-heading">Bedrooms</div>
+        <div class="check-group" id="beds-filter">
+          <div class="check-item" onclick="toggleCheck(this,'beds')"><div class="check-box"></div>Any</div>
+          <div class="check-item" onclick="toggleCheck(this,'beds')"><div class="check-box"></div>Studio (0)</div>
+          <div class="check-item" onclick="toggleCheck(this,'beds')"><div class="check-box"></div>1 Bedroom</div>
+          <div class="check-item" onclick="toggleCheck(this,'beds')"><div class="check-box"></div>2 Bedrooms</div>
+          <div class="check-item" onclick="toggleCheck(this,'beds')"><div class="check-box"></div>3+ Bedrooms</div>
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-heading">Amenities</div>
+        <div class="amenity-grid">
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">🔒 Security</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">💧 Water</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">⚡ Power</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">🌐 WiFi</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">🅿️ Parking</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">❄️ A/C</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">🛗 Elevator</div>
+          <div class="amenity-chip" onclick="this.classList.toggle('on')">🏊 Pool</div>
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-heading">Availability</div>
+        <div class="check-group">
+          <div class="check-item checked" onclick="this.classList.toggle('checked')"><div class="check-box"></div>Available Now</div>
+          <div class="check-item" onclick="this.classList.toggle('checked')"><div class="check-box"></div>Pending</div>
+        </div>
+      </div>
+
+      <button class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+    </aside>
+
+    <!-- LISTINGS -->
+    <div class="listings-area">
+      <div class="results-bar">
+        <div class="results-count"><span id="results-num">6</span> properties found</div>
+        <select class="sort-select" onchange="applyFilters()">
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest First</option>
+        </select>
+      </div>
+      <div class="listings-grid" id="listings-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DETAIL OVERLAY ── -->
+<div class="overlay" id="detail-overlay">
+  <div class="detail-modal" id="detail-modal">
+    <div class="detail-hero" id="detail-hero"></div>
+    <div class="detail-body">
+      <div class="detail-header">
+        <div>
+          <div class="detail-title" id="d-title"></div>
+          <div class="detail-address" id="d-address"></div>
+        </div>
+        <div class="close-btn" onclick="closeDetail()">✕</div>
+      </div>
+      <div class="detail-price-row">
+        <div class="detail-price" id="d-price"></div>
+        <div class="detail-price-sub">/ month</div>
+        <span id="d-badge" style="margin-left:10px"></span>
+      </div>
+      <div class="detail-stats" id="d-stats"></div>
+      <div class="detail-section">
+        <div class="detail-section-title">Description</div>
+        <div class="detail-desc" id="d-desc"></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Amenities</div>
+        <div class="amenities-list" id="d-amenities"></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Listed By</div>
+        <div class="landlord-row">
+          <div class="landlord-av">KO</div>
+          <div>
+            <div class="landlord-info-name">Kwame Osei</div>
+            <div class="landlord-info-label">Verified Landlord · Member since 2021</div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button class="detail-btn-outline" onclick="closeDetail()">← Back</button>
+        <button class="detail-btn-primary" id="d-select-btn" onclick="openRequest()">Select This Room</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── REQUEST OVERLAY ── -->
+<div class="overlay" id="req-overlay">
+  <div class="req-modal">
+    <div id="req-form-content">
+      <div class="req-header">
+        <div class="req-title">Request This Room</div>
+        <div class="req-sub">Fill in your details to submit a rental request to the landlord.</div>
+      </div>
+
+      <div class="summary-box" id="req-summary"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" value=currentProfile?.full_name||"User" id="r-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="text" class="form-input" placeholder="+233 XX XXX XXXX" id="r-phone">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="ama@email.com" id="r-email">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Move-in Date</label>
+          <input type="date" class="form-input" id="r-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lease Duration</label>
+          <select class="form-select" id="r-duration">
+            <option>3 Months</option>
+            <option selected>6 Months</option>
+            <option>1 Year</option>
+            <option>2 Years</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message to Landlord (Optional)</label>
+        <textarea class="form-textarea" placeholder="Tell the landlord a bit about yourself..."></textarea>
+      </div>
+
+      <div class="req-footer">
+        <button class="req-btn-cancel" onclick="closeRequest()">Cancel</button>
+        <button class="req-btn-submit" onclick="submitRequest()">Submit Request →</button>
+      </div>
+    </div>
+
+    <div id="req-success-content" style="display:none">
+      <div class="success-state">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Request Sent!</div>
+        <div class="success-sub">Your rental request has been sent to the landlord.<br>You'll receive a confirmation once approved.<br>Proceed to make your first rent payment.</div>
+        <button class="req-btn-submit" style="width:100%;padding:14px;margin-bottom:10px" onclick="window.location.href='singularity-payment.html'">💳 Proceed to Payment →</button>
+        <button class="req-btn-cancel" style="width:100%;padding:12px" onclick="closeAll()">Stay & Browse</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Added to saved listings!</div>
+
+<script>
+const listings = []; // Real data loaded from Supabase
+
+let savedIds = new Set();
+let activeQF = 'all';
+let currentListing = null;
+
+function renderListings(data) {
+  const grid = document.getElementById('listings-grid');
+  document.getElementById('results-num').textContent = data.length;
+  if (!data.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div>🔍</div><div style="font-family:'Syne',sans-serif;font-size:18px;color:var(--text);margin-bottom:8px">No properties found</div><div style="font-size:13px">Try adjusting your filters or search terms</div></div>`;
+    return;
+  }
+  grid.innerHTML = data.map((l, i) => `
+    <div class="listing-card" style="animation-delay:${i*0.07}s" onclick="openDetail(${l.id})">
+      <div class="card-img" style="background:${l.bg}">
+        <span class="card-emoji">${l.emoji}</span>
+        <span class="card-badge badge-${l.status}">${l.status}</span>
+        <div class="wishlist-btn ${savedIds.has(l.id)?'saved':''}" onclick="toggleSave(event,${l.id})">${savedIds.has(l.id)?'❤️':'🤍'}</div>
+        <div class="card-bottom">
+          <div class="card-price">₵${l.priceStr}<span>/mo</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${l.title}</div>
+        <div class="card-address">📍 ${l.address}</div>
+        <div class="card-meta">
+          <div class="meta-pill">🛏 ${l.beds} bed${l.beds!==1?'s':''}</div>
+          <div class="meta-pill">🚿 ${l.baths} bath${l.baths!==1?'s':''}</div>
+          <div class="meta-pill">${l.type}</div>
+        </div>
+        <div class="card-tags">${l.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <div class="card-footer">
+          <button class="btn-outline" onclick="event.stopPropagation();toggleSave(event,${l.id})">${savedIds.has(l.id)?'Saved ❤️':'Save'}</button>
+          <button class="btn-select" ${l.status==='occupied'?'disabled':''} onclick="event.stopPropagation();openDetail(${l.id});setTimeout(openRequest,300)">${l.status==='occupied'?'Occupied':'Select Room'}</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const maxPrice = parseInt(document.getElementById('price-range').value);
+  let result = listings.filter(l => {
+    const matchSearch = !search || l.title.toLowerCase().includes(search) || l.address.toLowerCase().includes(search) || l.type.toLowerCase().includes(search);
+    const matchPrice = l.price <= maxPrice;
+    const matchType = activeQF === 'all' || l.type === activeQF;
+    return matchSearch && matchPrice && matchType;
+  });
+  renderListings(result);
+}
+
+function setQF(el, val) {
+  document.querySelectorAll('.qf').forEach(q => q.classList.remove('active'));
+  el.classList.add('active');
+  activeQF = val;
+  applyFilters();
+}
+
+function setNav(el, tab) {
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  if (tab === 'saved') {
+    const saved = listings.filter(l => savedIds.has(l.id));
+    renderListings(saved);
+  } else if (tab === 'browse') {
+    applyFilters();
+  } else if (tab === 'my-room') {
+    // Show a mini "my room" state in the grid
+    const grid = document.getElementById('listings-grid');
+    document.getElementById('results-num').textContent = '1';
+    grid.innerHTML = `
+      <div style="grid-column:1/-1">
+        <div style="background:var(--surface);border:1px solid rgba(14,165,233,0.2);border-radius:20px;padding:40px 32px;text-align:center;max-width:520px;margin:0 auto">
+          <div style="font-size:56px;margin-bottom:16px">🏠</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:8px">Unit B — East Legon</div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:24px" id="req-success-detail">Your request has been submitted</div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button onclick="window.location.href='singularity-payment.html'" style="padding:11px 24px;background:var(--accent);color:#000;border:none;border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 20px rgba(14,165,233,0.25)">💳 Pay April Rent</button>
+            <button onclick="window.location.href='singularity-maintenance.html'" style="padding:11px 24px;background:var(--surface2);color:#64748b;border:1px solid var(--border);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">🔧 Maintenance</button>
+            <button onclick="window.location.href='singularity-receipt.html'" style="padding:11px 24px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">🧾 View Receipts</button>
+            <button onclick="window.open('singularity-tenancy-agreement.pdf')" style="padding:11px 24px;background:var(--surface2);color:#64748b;border:1px solid var(--border);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">📄 View Agreement</button>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+function updatePrice(val) {
+  document.getElementById('price-val').textContent = `₵${parseInt(val).toLocaleString()}`;
+  applyFilters();
+}
+
+function toggleCheck(el, group) {
+  document.querySelectorAll(`#${group}-filter .check-item`).forEach(i => i.classList.remove('checked'));
+  el.classList.add('checked');
+}
+
+function toggleSave(e, id) {
+  e.stopPropagation();
+  if (savedIds.has(id)) { savedIds.delete(id); showToast('Removed from saved.'); }
+  else { savedIds.add(id); showToast('Added to saved listings!'); }
+  // update saved count
+  document.querySelectorAll('.nav-link')[1].textContent = `Saved (${savedIds.size})`;
+  applyFilters();
+}
+
+function openDetail(id) {
+  currentListing = listings.find(l => l.id === id);
+  const l = currentListing;
+  document.getElementById('detail-hero').style.background = l.bg;
+  document.getElementById('detail-hero').innerHTML = `<span class="detail-emoji">${l.emoji}</span>`;
+  document.getElementById('d-title').textContent = l.title;
+  document.getElementById('d-address').textContent = '📍 ' + l.address;
+  document.getElementById('d-price').textContent = '₵' + l.priceStr;
+  document.getElementById('d-badge').innerHTML = `<span class="card-badge badge-${l.status}" style="position:static">${l.status}</span>`;
+  document.getElementById('d-stats').innerHTML = `
+    <div class="d-stat"><div class="d-stat-val">${l.beds}</div><div class="d-stat-lbl">Bedrooms</div></div>
+    <div class="d-stat"><div class="d-stat-val">${l.baths}</div><div class="d-stat-lbl">Bathrooms</div></div>
+    <div class="d-stat"><div class="d-stat-val">${l.amenities.length}</div><div class="d-stat-lbl">Amenities</div></div>
+    <div class="d-stat"><div class="d-stat-val" style="font-size:13px">Accra</div><div class="d-stat-lbl">City</div></div>
+  `;
+  document.getElementById('d-desc').textContent = l.desc;
+  document.getElementById('d-amenities').innerHTML = l.amenities.map(a=>`<span class="amenity-tag">${a}</span>`).join('');
+  const btn = document.getElementById('d-select-btn');
+  btn.disabled = l.status === 'occupied';
+  btn.textContent = l.status === 'occupied' ? 'Currently Occupied' : 'Select This Room';
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.remove('open');
+}
+
+function openRequest() {
+  if (!currentListing || currentListing.status === 'occupied') return;
+  const l = currentListing;
+  document.getElementById('req-summary').innerHTML = `
+    <div class="summary-title">Rental Summary</div>
+    <div class="summary-row"><span class="summary-label">Property</span><span class="summary-value">${l.title}</span></div>
+    <div class="summary-row"><span class="summary-label">Location</span><span class="summary-value">${l.address}</span></div>
+    <div class="summary-row"><span class="summary-label">Type</span><span class="summary-value">${l.type}</span></div>
+    <div class="summary-row"><span class="summary-label">Monthly Rent</span><span class="summary-value">₵${l.priceStr}</span></div>
+    <div class="summary-row"><span class="summary-label">Total (6 mo)</span><span class="summary-value">₵${(l.price*6).toLocaleString()}</span></div>
+  `;
+  document.getElementById('req-form-content').style.display = '';
+  document.getElementById('req-success-content').style.display = 'none';
+  document.getElementById('req-overlay').classList.add('open');
+}
+
+function closeRequest() {
+  document.getElementById('req-overlay').classList.remove('open');
+}
+
+function submitRequest() {
+  const name = document.getElementById('r-name').value.trim();
+  const phone = document.getElementById('r-phone').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  if (!name || !phone || !email) { alert('Please fill in your name, phone, and email.'); return; }
+  document.getElementById('req-form-content').style.display = 'none';
+  document.getElementById('req-success-content').style.display = '';
+}
+
+function closeAll() {
+  closeRequest();
+  closeDetail();
+  showToast('Request submitted! Check your My Room tab for updates.');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Close on overlay click
+document.getElementById('detail-overlay').addEventListener('click', function(e){ if(e.target===this) closeDetail(); });
+document.getElementById('req-overlay').addEventListener('click', function(e){ if(e.target===this) closeRequest(); });
+
+/* ═══════════════════════════════════
+   SUPABASE — Auth + Real Listings
+═══════════════════════════════════ */
+(function(){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = async () => {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    // Auth check using Supabase getSession - works on all domains
+    const {data:{session}} = await sb.auth.getSession();
+    if(!session){location.replace('index.html');return;}
+    const {data:profile} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+    if(!profile){location.replace('index.html');return;}
+    if(profile.role==='landlord'){location.replace('singularity-rentals.html');return;}
+    
+    // Hide loader
+    var l=document.getElementById('app-loader');
+    if(l){l.style.opacity='0';setTimeout(function(){l.remove();},300);}
+    
+    await initTenantPage(profile);
+  };
+  document.head.appendChild(s);
+})();
+
+async function initTenantPage(preloadedProfile) {
+  const {data:{session}}=await sb.auth.getSession();
+  const user=session?.user||null;
+  if (!user) { location.href = 'index.html'; return; }
+  currentUser = user;
+
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  currentProfile = profile;
+
+  // Role guard — landlords go to their dashboard
+  if (profile && profile.role === 'landlord') {
+    location.href = 'singularity-rentals.html';
+    return;
+  }
+
+  // Update navbar with real user info
+  if (profile) {
+    const fn = profile.full_name || 'User';
+    const initials = fn.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    const nameEl = document.querySelector('.user-name');
+    const avEl = document.querySelector('.avatar-sm');
+    if (nameEl) nameEl.textContent = fn;
+    if (avEl) {
+      if (profile.profile_photo) {
+        avEl.innerHTML = `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+      } else {
+        avEl.textContent = initials;
+      }
+    }
+  }
+
+  // Load real listings — show loading state first (no flash)
+  const grid = document.getElementById('listings-grid');
+  if (grid) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;padding:40px;text-align:center;color:#64748b;">
+        <div style="font-size:32px;margin-bottom:12px">⏳</div>
+        <div style="font-size:13px">Loading properties…</div>
+      </div>`;
+  }
+
+  await loadRealListings();
+}
+
+async function loadRealListings() {
+  // Load only available listings (not occupied/sold) and not other landlords' drafts
+  const { data, error } = await sb.from('listings')
+    .select(`*, profiles:landlord_id(full_name, phone, profile_photo, is_verified)`)
+    .eq('is_sold', false)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    const grid = document.getElementById('listings-grid');
+    if (grid) grid.innerHTML = `<div style="grid-column:1/-1;padding:40px;text-align:center;color:#dc2626;">⚠ Could not load listings.</div>`;
+    return;
+  }
+
+  if (!data || !data.length) {
+    // No listings in DB yet — show empty state
+    const grid = document.getElementById('listings-grid');
+    if (grid) grid.innerHTML = `
+      <div style="grid-column:1/-1;padding:60px 20px;text-align:center;">
+        <div style="font-size:56px;margin-bottom:16px">🏠</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;color:#0f172a">No listings yet</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.7">Landlords haven't posted any properties yet.<br>Check back soon — new listings are added daily.</div>
+      </div>`;
+    return;
+  }
+
+  const bgs = ['linear-gradient(135deg,#f5f3ff,#ede9fe)','linear-gradient(135deg,#eff6ff,#dbeafe)','linear-gradient(135deg,#f0fdf4,#dcfce7)','linear-gradient(135deg,#fff7ed,#fed7aa)','linear-gradient(135deg,#fdf2f8,#fce7f3)'];
+  const emojis = ['🏠','🏡','🏢','🏙️','🌴','🏗️','✈️','🏛️'];
+
+  const mapped = data.map((l, i) => ({
+    id: l.id,
+    title: l.title,
+    address: l.address,
+    price: l.price,
+    priceStr: l.price.toLocaleString(),
+    type: l.type,
+    beds: l.beds,
+    baths: l.baths,
+    status: l.status,
+    emoji: l.emoji || emojis[i % emojis.length],
+    bg: l.photos?.length ? null : bgs[i % bgs.length],
+    coverPhoto: l.photos?.length ? l.photos[0] : null,
+    desc: l.description || `A great ${l.type||'property'} in ${l.address}.`,
+    amenities: l.features?.length ? l.features.slice(0,4) : ['WiFi','Security','Water','Electricity'],
+    tags: l.features?.length ? l.features.slice(0,2) : [],
+    landlordName: l.profiles?.full_name || 'Verified Landlord',
+    landlordId: l.landlord_id,
+    contactPhone: l.contact_phone,
+    contactWa: l.contact_whatsapp,
+  }));
+
+  listings.length = 0;
+  mapped.forEach(l => listings.push(l));
+  applyFilters();
+}
+
+// When user clicks a listing card, go to detail page
+function openListingDetail(id) {
+  location.href = `singularity-listing.html?id=${id}`;
+}
+
+async function submitRequest() {
+  const name  = document.getElementById('r-name')?.value.trim();
+  const phone = document.getElementById('r-phone')?.value.trim();
+  const email = document.getElementById('r-email')?.value.trim();
+  if (!name || !phone || !email) {
+    alert('Please fill in your name, phone, and email.');
+    return;
+  }
+
+  if (sb && currentUser && currentListing) {
+    try {
+      await sb.from('rental_requests').insert({
+        listing_id: currentListing.id,
+        tenant_id: currentUser.id,
+        landlord_id: currentListing.landlordId,
+        move_in_date: document.getElementById('r-date')?.value || null,
+        lease_duration: document.getElementById('r-duration')?.value || '6 Months',
+        message: document.querySelector('.form-textarea')?.value || '',
+        status: 'pending'
+      });
+    } catch(e) { console.warn('DB save:', e); }
+  }
+
+  document.getElementById('req-form-content').style.display = 'none';
+  document.getElementById('req-success-content').style.display = '';
+}
+
+// Show loading state initially — real data replaces it
+const grid = document.getElementById('listings-grid');
+if (grid) {
+  grid.innerHTML = `<div style="grid-column:1/-1;padding:40px;text-align:center;color:#64748b;font-size:13px">⏳ Loading…</div>`;
+}
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  if(profile.role==='landlord'){hideLoader();location.replace('singularity-rentals.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

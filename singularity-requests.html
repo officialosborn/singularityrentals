@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* Notification bell */
+.sb-bell{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;position:relative;}
+.sb-bell:hover{color:var(--text);background:var(--surface2);}
+.notif-badge{position:absolute;right:16px;top:50%;transform:translateY(-50%);min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Rental Requests</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#f8fafc;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}button,[onclick]{cursor:pointer!important;}
+input,select,textarea{cursor:text!important;}select{cursor:pointer!important;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:220px;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:400;transition:width 0.3s ease;}
+.sidebar.collapsed{width:60px;}
+.sidebar.collapsed .sb-sub,.sidebar.collapsed .sb-uname,.sidebar.collapsed .sb-urole,.sidebar.collapsed .sb-sec,.sidebar.collapsed .sb-link span:not(.sb-link-icon),.sidebar.collapsed .sb-badge,.sidebar.collapsed .sb-logout span:last-child{display:none;}
+.sidebar.collapsed .sb-link,.sidebar.collapsed .sb-logout{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user>div:last-child{display:none;}
+.sidebar.collapsed+.main{margin-left:60px;}
+.sb-toggle{position:absolute;top:50%;right:-14px;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer!important;z-index:500;box-shadow:0 2px 8px rgba(0,0,0,0.1);color:var(--muted);}
+.sidebar{position:relative;}
+.sb-brand{padding:20px 20px 16px;border-bottom:1px solid var(--border);cursor:pointer;}
+.sb-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.2em;color:var(--accent);line-height:1;}
+.sb-sub{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);}
+.sb-user{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);}
+.sb-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0;overflow:hidden;}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-uname{font-size:12px;font-weight:600;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-urole{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.sb-nav{flex:1;overflow-y:auto;padding:10px 0;}
+.sb-sec{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);padding:12px 20px 5px;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;}
+.sb-link:hover{color:var(--text);background:var(--surface2);}
+.sb-link.active{color:var(--accent);background:rgba(14,165,233,0.06);border-left-color:var(--accent);}
+.sb-link-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.sb-badge{font-size:9px;padding:2px 7px;border-radius:10px;margin-left:auto;}
+.sb-badge.unverified{background:rgba(245,158,11,0.12);color:var(--warn);border:1px solid rgba(245,158,11,0.25);}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:12px;color:var(--danger);cursor:pointer!important;border-top:1px solid var(--border);transition:background 0.2s;}
+.sb-logout:hover{background:#fef2f2;}
+.main{margin-left:220px;min-height:100vh;background:var(--bg);transition:margin-left 0.3s;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 32px 14px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(0,0,0,0.04);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:#0f172a;}
+.page-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.content{padding:24px 32px 60px;}
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tab-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);transition:all 0.2s;}
+.tab-btn:hover{border-color:var(--accent);color:var(--accent);}
+.tab-btn.active{border-color:var(--accent);background:rgba(14,165,233,0.07);color:var(--accent);font-weight:600;}
+.tab-btn.pending.active{border-color:var(--warn);background:rgba(245,158,11,0.07);color:var(--warn);}
+.tab-btn.approved.active{border-color:var(--success);background:rgba(5,150,105,0.07);color:var(--success);}
+.tab-btn.rejected.active{border-color:var(--danger);background:rgba(220,38,38,0.07);color:var(--danger);}
+
+/* REQUEST CARDS */
+.requests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+.req-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);transition:all 0.2s;}
+.req-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);}
+.req-card-header{padding:16px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.tenant-av{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#9333ea);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:#fff;flex-shrink:0;overflow:hidden;}
+.tenant-av img{width:100%;height:100%;object-fit:cover;}
+.tenant-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;}
+.tenant-phone{font-size:11px;color:var(--muted);margin-top:2px;}
+.req-status-badge{margin-left:auto;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;}
+.status-pending{background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.status-approved{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.2);}
+.status-rejected{background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.15);}
+
+.req-card-body{padding:16px 18px;}
+.listing-strip{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:14px;}
+.listing-emoji{font-size:22px;}
+.listing-name{font-size:13px;font-weight:600;}
+.listing-price{font-size:11px;color:var(--muted);}
+
+.req-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.rd-item{background:var(--surface2);border-radius:8px;padding:9px 11px;}
+.rd-label{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px;}
+.rd-value{font-size:12px;font-weight:600;color:#0f172a;}
+
+.req-message{background:rgba(124,58,237,0.04);border:1px solid rgba(124,58,237,0.12);border-radius:9px;padding:10px 12px;font-size:12px;color:#475569;line-height:1.6;margin-bottom:14px;font-style:italic;}
+
+.req-actions{display:flex;gap:8px;}
+.btn-approve{flex:1;padding:10px;border-radius:9px;background:var(--success);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;box-shadow:0 0 12px rgba(5,150,105,0.2);}
+.btn-approve:hover{box-shadow:0 0 20px rgba(5,150,105,0.4);transform:translateY(-1px);}
+.btn-reject{flex:1;padding:10px;border-radius:9px;background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.2);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;}
+.btn-reject:hover{background:rgba(220,38,38,0.15);}
+.btn-view{padding:10px 14px;border-radius:9px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;}
+.btn-view:hover{border-color:var(--accent);color:var(--accent);}
+
+.req-date{font-size:10px;color:var(--muted);margin-top:10px;text-align:right;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
+.es-icon{font-size:56px;margin-bottom:16px;}
+.es-title{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;color:#0f172a;}
+.es-sub{font-size:13px;line-height:1.7;max-width:360px;margin:0 auto;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;padding:12px 18px;border-radius:12px;background:#fff;font-size:12px;z-index:900;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+@media(max-width:768px){
+  .sidebar{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:60px;flex-direction:row;border-right:none;border-top:1px solid var(--border);}
+  .sb-brand,.sb-user,.sb-sec,.sb-logout,.sb-toggle{display:none;}
+  .sb-nav{flex-direction:row;overflow-x:auto;padding:0;display:flex;}
+  .sb-link{flex-direction:column;padding:6px 10px;min-width:56px;border-left:none;border-top:2px solid transparent;justify-content:center;align-items:center;font-size:9px;gap:2px;}
+  .sb-link.active{border-top-color:var(--accent);border-left:none;}
+  .main{margin-left:0;}
+  .topbar,.content{padding:12px 16px;}
+  .requests-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<aside class="sidebar" id="sidebar">
+  <div style="padding:20px;color:var(--muted);font-size:12px">Loading…</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Rental Requests</div>
+      <div class="page-sub" id="page-sub">Review and approve tenant room requests</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="setFilter(this,'all')">All Requests</button>
+      <button class="tab-btn pending" onclick="setFilter(this,'pending')">⏳ Pending</button>
+      <button class="tab-btn approved" onclick="setFilter(this,'approved')">✅ Approved</button>
+      <button class="tab-btn rejected" onclick="setFilter(this,'rejected')">❌ Rejected</button>
+    </div>
+    <div class="requests-grid" id="requests-grid">
+      <div class="empty-state"><div class="es-icon">⏳</div><div class="es-title">Loading requests…</div></div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+,allRequests=[];
+let currentFilter='all';
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  if(p.role==='tenant'){location.replace('singularity-dashboard.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  currentProfile=p;
+  buildSidebar(p);
+  loadNotifBadge();
+  await loadRequests();
+}
+
+async function loadRequests(){
+  const {data,error}=await sb.from('rental_requests')
+    .select(`
+      *,
+      listings(id,title,address,price,type,beds,baths,emoji,photos),
+      profiles:tenant_id(full_name,phone,profile_photo,is_verified)
+    `)
+    .eq('landlord_id',currentUser.id)
+    .order('created_at',{ascending:false});
+
+  if(error){showToast('Error loading requests: '+error.message,'err');return;}
+  allRequests=data||[];
+
+  const pending=allRequests.filter(r=>r.status==='pending').length;
+  document.getElementById('page-sub').textContent=
+    pending>0?`${pending} request${pending>1?'s':''} awaiting your approval`:'Review and approve tenant room requests';
+
+  renderRequests();
+}
+
+function setFilter(el,filter){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter=filter;
+  renderRequests();
+}
+
+function renderRequests(){
+  const grid=document.getElementById('requests-grid');
+  const filtered=currentFilter==='all'?allRequests:allRequests.filter(r=>r.status===currentFilter);
+
+  if(!filtered.length){
+    const msgs={
+      all:'No rental requests yet. When tenants select your listings, their requests will appear here.',
+      pending:'No pending requests. All requests have been reviewed.',
+      approved:'No approved requests yet.',
+      rejected:'No rejected requests.'
+    };
+    grid.innerHTML=`
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="es-icon">${currentFilter==='pending'?'⏳':currentFilter==='approved'?'✅':'📋'}</div>
+        <div class="es-title">No ${currentFilter==='all'?'':currentFilter+' '}requests</div>
+        <div class="es-sub">${msgs[currentFilter]}</div>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML=filtered.map(r=>{
+    const t=r.profiles||{};
+    const l=r.listings||{};
+    const initials=(t.full_name||'T').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    const avatarHTML=t.profile_photo?`<img src="${t.profile_photo}" alt="">`:`${initials}`;
+    const isPending=r.status==='pending';
+
+    return `
+    <div class="req-card" id="req-${r.id}">
+      <div class="req-card-header">
+        <div class="tenant-av">${avatarHTML}</div>
+        <div>
+          <div class="tenant-name">${t.full_name||'Tenant'}${t.is_verified?' ✓':''}</div>
+          <div class="tenant-phone">${t.phone||'No phone provided'}</div>
+        </div>
+        <span class="req-status-badge status-${r.status}">${r.status}</span>
+      </div>
+      <div class="req-card-body">
+        <div class="listing-strip">
+          <div class="listing-emoji">${l.photos?.length?`<img src="${l.photos[0]}" style="width:36px;height:36px;object-fit:cover;border-radius:8px;">`:(l.emoji||'🏠')}</div>
+          <div>
+            <div class="listing-name">${l.title||'Property'}</div>
+            <div class="listing-price">GHS ${(l.price||0).toLocaleString()}/mo · ${l.type||'—'}</div>
+          </div>
+        </div>
+        <div class="req-details">
+          <div class="rd-item"><div class="rd-label">Move-in Date</div><div class="rd-value">${r.move_in_date?new Date(r.move_in_date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'Not specified'}</div></div>
+          <div class="rd-item"><div class="rd-label">Lease Duration</div><div class="rd-value">${r.lease_duration||'Not specified'}</div></div>
+        </div>
+        ${r.message?`<div class="req-message">"${r.message}"</div>`:''}
+        <div class="req-actions">
+          ${isPending?`
+            <button class="btn-approve" onclick="updateRequest('${r.id}','approved')">✓ Approve</button>
+            <button class="btn-reject" onclick="updateRequest('${r.id}','rejected')">✕ Reject</button>
+          `:`
+            <button class="btn-view" onclick="location.href='singularity-listing.html?id=${l.id}'">View Property →</button>
+            ${r.status==='rejected'?`<button class="btn-approve" onclick="updateRequest('${r.id}','approved')">↺ Re-approve</button>`:''}
+          `}
+        </div>
+        <div class="req-date">Submitted ${new Date(r.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function updateRequest(id,status){
+  const action=status==='approved'?'approve':'reject';
+  if(!confirm(`${action.charAt(0).toUpperCase()+action.slice(1)} this request?`))return;
+
+  const card=document.getElementById('req-'+id);
+  if(card)card.style.opacity='0.5';
+
+  const {error}=await sb.from('rental_requests').update({status}).eq('id',id);
+  if(error){showToast('Error: '+error.message,'err');if(card)card.style.opacity='1';return;}
+
+  const req=allRequests.find(r=>r.id===id);
+
+  // If approved, update listing status to occupied and notify tenant
+  if(status==='approved'){
+    if(req?.listings?.id){
+      await sb.from('listings').update({status:'occupied'}).eq('id',req.listings.id);
+    }
+    // Reject all other pending requests for same listing
+    const others=allRequests.filter(r=>r.id!==id&&r.listings?.id===req?.listings?.id&&r.status==='pending');
+    for(const o of others){
+      await sb.from('rental_requests').update({status:'rejected'}).eq('id',o.id);
+      // Notify rejected tenants
+      await sb.from('notifications').insert({
+        user_id:o.tenant_id,
+        title:'❌ Rental Request Not Approved',
+        message:`Your request for "${req?.listings?.title||'this property'}" was not approved this time. Browse other available listings.`,
+        type:'warning',
+        link:'singularity-tenant.html',
+      }).catch(()=>{});
+    }
+    // Notify approved tenant
+    await sb.from('notifications').insert({
+      user_id:req.tenant_id,
+      title:'✅ Rental Request Approved!',
+      message:`${currentProfile?.full_name||'Your landlord'} has approved your request for "${req?.listings?.title||'the property'}". You can now proceed to make your first payment.`,
+      type:'success',
+      link:'singularity-payment.html',
+    }).catch(()=>{});
+  } else if(status==='rejected'){
+    // Notify rejected tenant
+    await sb.from('notifications').insert({
+      user_id:req.tenant_id,
+      title:'❌ Rental Request Not Approved',
+      message:`Your request for "${req?.listings?.title||'this property'}" was not approved. Browse other available listings.`,
+      type:'warning',
+      link:'singularity-tenant.html',
+    }).catch(()=>{});
+  }
+
+  showToast(status==='approved'?'✅ Request approved! Tenant notified.':'Request rejected.', status==='approved'?'ok':'err');
+  await loadRequests();
+}
+
+function buildSidebar(p){ buildSharedSidebar(p, 'requests'); }
+<div class="sb-sec">${item.sec}</div>`;return;}
+    navHTML+=`<div class="sb-link${item.active?' active':''}" onclick="location.href='${item.url}'">
+      <span class="sb-link-icon">${item.icon}</span><span>${item.label}</span>
+      ${item.badge?`<span class="sb-badge ${item.badge}">${item.badgeText}</span>`:''}
+    </div>`;
+  });
+  document.getElementById('sidebar').innerHTML=`
+    <div class="sb-brand" onclick="location.href='singularity-rentals.html'"><div class="sb-logo">Singularity</div><div class="sb-sub">Rentals</div></div>
+    <div class="sb-user">
+      <div class="sb-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">${avatarHTML}</div>
+      <div><div class="sb-uname">${fn}</div><div class="sb-urole">Landlord</div></div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+  const toggle=document.createElement('div');
+  toggle.className='sb-toggle';toggle.textContent='‹';
+  toggle.onclick=()=>{const sb=document.getElementById('sidebar');const c=sb.classList.toggle('collapsed');toggle.textContent=c?'›':'‹';localStorage.setItem('sidebar-collapsed',c);};
+  document.getElementById('sidebar').appendChild(toggle);
+  if(localStorage.getItem('sidebar-collapsed')==='true'){document.getElementById('sidebar').classList.add('collapsed');toggle.textContent='›';}
+}
+
+async function doLogout(){await sb.auth.signOut();location.href='index.html';}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── Notification bell ──
+async function loadNotifBadge(){
+  if(!window.sb||!currentUser)return;
+  try{
+    const {count}=await window.sb.from('notifications')
+      .select('*',{count:'exact',head:true})
+      .eq('user_id',currentUser.id)
+      .eq('is_read',false);
+    const badge=document.getElementById('notif-badge');
+    if(badge){
+      if(count>0){badge.textContent=count>9?'9+':count;badge.style.display='flex';}
+      else{badge.style.display='none';}
+    }
+  }catch(e){}
+}
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  // Load Supabase
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  // Get session
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  // Get profile
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  if(profile.role==='tenant'){hideLoader();location.replace('singularity-dashboard.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

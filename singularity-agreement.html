@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenancy Agreement — Singularity Rentals</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8fafc;--surface:#ffffff;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--text:#0f172a;--muted:#64748b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;}
+*,*:hover{cursor:default;}
+button{cursor:pointer!important;}
+input,textarea{cursor:text!important;}
+
+.navbar{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.2em;color:var(--accent);}
+.nav-btns{display:flex;gap:8px;}
+.nav-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+.page{max-width:800px;margin:32px auto;padding:0 24px 60px;}
+
+/* Document */
+.doc{background:#ffffff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+
+/* Header */
+.doc-header{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);padding:36px 40px;text-align:center;position:relative;}
+.doc-header::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.06) 1px,transparent 1px);background-size:30px 30px;}
+.doc-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.3em;color:rgba(255,255,255,0.5);margin-bottom:16px;position:relative;z-index:1;}
+.doc-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.05em;color:#ffffff;margin-bottom:8px;position:relative;z-index:1;}
+.doc-subtitle{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1;}
+.doc-ref{display:inline-block;padding:5px 14px;border-radius:20px;border:1px solid rgba(14,165,233,0.3);background:rgba(14,165,233,0.08);color:var(--accent);font-size:12px;letter-spacing:0.1em;position:relative;z-index:1;}
+
+/* Body */
+.doc-body{padding:40px;}
+
+.section{margin-bottom:28px;}
+.section-num{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.3em;color:var(--accent);margin-bottom:4px;}
+.section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.section-body{font-size:13px;line-height:1.9;color:#374151;}
+.section-body strong{color:#0f172a;}
+
+/* Parties */
+.parties-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;margin-bottom:24px;}
+.party-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.party-role{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.party-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#0f172a;margin-bottom:4px;}
+.party-detail{font-size:12px;color:var(--muted);margin-bottom:2px;}
+.party-arrow{text-align:center;font-size:24px;color:var(--muted);}
+
+/* Details grid */
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;}
+.detail-cell{padding:12px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.detail-cell:nth-child(2n){border-right:none;}
+.detail-cell:nth-last-child(-n+2){border-bottom:none;}
+.dc-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.dc-value{font-size:13px;font-weight:600;color:#0f172a;}
+
+/* Clauses */
+.clause{display:flex;gap:12px;margin-bottom:12px;}
+.clause-num{width:24px;height:24px;border-radius:6px;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:1px;}
+.clause-text{font-size:13px;line-height:1.8;color:#374151;}
+
+/* Signature section */
+.sig-section{margin-top:32px;}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.sig-card{border:1px solid var(--border);border-radius:12px;padding:20px;}
+.sig-role{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.sig-digital{margin-bottom:16px;}
+.sig-digital-label{font-size:11px;color:var(--muted);margin-bottom:6px;}
+.sig-digital-input{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:9px 12px;color:#0f172a;font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+.sig-digital-input:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(124,58,237,0.07);}
+.sig-digital-note{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.5;}
+.sig-physical-label{font-size:11px;color:var(--muted);margin-bottom:8px;}
+.sig-line{height:1px;background:var(--border);margin:32px 0 8px;}
+.sig-name-below{font-size:11px;color:var(--muted);}
+.sig-date{margin-top:12px;font-size:12px;color:var(--muted);}
+.sig-date strong{color:#0f172a;}
+
+/* Ghana law notice */
+.law-notice{background:rgba(14,165,233,0.04);border:1px solid rgba(14,165,233,0.15);border-radius:10px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.7;text-align:center;}
+
+/* Submit bar */
+.submit-bar{background:rgba(124,58,237,0.04);border:1px solid rgba(124,58,237,0.15);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;margin-top:24px;}
+.submit-bar-text{flex:1;font-size:13px;color:#4c1d95;}
+.btn-sign{padding:11px 24px;border-radius:10px;background:var(--accent2);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 0 16px rgba(124,58,237,0.25);transition:all 0.2s;}
+.btn-sign:hover{box-shadow:0 0 28px rgba(124,58,237,0.45);transform:translateY(-1px);}
+
+/* Stamp */
+.stamp{width:120px;height:120px;border-radius:50%;border:4px double var(--accent2);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;opacity:0.15;transform:rotate(-12deg);}
+.stamp-text{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:0.2em;color:var(--accent2);text-align:center;}
+.stamp-main{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.1em;color:var(--accent2);}
+
+/* Footer strip */
+.doc-footer{background:#f8fafc;border-top:1px solid var(--border);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);}
+
+@media print{
+  .navbar,.nav-btns,.submit-bar{display:none!important;}
+  .doc{box-shadow:none;border:none;}
+  body{background:#fff;}
+  .page{margin:0;padding:0;}
+}
+@media(max-width:600px){
+  .parties-grid{grid-template-columns:1fr;}
+  .party-arrow{display:none;}
+  .sig-grid{grid-template-columns:1fr;}
+  .details-grid{grid-template-columns:1fr;}
+  .detail-cell{border-right:none;}
+  .doc-body{padding:24px 20px;}
+  .doc-header{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<nav class="navbar">
+  <div class="nav-logo">Singularity Rentals</div>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="history.back()">← Back</button>
+    <button class="nav-btn" onclick="window.print()">🖨 Print</button>
+    <button class="nav-btn primary" onclick="downloadPDF()">⬇ Download PDF</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="doc" id="agreement-doc">
+
+    <!-- HEADER -->
+    <div class="doc-header">
+      <div class="doc-logo">Singularity Rentals</div>
+      <div class="doc-title">Tenancy Agreement</div>
+      <div class="doc-subtitle">Residential Rental Contract</div>
+      <div class="doc-ref" id="doc-ref">SING-AGR-000000</div>
+    </div>
+
+    <div class="doc-body">
+
+      <!-- GHANA LAW -->
+      <div class="law-notice" style="margin-bottom:28px">
+        This Agreement is governed by the <strong>Rent Act of Ghana, Act 220 (1963)</strong> and its amendments. Both parties are bound by the terms set out herein.
+      </div>
+
+      <!-- PARTIES -->
+      <div class="section">
+        <div class="section-num">Section 01</div>
+        <div class="section-title">The Parties</div>
+        <div class="parties-grid">
+          <div class="party-card">
+            <div class="party-role">🏠 Landlord / Licensor</div>
+            <div class="party-name" id="ll-name">—</div>
+            <div class="party-detail" id="ll-phone">Phone: —</div>
+            <div class="party-detail" id="ll-email">Email: —</div>
+          </div>
+          <div class="party-arrow">⇄</div>
+          <div class="party-card">
+            <div class="party-role">🔑 Tenant / Licensee</div>
+            <div class="party-name" id="tn-name">—</div>
+            <div class="party-detail" id="tn-phone">Phone: —</div>
+            <div class="party-detail" id="tn-email">Email: —</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPERTY DETAILS -->
+      <div class="section">
+        <div class="section-num">Section 02</div>
+        <div class="section-title">Property Details</div>
+        <div class="details-grid">
+          <div class="detail-cell"><div class="dc-label">Property Address</div><div class="dc-value" id="d-address">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Property Type</div><div class="dc-value" id="d-type">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Monthly Rent</div><div class="dc-value" id="d-rent">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Advance Payment</div><div class="dc-value" id="d-advance">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Lease Duration</div><div class="dc-value" id="d-duration">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Commencement Date</div><div class="dc-value" id="d-start">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Payment Method</div><div class="dc-value" id="d-method">—</div></div>
+          <div class="detail-cell"><div class="dc-label">Agreement Date</div><div class="dc-value" id="d-date">—</div></div>
+        </div>
+      </div>
+
+      <!-- TERMS -->
+      <div class="section">
+        <div class="section-num">Section 03</div>
+        <div class="section-title">Terms & Conditions</div>
+        <div>
+          <div class="clause"><div class="clause-num">1</div><div class="clause-text"><strong>Rent Payment:</strong> The Tenant agrees to pay the monthly rent of <strong id="c-rent">—</strong> on or before the 1st day of each month. Late payments attract a penalty of 5% per week overdue.</div></div>
+          <div class="clause"><div class="clause-num">2</div><div class="clause-text"><strong>Advance Payment:</strong> The Tenant has paid an advance of <strong id="c-advance">—</strong> which shall be applied to the first months of the tenancy as agreed between both parties.</div></div>
+          <div class="clause"><div class="clause-num">3</div><div class="clause-text"><strong>Property Use:</strong> The property shall be used solely for residential purposes. The Tenant shall not sublet, assign, or part with possession of the property without the written consent of the Landlord.</div></div>
+          <div class="clause"><div class="clause-num">4</div><div class="clause-text"><strong>Maintenance:</strong> The Tenant shall keep the property clean and in good condition. Minor repairs under GHS 200 are the Tenant's responsibility. Major structural repairs are the Landlord's responsibility.</div></div>
+          <div class="clause"><div class="clause-num">5</div><div class="clause-text"><strong>Utilities:</strong> Water, electricity, and other utility bills are the responsibility of the Tenant unless otherwise stated in writing by the Landlord.</div></div>
+          <div class="clause"><div class="clause-num">6</div><div class="clause-text"><strong>Notice to Quit:</strong> Either party wishing to terminate this agreement must give <strong>one (1) calendar month's written notice</strong> to the other party. Failure to give adequate notice results in forfeiture of one month's rent.</div></div>
+          <div class="clause"><div class="clause-num">7</div><div class="clause-text"><strong>Alterations:</strong> The Tenant shall not make any structural alterations to the property without prior written consent from the Landlord.</div></div>
+          <div class="clause"><div class="clause-num">8</div><div class="clause-text"><strong>Access:</strong> The Landlord reserves the right to inspect the property with 48 hours written notice to the Tenant, except in cases of emergency.</div></div>
+          <div class="clause"><div class="clause-num">9</div><div class="clause-text"><strong>Governing Law:</strong> This Agreement is governed by the Rent Act of Ghana (Act 220, 1963) and any disputes shall be resolved through the Rent Control Department of Ghana or a court of competent jurisdiction.</div></div>
+          <div class="clause"><div class="clause-num">10</div><div class="clause-text"><strong>Digital Agreement:</strong> Both parties agree that this digitally signed agreement constitutes a legally binding contract equivalent to a physical signature under Ghana's Electronic Transactions Act, 2008 (Act 772).</div></div>
+        </div>
+      </div>
+
+      <!-- SIGNATURES -->
+      <div class="section sig-section">
+        <div class="section-num">Section 04</div>
+        <div class="section-title">Signatures</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7">
+          By signing below, both parties confirm they have read, understood, and agree to the terms of this Tenancy Agreement. The digital signature must match the name on your Ghana Card or recognised ID document.
+        </div>
+
+        <div class="sig-grid">
+          <!-- Landlord Signature -->
+          <div class="sig-card">
+            <div class="sig-role">🏠 Landlord Signature</div>
+            <div class="sig-digital">
+              <div class="sig-digital-label">Digital Signature (Type name as on Ghana Card)</div>
+              <input type="text" class="sig-digital-input" id="sig-landlord" placeholder="e.g. KOFI MENSAH" oninput="this.value=this.value.toUpperCase()">
+              <div class="sig-digital-note">✓ Your typed name serves as your legally recognised digital signature under Ghana's Electronic Transactions Act (Act 772, 2008)</div>
+            </div>
+            <div class="sig-physical-label">Physical Signature:</div>
+            <div class="sig-line"></div>
+            <div class="sig-name-below" id="sig-ll-name-below">Landlord name</div>
+            <div class="sig-date">Date: <strong id="sig-date-ll">—</strong></div>
+          </div>
+
+          <!-- Tenant Signature -->
+          <div class="sig-card">
+            <div class="sig-role">🔑 Tenant Signature</div>
+            <div class="sig-digital">
+              <div class="sig-digital-label">Digital Signature (Type name as on Ghana Card)</div>
+              <input type="text" class="sig-digital-input" id="sig-tenant" placeholder="e.g. AMA OWUSU" oninput="this.value=this.value.toUpperCase()">
+              <div class="sig-digital-note">✓ Your typed name serves as your legally recognised digital signature under Ghana's Electronic Transactions Act (Act 772, 2008)</div>
+            </div>
+            <div class="sig-physical-label">Physical Signature:</div>
+            <div class="sig-line"></div>
+            <div class="sig-name-below" id="sig-tn-name-below">Tenant name</div>
+            <div class="sig-date">Date: <strong id="sig-date-tn">—</strong></div>
+          </div>
+        </div>
+
+        <!-- Stamp -->
+        <div style="text-align:center;margin-top:24px;position:relative;">
+          <div class="stamp">
+            <div class="stamp-text">SINGULARITY</div>
+            <div class="stamp-main">RENTALS</div>
+            <div class="stamp-text">VERIFIED</div>
+          </div>
+        </div>
+
+        <!-- Submit bar -->
+        <div class="submit-bar">
+          <div class="submit-bar-text">
+            Both parties must type their names in the digital signature fields above before submitting. This action is legally binding.
+          </div>
+          <button class="btn-sign" onclick="submitSignatures()">✍ Sign & Finalise Agreement</button>
+        </div>
+      </div>
+
+    </div><!-- end doc-body -->
+
+    <!-- FOOTER STRIP -->
+    <div class="doc-footer">
+      <span id="footer-ref">Ref: SING-AGR-000000</span>
+      <span>Singularity Rentals — Accra, Ghana</span>
+      <span id="footer-date">—</span>
+    </div>
+
+  </div><!-- end doc -->
+</div><!-- end page -->
+
+<script>
+,paymentData;
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  currentProfile=p;
+
+  // Get payment data from localStorage (set by payment page)
+  const stored=localStorage.getItem('singularity_last_receipt');
+  if(stored){paymentData=JSON.parse(stored);}
+
+  // Get payment from Supabase if available
+  const {data:payments}=await sb.from('payments')
+    .select(`*,listings(title,address,type,advance_payment),profiles:tenant_id(full_name,phone)`)
+    .eq('tenant_id',user.id)
+    .order('created_at',{ascending:false})
+    .limit(1);
+
+  const payment=payments?.[0];
+  const today=new Date();
+  const todayStr=today.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Generate reference
+  const ref='SING-AGR-'+Math.floor(Math.random()*900000+100000);
+  document.getElementById('doc-ref').textContent=ref;
+  document.getElementById('footer-ref').textContent='Ref: '+ref;
+  document.getElementById('footer-date').textContent=todayStr;
+
+  // Set agreement date (payment date = agreement date)
+  const agreementDate=payment
+    ? new Date(payment.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
+    : todayStr;
+
+  document.getElementById('sig-date-ll').textContent=agreementDate;
+  document.getElementById('sig-date-tn').textContent=agreementDate;
+  document.getElementById('d-date').textContent=agreementDate;
+
+  // Fill tenant details (logged in user)
+  document.getElementById('tn-name').textContent=p.full_name||'—';
+  document.getElementById('tn-phone').textContent='Phone: '+(p.phone||'—');
+  document.getElementById('sig-tn-name-below').textContent=p.full_name||'Tenant';
+  // Pre-fill tenant signature with name
+  document.getElementById('sig-tenant').value=(p.full_name||'').toUpperCase();
+
+  if(payment){
+    // Tenant details
+    document.getElementById('tn-email').textContent='—';
+
+    // Property details
+    const listing=payment.listings;
+    document.getElementById('d-address').textContent=listing?.address||paymentData?.property||'—';
+    document.getElementById('d-type').textContent=listing?.type||'Residential Property';
+    document.getElementById('d-rent').textContent='GHS '+((payment.amount)||0).toLocaleString()+' / month';
+    document.getElementById('d-advance').textContent=listing?.advance_payment?'GHS '+listing.advance_payment.toLocaleString():'As agreed';
+    document.getElementById('d-method').textContent=payment.method||'—';
+    document.getElementById('d-start').textContent=agreementDate;
+    document.getElementById('d-duration').textContent=paymentData?.period?'12 Months':'As agreed';
+    document.getElementById('c-rent').textContent='GHS '+((payment.amount)||0).toLocaleString();
+    document.getElementById('c-advance').textContent=listing?.advance_payment?'GHS '+listing.advance_payment.toLocaleString():'the agreed amount';
+
+    // Load landlord details
+    const {data:landlordProfile}=await sb.from('profiles').select('*').eq('id',payment.landlord_id).single();
+    if(landlordProfile){
+      document.getElementById('ll-name').textContent=landlordProfile.full_name||'—';
+      document.getElementById('ll-phone').textContent='Phone: '+(landlordProfile.phone||'—');
+      document.getElementById('sig-ll-name-below').textContent=landlordProfile.full_name||'Landlord';
+    }
+  } else if(paymentData){
+    // Fall back to localStorage data
+    document.getElementById('ll-name').textContent=paymentData.landlord||'—';
+    document.getElementById('tn-name').textContent=paymentData.tenant||p.full_name||'—';
+    document.getElementById('d-address').textContent=paymentData.property||'—';
+    document.getElementById('d-rent').textContent='GHS '+(paymentData.rent||0).toLocaleString()+' / month';
+    document.getElementById('d-advance').textContent='As agreed';
+    document.getElementById('d-method').textContent=paymentData.method||'—';
+    document.getElementById('d-start').textContent=agreementDate;
+    document.getElementById('d-duration').textContent='12 Months';
+    document.getElementById('d-date').textContent=agreementDate;
+    document.getElementById('c-rent').textContent='GHS '+(paymentData.rent||0).toLocaleString();
+    document.getElementById('c-advance').textContent='the agreed amount';
+    document.getElementById('sig-ll-name-below').textContent=paymentData.landlord||'Landlord';
+    document.getElementById('sig-tn-name-below').textContent=paymentData.tenant||p.full_name||'Tenant';
+  }
+}
+
+function submitSignatures(){
+  const llSig=document.getElementById('sig-landlord').value.trim();
+  const tnSig=document.getElementById('sig-tenant').value.trim();
+
+  if(!tnSig){
+    alert('Please type your full name as it appears on your Ghana Card to sign.');
+    document.getElementById('sig-tenant').focus();
+    return;
+  }
+
+  // Mark as signed
+  const btn=document.querySelector('.btn-sign');
+  btn.textContent='✓ Agreement Signed';
+  btn.style.background='#059669';
+  btn.disabled=true;
+
+  // Show stamp prominently
+  document.querySelector('.stamp').style.opacity='0.6';
+  document.querySelector('.stamp').style.transform='rotate(-12deg) scale(1.1)';
+
+  alert('✅ Agreement signed successfully!\n\nYou can now download or print this agreement for your records.');
+}
+
+async function downloadPDF(){
+  window.print();
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

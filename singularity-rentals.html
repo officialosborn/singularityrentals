@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── SIDEBAR TOGGLE ── */
+.sidebar{transition:width 0.3s ease;}
+.sidebar.collapsed{width:60px;}
+.sidebar.collapsed .sb-logo-sub,
+.sidebar.collapsed .sb-sub,
+.sidebar.collapsed .sb-uname,
+.sidebar.collapsed .sb-urole,
+.sidebar.collapsed .sb-sec,
+.sidebar.collapsed .sb-link span:not(.sb-link-icon),
+.sidebar.collapsed .sb-badge,
+.sidebar.collapsed .sb-logout span:last-child{display:none;}
+.sidebar.collapsed .sb-link{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user > div:last-child{display:none;}
+.sidebar.collapsed .sb-logout{justify-content:center;padding:12px;}
+.sidebar.collapsed + .main{margin-left:60px;}
+.sb-toggle{
+  position:absolute;top:50%;right:-14px;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer!important;z-index:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:all 0.2s;
+  color:var(--muted);
+}
+.sb-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.sidebar{position:relative;}
+
+
+/* Notification bell */
+.sb-bell{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;position:relative;}
+.sb-bell:hover{color:var(--text);background:var(--surface2);}
+.notif-badge{position:absolute;right:16px;top:50%;transform:translateY(-50%);min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Landlord Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--accent3:#f59e0b;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}
+button,[onclick]{cursor:pointer!important;}
+input,input:hover,textarea,textarea:hover,select,select:hover{cursor:text!important;}
+select{cursor:pointer!important;}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:220px;background:#ffffff;border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:400;box-shadow:1px 0 8px rgba(0,0,0,0.04);}
+.sb-brand{padding:22px 20px 18px;border-bottom:1px solid var(--border);cursor:pointer;}
+.sb-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.2em;color:var(--accent);line-height:1;}
+.sb-sub{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.sb-user{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);}
+.sb-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0;overflow:hidden;}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-uname{font-size:12px;font-weight:600;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-urole{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:1px;}
+.sb-nav{flex:1;overflow-y:auto;padding:10px 0;}
+.sb-sec{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);padding:12px 20px 5px;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);text-decoration:none;transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;}
+.sb-link:hover{color:var(--text);background:var(--surface2);}
+.sb-link.active{color:var(--accent);background:rgba(14,165,233,0.06);border-left-color:var(--accent);}
+.sb-link-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.sb-badge{font-size:9px;padding:2px 7px;border-radius:10px;margin-left:auto;}
+.sb-badge.unverified{background:rgba(245,158,11,0.12);color:var(--warn);border:1px solid rgba(245,158,11,0.25);}
+.sb-badge.verified{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.2);}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:12px;color:var(--danger);cursor:pointer!important;border-top:1px solid var(--border);transition:background 0.2s;}
+.sb-logout:hover{background:#fef2f2;}
+
+/* ── MAIN ── */
+.main{margin-left:220px;min-height:100vh;padding:0;background:var(--bg);}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 32px 14px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(0,0,0,0.04);}
+.topbar-left{}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:#0f172a;line-height:1;}
+.page-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-actions{display:flex;gap:8px;align-items:center;}
+.btn{padding:9px 18px;border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;border:1px solid var(--border);}
+.btn-ghost{background:transparent;color:var(--muted);}
+.btn-ghost:hover{color:var(--text);border-color:var(--text);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 0 16px rgba(14,165,233,0.25);}
+.btn-primary:hover{box-shadow:0 0 28px rgba(14,165,233,0.4);transform:translateY(-1px);}
+
+/* ── CONTENT AREA ── */
+.content{padding:24px 32px 60px;}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stat-card:nth-child(1)::before{background:var(--accent);}
+.stat-card:nth-child(2)::before{background:var(--success);}
+.stat-card:nth-child(3)::before{background:var(--warn);}
+.stat-card:nth-child(4)::before{background:var(--accent2);}
+.stat-icon{font-size:22px;margin-bottom:8px;}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.04em;line-height:1;margin-bottom:4px;}
+.stat-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-chip{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);transition:all 0.2s;}
+.filter-chip:hover{border-color:var(--accent);color:var(--accent);}
+.filter-chip.active{border-color:var(--accent);background:rgba(14,165,233,0.07);color:var(--accent);font-weight:600;}
+
+/* ── LISTINGS GRID ── */
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+
+/* Skeleton loader */
+.skeleton{background:linear-gradient(90deg,#f1f5f9 25%,#e8eef5 50%,#f1f5f9 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:14px;height:280px;}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* ── LISTING CARD ── */
+.listing-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.22s;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.listing-card:hover{border-color:rgba(14,165,233,0.3);box-shadow:0 6px 20px rgba(14,165,233,0.1);transform:translateY(-2px);}
+.listing-img-wrap{height:170px;position:relative;overflow:hidden;}
+.img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.listing-badge{position:absolute;top:10px;right:10px;padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.badge-available{background:rgba(5,150,105,0.12);color:var(--success);border:1px solid rgba(5,150,105,0.25);}
+.badge-occupied{background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.15);}
+.badge-pending{background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.badge-sold{background:#1e293b;color:#fff;}
+.photo-count{position:absolute;bottom:8px;left:10px;background:rgba(0,0,0,0.5);color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;backdrop-filter:blur(4px);}
+.listing-body{padding:14px;}
+.listing-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:3px;color:#0f172a;line-height:1.3;}
+.listing-address{font-size:11px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+.listing-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.meta-tag{font-size:10px;padding:3px 8px;border-radius:5px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
+.listing-footer{display:flex;align-items:center;justify-content:space-between;}
+.listing-price{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent);letter-spacing:0.04em;}
+.listing-price span{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0;}
+.listing-actions{display:flex;gap:4px;}
+.icon-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.icon-btn:hover{border-color:var(--accent);background:rgba(14,165,233,0.06);}
+.icon-btn svg{width:14px;height:14px;stroke:var(--muted);transition:stroke 0.2s;}
+.icon-btn:hover svg{stroke:var(--accent);}
+.icon-btn.danger:hover{border-color:var(--danger);background:rgba(220,38,38,0.06);}
+.icon-btn.danger:hover svg{stroke:var(--danger);}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;grid-column:1/-1;}
+.es-icon{font-size:56px;margin-bottom:16px;}
+.es-title{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;color:#0f172a;}
+.es-sub{font-size:13px;color:var(--muted);line-height:1.7;max-width:380px;margin:0 auto 24px;}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.6);backdrop-filter:blur(6px);z-index:800;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{width:600px;max-width:100%;background:#ffffff;border:1px solid var(--border);border-radius:20px;padding:28px;transform:translateY(20px) scale(0.97);transition:all 0.25s;box-shadow:0 20px 60px rgba(0,0,0,0.2);margin:auto 0;}
+.modal-overlay.open .modal{transform:none;}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:4px;color:#0f172a;}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
+.modal-section{margin-bottom:20px;}
+.modal-section-title{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(14,165,233,0.15);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.form-group{margin-bottom:0;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;}
+.form-label .opt{color:var(--muted);font-size:9px;opacity:0.7;}
+.form-input,.form-select{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:9px 13px;color:#0f172a;font-family:'DM Mono',monospace;font-size:12px;outline:none;transition:border-color 0.2s;}
+.form-input:focus,.form-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,165,233,0.07);}
+.form-input::placeholder{color:var(--muted);}
+.form-textarea{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:9px 13px;color:#0f172a;font-family:'DM Mono',monospace;font-size:12px;outline:none;transition:border-color 0.2s;resize:vertical;min-height:80px;}
+.form-textarea:focus{border-color:var(--accent);}
+
+/* Features checklist */
+.features-check{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.feat-item{display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:11px;cursor:pointer;transition:all 0.2s;}
+.feat-item:hover{border-color:rgba(14,165,233,0.3);}
+.feat-item input{width:14px;height:14px;accent-color:var(--accent);cursor:pointer;}
+.feat-item.checked{border-color:var(--accent);background:rgba(14,165,233,0.04);}
+
+/* Photo upload */
+.photo-upload-zone{border:2px dashed var(--border);border-radius:12px;padding:24px;text-align:center;transition:all 0.2s;cursor:pointer;position:relative;}
+.photo-upload-zone:hover{border-color:var(--accent);background:rgba(14,165,233,0.02);}
+.photo-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.puz-icon{font-size:32px;margin-bottom:8px;}
+.puz-text{font-size:12px;color:var(--muted);line-height:1.6;}
+.puz-text strong{color:var(--text);}
+.photo-preview-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.photo-preview-item{position:relative;width:80px;height:80px;}
+.photo-preview-item img{width:100%;height:100%;object-fit:cover;border-radius:8px;border:1px solid var(--border);}
+.photo-remove{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--danger);color:#fff;border:none;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1;}
+.photo-remove:hover{transform:scale(1.1);}
+
+/* Modal footer */
+.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.btn-cancel{padding:10px 20px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;}
+.btn-cancel:hover{color:var(--text);border-color:var(--text);}
+.btn-publish{padding:10px 24px;border-radius:9px;background:var(--accent);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;box-shadow:0 0 16px rgba(14,165,233,0.25);transition:all 0.2s;}
+.btn-publish:hover{box-shadow:0 0 28px rgba(14,165,233,0.45);transform:translateY(-1px);}
+.btn-publish:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;padding:12px 18px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:60px;flex-direction:row;border-right:none;border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,0.08);}
+  .sb-brand,.sb-user,.sb-sec,.sb-logout{display:none;}
+  .sb-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;display:flex;}
+  .sb-link{flex-direction:column;padding:6px 10px;min-width:56px;border-left:none;border-top:2px solid transparent;justify-content:center;align-items:center;font-size:9px;gap:2px;}
+  .sb-link.active{border-top-color:var(--accent);border-left:none;}
+  .sb-link-icon{font-size:18px;width:auto;}
+  .sb-badge{display:none;}
+  .main{margin-left:0;}
+  .topbar{padding:12px 16px;}
+  .content{padding:16px 16px 80px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .listings-grid{grid-template-columns:1fr;}
+  .form-row,.form-row-3{grid-template-columns:1fr;}
+  .features-check{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <!-- Built by JS -->
+  <div style="padding:20px;color:var(--muted);font-size:12px">Loading…</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="page-title" id="page-title">My Listings</div>
+      <div class="page-sub" id="page-sub">Manage your rental properties</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" onclick="openModal()">+ Add Listing</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card"><div class="stat-icon">🏠</div><div class="stat-value" id="s-total">—</div><div class="stat-label">Total Listings</div></div>
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value" id="s-occupied">—</div><div class="stat-label">Occupied</div></div>
+      <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-value" id="s-pending">—</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="s-revenue">—</div><div class="stat-label">Monthly Revenue</div></div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-chip active" onclick="setFilter(this,'all')">All</button>
+      <button class="filter-chip" onclick="setFilter(this,'available')">Available</button>
+      <button class="filter-chip" onclick="setFilter(this,'occupied')">Occupied</button>
+      <button class="filter-chip" onclick="setFilter(this,'pending')">Pending</button>
+    </div>
+
+    <!-- LISTINGS GRID -->
+    <div class="listings-grid" id="listings-grid">
+      <!-- Skeleton loaders while fetching -->
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ADD LISTING MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">Add New Listing</div>
+    <div class="modal-sub">Fill in the details below to publish your property on Singularity Rentals.</div>
+
+    <!-- Section 1: Title & Location -->
+    <div class="modal-section">
+      <div class="modal-section-title">📍 Title & Location</div>
+      <div class="form-group full" style="margin-bottom:10px">
+        <label class="form-label">Listing Title</label>
+        <input type="text" class="form-input" id="f-title" placeholder="e.g. 2 Bedroom Apartment in East Legon">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Area / Neighbourhood</label>
+          <input type="text" class="form-input" id="f-address" placeholder="e.g. East Legon, Accra">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nearby Landmark <span class="opt">(optional)</span></label>
+          <input type="text" class="form-input" id="f-landmark" placeholder="e.g. Near Accra Mall">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Price -->
+    <div class="modal-section">
+      <div class="modal-section-title">💰 Price & Fees</div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Monthly Rent (GHS)</label>
+          <input type="number" class="form-input" id="f-price" placeholder="e.g. 1800" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Advance Payment (GHS) <span class="opt">(opt)</span></label>
+          <input type="number" class="form-input" id="f-advance" placeholder="e.g. 5400" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Extra Fees <span class="opt">(opt)</span></label>
+          <input type="text" class="form-input" id="f-fees" placeholder="e.g. GHS 100 utilities">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Overview -->
+    <div class="modal-section">
+      <div class="modal-section-title">🏠 Property Overview</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Property Type</label>
+          <select class="form-select" id="f-type">
+            <option value="">Select type…</option>
+            <option>Studio</option>
+            <option>1 Bedroom</option>
+            <option>2 Bedrooms</option>
+            <option>3 Bedrooms</option>
+            <option>4+ Bedrooms</option>
+            <option>Entire House</option>
+            <option>Single Room</option>
+            <option>Chamber & Hall</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Furnishing</label>
+          <select class="form-select" id="f-furnished">
+            <option>Unfurnished</option>
+            <option>Partially Furnished</option>
+            <option>Fully Furnished</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:10px">
+        <div class="form-group">
+          <label class="form-label">Bedrooms</label>
+          <input type="number" class="form-input" id="f-beds" placeholder="1" min="0" max="20">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bathrooms</label>
+          <input type="number" class="form-input" id="f-baths" placeholder="1" min="0" max="20">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Photos -->
+    <div class="modal-section">
+      <div class="modal-section-title">📸 Photos</div>
+      <div class="photo-upload-zone" id="photo-zone">
+        <input type="file" accept="image/*" multiple onchange="previewPhotos(this)" id="photo-input">
+        <div class="puz-icon">📷</div>
+        <div class="puz-text"><strong>Click to upload photos</strong><br>Upload multiple photos of rooms, exterior, and amenities<br><span style="font-size:10px;color:var(--muted)">JPG, PNG — Max 5MB each</span></div>
+      </div>
+      <div class="photo-preview-row" id="photo-preview"></div>
+    </div>
+
+    <!-- Section 5: Description & Features -->
+    <div class="modal-section">
+      <div class="modal-section-title">📝 Description & Features</div>
+      <div class="form-group full" style="margin-bottom:10px">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="f-desc" placeholder="Write a short summary of the property — highlight its best features, location benefits, and what makes it special…"></textarea>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Features & Amenities</label>
+        <div class="features-check" id="features-check">
+          <!-- Built by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Availability & Status -->
+    <div class="modal-section">
+      <div class="modal-section-title">📅 Availability</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Availability</label>
+          <select class="form-select" id="f-avail">
+            <option value="Available Now">Available Now</option>
+            <option value="Available Next Month">Available Next Month</option>
+            <option value="Available in 3 Months">Available in 3 Months</option>
+            <option value="custom">Specific Date…</option>
+          </select>
+        </div>
+        <div class="form-group" id="avail-date-wrap" style="display:none">
+          <label class="form-label">Available From</label>
+          <input type="date" class="form-input" id="f-avail-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Listing Status</label>
+          <select class="form-select" id="f-status">
+            <option value="available">Available</option>
+            <option value="pending">Pending</option>
+            <option value="occupied">Occupied</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7: Contact Info -->
+    <div class="modal-section">
+      <div class="modal-section-title">📞 Contact Information</div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" id="f-phone" placeholder="+233 XX XXX XXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp Number</label>
+          <input type="tel" class="form-input" id="f-whatsapp" placeholder="+233 XX XXX XXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="opt">(opt)</span></label>
+          <input type="email" class="form-input" id="f-email" placeholder="you@email.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-publish" id="btn-publish" onclick="saveListing()">🏠 Publish Listing</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+let listings=[];
+let currentFilter='all';
+let selectedPhotoFiles=[];
+
+const FEATURES=['AC / Air Conditioning','WiFi / Internet','24hr Security','Parking Space','Constant Water','Prepaid Electricity','Wardrobe','Kitchen','Balcony','Generator','CCTV','Hot Water','Tiled Floors','Ceiling Fans','Swimming Pool','Gym','Elevator','Garden','Boys Quarters','Borehole'];
+
+const CARD_BGS=['linear-gradient(135deg,#f5f3ff,#ede9fe)','linear-gradient(135deg,#eff6ff,#dbeafe)','linear-gradient(135deg,#f0fdf4,#dcfce7)','linear-gradient(135deg,#fff7ed,#fed7aa)','linear-gradient(135deg,#fdf2f8,#fce7f3)','linear-gradient(135deg,#f0f9ff,#e0f2fe)'];
+const EMOJIS=['🏠','🏡','🏢','🏙️','🌴','🏗️','✈️','🏛️','🏰'];
+
+// Load Supabase
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    window.sb=sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  if(p.role==='tenant'){location.replace('singularity-dashboard.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+
+  currentProfile=p;
+
+  buildSidebar(p);
+  buildFeaturesChecklist();
+  prefillContactFromProfile(p);
+
+  // Load listings from Supabase - no flash, skeletons shown until ready
+  await loadListings();
+  loadNotifBadge();
+}
+
+function buildSidebar(p){ buildSharedSidebar(p, 'listings'); }
+<div class="sb-sec">${item.sec}</div>`;return;}
+    navHTML+=`<div class="sb-link${item.active?' active':''}" onclick="location.href='${item.url}'">
+      <span class="sb-link-icon">${item.icon}</span>
+      <span>${item.label}</span>
+      ${item.badge?`<span class="sb-badge ${item.badge}">${item.badgeText}</span>`:''}
+    </div>`;
+  });
+
+  document.getElementById('sidebar').innerHTML=`
+    <div class="sb-brand" onclick="location.href='singularity-rentals.html'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div><div class="sb-uname">${fn}</div><div class="sb-urole">Landlord</div></div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+}
+
+function prefillContactFromProfile(p){
+  if(p.phone){
+    document.getElementById('f-phone').value=p.phone;
+    document.getElementById('f-whatsapp').value=p.phone;
+  }
+}
+
+function buildFeaturesChecklist(){
+  document.getElementById('features-check').innerHTML=FEATURES.map(f=>`
+    <label class="feat-item" id="fi-${f.replace(/\s+/g,'-')}">
+      <input type="checkbox" value="${f}" onchange="this.closest('.feat-item').classList.toggle('checked',this.checked)">
+      ${f}
+    </label>`).join('');
+}
+
+async function loadListings(){
+  const {data,error}=await sb.from('listings')
+    .select('*')
+    .eq('landlord_id',currentUser.id)
+    .order('created_at',{ascending:false});
+
+  if(error){
+    showToast('Error loading listings: '+error.message,'err');
+    document.getElementById('listings-grid').innerHTML='<div class="empty-state"><div class="es-icon">⚠️</div><div class="es-title">Could not load listings</div><div class="es-sub">'+error.message+'</div></div>';
+    return;
+  }
+
+  listings=data||[];
+  updateStats();
+  renderListings();
+}
+
+function updateStats(){
+  const total=listings.length;
+  const occupied=listings.filter(l=>l.status==='occupied').length;
+  const pending=listings.filter(l=>l.status==='pending').length;
+  const revenue=listings.filter(l=>l.status==='occupied').reduce((a,l)=>a+l.price,0);
+  document.getElementById('s-total').textContent=total;
+  document.getElementById('s-occupied').textContent=occupied;
+  document.getElementById('s-pending').textContent=pending;
+  document.getElementById('s-revenue').textContent='GHS '+(revenue?revenue.toLocaleString():'0');
+}
+
+function renderListings(){
+  const grid=document.getElementById('listings-grid');
+  const filtered=currentFilter==='all'?listings:listings.filter(l=>l.status===currentFilter);
+
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty-state">
+      <div class="es-icon">🏠</div>
+      <div class="es-title">${currentFilter==='all'?'No listings yet':'No '+currentFilter+' listings'}</div>
+      <div class="es-sub">${currentFilter==='all'?'Click "+ Add Listing" to publish your first property. It will appear to all tenants browsing the app.':'Try selecting a different filter.'}</div>
+      ${currentFilter==='all'?`<button class="btn btn-primary" onclick="openModal()">+ Add Your First Listing</button>`:''}
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML=filtered.map((l,i)=>{
+    const bg=CARD_BGS[i%CARD_BGS.length];
+    const emoji=l.emoji||EMOJIS[i%EMOJIS.length];
+    const hasPhotos=l.photos&&l.photos.length>0;
+    const badgeClass=l.is_sold?'badge-sold':l.status==='available'?'badge-available':l.status==='occupied'?'badge-occupied':'badge-pending';
+    const badgeText=l.is_sold?'Sold':l.status.charAt(0).toUpperCase()+l.status.slice(1);
+
+    return `<div class="listing-card" onclick="viewListing('${l.id}')">
+      <div class="listing-img-wrap">
+        ${hasPhotos
+          ?`<img src="${l.photos[0]}" alt="${l.title}" style="width:100%;height:100%;object-fit:cover;">`
+          :`<div class="img-placeholder" style="background:${bg}"><span style="font-size:52px">${emoji}</span></div>`}
+        <span class="listing-badge ${badgeClass}">${badgeText}</span>
+        ${hasPhotos&&l.photos.length>1?`<div class="photo-count">📷 ${l.photos.length}</div>`:''}
+      </div>
+      <div class="listing-body">
+        <div class="listing-title">${l.title}</div>
+        <div class="listing-address">📍 ${l.address}${l.landmark?' · Near '+l.landmark:''}</div>
+        <div class="listing-meta">
+          <span class="meta-tag">🛏 ${l.beds} bed${l.beds!==1?'s':''}</span>
+          <span class="meta-tag">🚿 ${l.baths} bath${l.baths!==1?'s':''}</span>
+          <span class="meta-tag">${l.type||'Property'}</span>
+          ${l.furnished?`<span class="meta-tag">${l.furnished}</span>`:''}
+        </div>
+        <div class="listing-footer">
+          <div class="listing-price">GHS ${l.price.toLocaleString()}<span>/mo</span></div>
+          <div class="listing-actions" onclick="event.stopPropagation()">
+            <div class="icon-btn" title="Edit" onclick="openEditModal('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="icon-btn" title="View Details" onclick="viewListing('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            ${!l.is_sold?`<div class="icon-btn" title="Mark as Sold" onclick="markSold('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>`:''}
+            <div class="icon-btn danger" title="Delete" onclick="confirmDelete('${l.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function viewListing(id){
+  location.href=`singularity-listing.html?id=${id}`;
+}
+
+// ── EDIT LISTING ──
+function openEditModal(id){
+  const l=listings.find(x=>x.id===id);
+  if(!l)return;
+  // Pre-fill the add modal with existing data
+  document.getElementById('f-title').value=l.title||'';
+  document.getElementById('f-address').value=l.address||'';
+  document.getElementById('f-landmark').value=l.landmark||'';
+  document.getElementById('f-price').value=l.price||'';
+  document.getElementById('f-advance').value=l.advance_payment||'';
+  document.getElementById('f-fees').value=l.extra_fees||'';
+  document.getElementById('f-type').value=l.type||'';
+  document.getElementById('f-furnished').value=l.furnished||'Unfurnished';
+  document.getElementById('f-beds').value=l.beds||'';
+  document.getElementById('f-baths').value=l.baths||'';
+  document.getElementById('f-desc').value=l.description||'';
+  document.getElementById('f-status').value=l.status||'available';
+  document.getElementById('f-phone').value=l.contact_phone||'';
+  document.getElementById('f-whatsapp').value=l.contact_whatsapp||'';
+  document.getElementById('f-email').value=l.contact_email||'';
+
+  // Check existing features
+  if(l.features?.length){
+    document.querySelectorAll('.feat-item input').forEach(cb=>{
+      const checked=l.features.includes(cb.value);
+      cb.checked=checked;
+      cb.closest('.feat-item').classList.toggle('checked',checked);
+    });
+  }
+
+  // Update modal title and button
+  document.querySelector('.modal-title').textContent='Edit Listing';
+  document.querySelector('.modal-sub').textContent='Update the details of your listing.';
+  const btn=document.getElementById('btn-publish');
+  btn.textContent='💾 Save Changes';
+  btn.onclick=()=>saveEditedListing(id);
+
+  document.getElementById('modal').classList.add('open');
+}
+
+async function saveEditedListing(id){
+  const title=document.getElementById('f-title').value.trim();
+  const address=document.getElementById('f-address').value.trim();
+  const price=parseInt(document.getElementById('f-price').value)||0;
+  const type=document.getElementById('f-type').value;
+  if(!title||!address||!price||!type){showToast('Please fill in all required fields.','err');return;}
+
+  const btn=document.getElementById('btn-publish');
+  btn.disabled=true;btn.textContent='⏳ Saving…';
+
+  const features=[...document.querySelectorAll('.feat-item input:checked')].map(cb=>cb.value);
+  const availSel=document.getElementById('f-avail').value;
+  const availDate=availSel==='custom'?document.getElementById('f-avail-date').value||'Available Now':availSel;
+
+  const updates={
+    title,address,price,type,
+    beds:parseInt(document.getElementById('f-beds').value)||1,
+    baths:parseInt(document.getElementById('f-baths').value)||1,
+    furnished:document.getElementById('f-furnished').value,
+    landmark:document.getElementById('f-landmark').value.trim()||null,
+    advance_payment:parseInt(document.getElementById('f-advance').value)||0,
+    extra_fees:document.getElementById('f-fees').value.trim()||null,
+    description:document.getElementById('f-desc').value.trim()||null,
+    features,
+    availability_date:availDate,
+    status:document.getElementById('f-status').value,
+    contact_phone:document.getElementById('f-phone').value.trim()||null,
+    contact_whatsapp:document.getElementById('f-whatsapp').value.trim()||null,
+    contact_email:document.getElementById('f-email').value.trim()||null,
+  };
+
+  const {error}=await sb.from('listings').update(updates).eq('id',id);
+  btn.disabled=false;btn.textContent='💾 Save Changes';
+
+  if(error){showToast('Error: '+error.message,'err');return;}
+
+  // Update local array
+  const idx=listings.findIndex(l=>l.id===id);
+  if(idx>-1)listings[idx]={...listings[idx],...updates};
+
+  closeModal();
+  renderListings();updateStats();
+  showToast('Listing updated successfully!','ok');
+
+  // Reset modal for next add
+  document.querySelector('.modal-title').textContent='Add New Listing';
+  document.querySelector('.modal-sub').textContent='Fill in the details below to publish your property.';
+  document.getElementById('btn-publish').textContent='🏠 Publish Listing';
+  document.getElementById('btn-publish').onclick=saveListing;
+}
+
+function setFilter(el,filter){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter=filter;
+  renderListings();
+}
+
+/* ── MODAL ── */
+function openModal(){
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  resetForm();
+}
+
+function resetForm(){
+  ['f-title','f-address','f-landmark','f-price','f-advance','f-fees','f-desc','f-phone','f-whatsapp','f-email'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value='';
+  });
+  document.getElementById('f-beds').value='';
+  document.getElementById('f-baths').value='';
+  document.getElementById('photo-preview').innerHTML='';
+  selectedPhotoFiles=[];
+  document.querySelectorAll('.feat-item input').forEach(cb=>{cb.checked=false;cb.closest('.feat-item').classList.remove('checked');});
+  if(currentProfile?.phone){
+    document.getElementById('f-phone').value=currentProfile.phone;
+    document.getElementById('f-whatsapp').value=currentProfile.phone;
+  }
+}
+
+// Availability toggle
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=document.getElementById('f-avail');
+  if(sel)sel.addEventListener('change',()=>{
+    document.getElementById('avail-date-wrap').style.display=sel.value==='custom'?'':'none';
+  });
+});
+
+/* ── PHOTOS ── */
+function previewPhotos(input){
+  const files=[...input.files];
+  const preview=document.getElementById('photo-preview');
+
+  files.forEach(file=>{
+    if(file.size>5*1024*1024){showToast(`${file.name} is too large (max 5MB)`, 'err');return;}
+    selectedPhotoFiles.push(file);
+    const url=URL.createObjectURL(file);
+    const item=document.createElement('div');
+    item.className='photo-preview-item';
+    item.innerHTML=`<img src="${url}" alt=""><button class="photo-remove" onclick="removePhoto(this,${selectedPhotoFiles.length-1})">×</button>`;
+    preview.appendChild(item);
+  });
+
+  // Reset input so same files can be re-selected
+  input.value='';
+}
+
+function removePhoto(btn,idx){
+  selectedPhotoFiles.splice(idx,1);
+  btn.closest('.photo-preview-item').remove();
+  // Re-index remaining remove buttons
+  document.querySelectorAll('.photo-remove').forEach((b,i)=>{
+    b.setAttribute('onclick',`removePhoto(this,${i})`);
+  });
+}
+
+/* ── SAVE LISTING ── */
+async function saveListing(){
+  const title=document.getElementById('f-title').value.trim();
+  const address=document.getElementById('f-address').value.trim();
+  const price=parseInt(document.getElementById('f-price').value)||0;
+  const type=document.getElementById('f-type').value;
+  const beds=parseInt(document.getElementById('f-beds').value)||1;
+  const baths=parseInt(document.getElementById('f-baths').value)||1;
+
+  if(!title){showToast('Please enter a listing title.','err');return;}
+  if(!address){showToast('Please enter the property address.','err');return;}
+  if(!price){showToast('Please enter a monthly rent amount.','err');return;}
+  if(!type){showToast('Please select a property type.','err');return;}
+
+  const btn=document.getElementById('btn-publish');
+  btn.disabled=true;btn.textContent='⏳ Publishing…';
+
+  try{
+    // Get selected features
+    const features=[...document.querySelectorAll('.feat-item input:checked')].map(cb=>cb.value);
+
+    // Get availability
+    const availSel=document.getElementById('f-avail').value;
+    const availDate=availSel==='custom'
+      ? document.getElementById('f-avail-date').value||'Available Now'
+      : availSel;
+
+    // Upload photos to Supabase Storage
+    let photoURLs=[];
+    for(let i=0;i<selectedPhotoFiles.length;i++){
+      const file=selectedPhotoFiles[i];
+      const ext=file.name.split('.').pop();
+      const path=`listings/${currentUser.id}/${Date.now()}-${i}.${ext}`;
+      const {error:upe}=await sb.storage.from('listings').upload(path,file,{contentType:file.type});
+      if(!upe){
+        const {data:{publicUrl}}=sb.storage.from('listings').getPublicUrl(path);
+        photoURLs.push(publicUrl);
+      }
+    }
+
+    const listing={
+      landlord_id:currentUser.id,
+      title,
+      address,
+      neighbourhood:address.split(',')[0].trim(),
+      landmark:document.getElementById('f-landmark').value.trim()||null,
+      price,
+      advance_payment:parseInt(document.getElementById('f-advance').value)||0,
+      extra_fees:document.getElementById('f-fees').value.trim()||null,
+      type,beds,baths,
+      furnished:document.getElementById('f-furnished').value,
+      description:document.getElementById('f-desc').value.trim()||null,
+      features,
+      photos:photoURLs,
+      availability_date:availDate,
+      status:document.getElementById('f-status').value,
+      contact_phone:document.getElementById('f-phone').value.trim()||null,
+      contact_whatsapp:document.getElementById('f-whatsapp').value.trim()||null,
+      contact_email:document.getElementById('f-email').value.trim()||null,
+      emoji:EMOJIS[Math.floor(Math.random()*EMOJIS.length)],
+      is_sold:false,
+    };
+
+    const {data,error}=await sb.from('listings').insert(listing).select().single();
+    if(error)throw error;
+
+    listings.unshift(data);
+    updateStats();
+    renderListings();
+    closeModal();
+    showToast('Listing published! Tenants can now see it.','ok');
+
+  }catch(err){
+    showToast('Error: '+err.message,'err');
+  }finally{
+    btn.disabled=false;btn.textContent='🏠 Publish Listing';
+  }
+}
+
+/* ── ACTIONS ── */
+async function markSold(id){
+  if(!confirm('Mark this listing as sold? Tenants will see a "Sold" badge.'))return;
+  const {error}=await sb.from('listings').update({is_sold:true,status:'occupied'}).eq('id',id);
+  if(error){showToast('Error: '+error.message,'err');return;}
+  const l=listings.find(x=>x.id===id);
+  if(l){l.is_sold=true;l.status='occupied';}
+  renderListings();updateStats();
+  showToast('Listing marked as sold.','ok');
+}
+
+async function confirmDelete(id){
+  const l=listings.find(x=>x.id===id);
+  if(!confirm(`Delete "${l?.title||'this listing'}"? This cannot be undone.`))return;
+
+  // Delete photos from storage
+  if(l?.photos?.length){
+    for(const url of l.photos){
+      const path=url.split('/listings/')[1];
+      if(path)await sb.storage.from('listings').remove([path]);
+    }
+  }
+
+  const {error}=await sb.from('listings').delete().eq('id',id);
+  if(error){showToast('Error: '+error.message,'err');return;}
+  listings=listings.filter(x=>x.id!==id);
+  renderListings();updateStats();
+  showToast('Listing deleted.','ok');
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  location.href='index.html';
+}
+
+/* ── TOAST ── */
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// Close modal on backdrop click
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// ── Sidebar collapse toggle ──
+function initSidebarToggle() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  
+  // Add toggle button
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle';
+  toggle.id = 'sb-toggle';
+  toggle.textContent = '‹';
+  toggle.title = 'Collapse sidebar';
+  toggle.onclick = toggleSidebar;
+  sidebar.appendChild(toggle);
+  
+  // Restore collapsed state
+  if (localStorage.getItem('sidebar-collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    toggle.textContent = '›';
+    toggle.title = 'Expand sidebar';
+  }
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('sb-toggle');
+  if (!sidebar) return;
+  const isCollapsed = sidebar.classList.toggle('collapsed');
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  toggle.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  localStorage.setItem('sidebar-collapsed', isCollapsed);
+}
+
+
+// ── Notification bell ──
+async function loadNotifBadge(){
+  if(!window.sb||!currentUser)return;
+  try{
+    const {count}=await window.sb.from('notifications')
+      .select('*',{count:'exact',head:true})
+      .eq('user_id',currentUser.id)
+      .eq('is_read',false);
+    const badge=document.getElementById('notif-badge');
+    if(badge){
+      if(count>0){badge.textContent=count>9?'9+':count;badge.style.display='flex';}
+      else{badge.style.display='none';}
+    }
+  }catch(e){}
+}
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  // Load Supabase
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  // Get session
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  // Get profile
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  if(profile.role==='tenant'){hideLoader();location.replace('singularity-dashboard.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

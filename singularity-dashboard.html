@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* Notification bell */
+.sb-bell{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;position:relative;}
+.sb-bell:hover{color:var(--text);background:var(--surface2);}
+.notif-badge{position:absolute;right:16px;top:50%;transform:translateY(-50%);min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — My Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#f8fafc;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--accent3:#f59e0b;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}
+button,[onclick],a{cursor:pointer!important;}
+input,select,textarea{cursor:text!important;}
+select{cursor:pointer!important;}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:220px;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:400;box-shadow:1px 0 8px rgba(0,0,0,0.04);transition:width 0.3s ease;}
+.sidebar.collapsed{width:60px;}
+.sidebar.collapsed .sb-sub,.sidebar.collapsed .sb-uname,.sidebar.collapsed .sb-urole,.sidebar.collapsed .sb-sec,.sidebar.collapsed .sb-link span:not(.sb-link-icon),.sidebar.collapsed .sb-badge,.sidebar.collapsed .sb-logout span:last-child{display:none;}
+.sidebar.collapsed .sb-link{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user>div:last-child{display:none;}
+.sidebar.collapsed .sb-logout{justify-content:center;padding:12px;}
+.sidebar.collapsed+.main{margin-left:60px;}
+.sb-toggle{position:absolute;top:50%;right:-14px;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer!important;z-index:500;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:all 0.2s;color:var(--muted);}
+.sb-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.sidebar{position:relative;}
+.sb-brand{padding:20px 20px 16px;border-bottom:1px solid var(--border);cursor:pointer;}
+.sb-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.2em;color:var(--accent);line-height:1;}
+.sb-sub{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.sb-user{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);}
+.sb-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#9333ea);}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-uname{font-size:12px;font-weight:600;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-urole{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:1px;}
+.sb-nav{flex:1;overflow-y:auto;padding:10px 0;}
+.sb-sec{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);padding:12px 20px 5px;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;}
+.sb-link:hover{color:var(--text);background:var(--surface2);}
+.sb-link.active{color:var(--accent2);background:rgba(124,58,237,0.06);border-left-color:var(--accent2);}
+.sb-link-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.sb-badge{font-size:9px;padding:2px 7px;border-radius:10px;margin-left:auto;}
+.sb-badge.unverified{background:rgba(245,158,11,0.12);color:var(--warn);border:1px solid rgba(245,158,11,0.25);}
+.sb-badge.verified{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.2);}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:12px;color:var(--danger);cursor:pointer!important;border-top:1px solid var(--border);transition:background 0.2s;margin-top:auto;}
+.sb-logout:hover{background:#fef2f2;}
+
+/* ── MAIN ── */
+.main{margin-left:220px;min-height:100vh;background:var(--bg);transition:margin-left 0.3s ease;}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 32px 14px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(0,0,0,0.04);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:#0f172a;line-height:1;}
+.page-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-actions{display:flex;gap:8px;}
+.btn{padding:9px 18px;border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;border:none;}
+.btn-primary{background:var(--accent2);color:#fff;box-shadow:0 0 16px rgba(124,58,237,0.25);}
+.btn-primary:hover{box-shadow:0 0 28px rgba(124,58,237,0.4);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--text);border-color:var(--text);}
+
+/* ── CONTENT ── */
+.content{padding:24px 32px 60px;}
+
+/* ── WELCOME BANNER ── */
+.welcome-banner{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#1e1b4b 100%);border-radius:18px;padding:28px 32px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
+.welcome-banner::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.06) 1px,transparent 1px);background-size:40px 40px;}
+.wb-left{position:relative;z-index:1;}
+.wb-greeting{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px;}
+.wb-name{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;margin-bottom:6px;}
+.wb-sub{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;}
+.wb-right{position:relative;z-index:1;text-align:right;}
+.wb-status{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;background:rgba(5,150,105,0.15);border:1px solid rgba(5,150,105,0.3);font-size:11px;color:#6ee7b7;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;}
+.wb-dot{width:7px;height:7px;border-radius:50%;background:#6ee7b7;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ── STAT CARDS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.04);position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stat-card:nth-child(1)::before{background:var(--accent2);}
+.stat-card:nth-child(2)::before{background:var(--success);}
+.stat-card:nth-child(3)::before{background:var(--accent);}
+.stat-card:nth-child(4)::before{background:var(--warn);}
+.stat-icon{font-size:22px;margin-bottom:8px;}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;line-height:1;margin-bottom:4px;}
+.stat-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+
+/* ── GRID ── */
+.dash-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;}
+
+/* ── CARDS ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);margin-bottom:16px;}
+.card-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#0f172a;}
+.card-badge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+.badge-active{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.2);}
+.badge-pending{background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.badge-none{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.card-body{padding:20px;}
+
+/* ── UNIT CARD ── */
+.unit-hero{height:160px;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;overflow:hidden;}
+.unit-hero img{width:100%;height:100%;object-fit:cover;}
+.unit-details{padding:20px;}
+.unit-name{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;margin-bottom:4px;}
+.unit-addr{font-size:12px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:5px;}
+.unit-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.unit-meta-item{background:var(--surface2);border-radius:10px;padding:10px 12px;}
+.um-label{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+.um-value{font-size:13px;font-weight:600;color:#0f172a;}
+.landlord-strip{display:flex;align-items:center;gap:10px;padding:12px;background:var(--surface2);border-radius:10px;}
+.ll-av{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;flex-shrink:0;overflow:hidden;}
+.ll-av img{width:100%;height:100%;object-fit:cover;}
+.ll-name{font-size:13px;font-weight:600;}
+.ll-tag{font-size:10px;color:var(--muted);}
+.ll-actions{margin-left:auto;display:flex;gap:6px;}
+.ll-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;}
+.ll-btn:hover{border-color:var(--accent);background:rgba(14,165,233,0.06);}
+
+/* ── RENT CARD ── */
+.rent-amount{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--accent2);letter-spacing:0.04em;line-height:1;margin-bottom:4px;}
+.rent-period{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.rent-due-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;margin-bottom:14px;}
+.rent-due-row.ok{background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.15);}
+.rent-due-row.warn{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);}
+.rent-due-row.overdue{background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.15);}
+.due-label{font-size:12px;color:var(--muted);}
+.due-date{font-size:13px;font-weight:600;}
+.due-date.ok{color:var(--success);}
+.due-date.warn{color:var(--warn);}
+.due-date.overdue{color:var(--danger);}
+.pay-btn{width:100%;padding:12px;border-radius:10px;background:var(--accent2);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;box-shadow:0 0 20px rgba(124,58,237,0.25);transition:all 0.2s;}
+.pay-btn:hover{box-shadow:0 0 32px rgba(124,58,237,0.45);transform:translateY(-1px);}
+.pay-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+/* ── PAYMENT HISTORY ── */
+.pay-hist-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f8fafc;}
+.pay-hist-row:last-child{border-bottom:none;}
+.ph-left{display:flex;align-items:center;gap:10px;}
+.ph-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.ph-period{font-size:13px;font-weight:600;}
+.ph-method{font-size:11px;color:var(--muted);}
+.ph-amount{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.04em;}
+.ph-amount.paid{color:var(--success);}
+.ph-amount.pending{color:var(--warn);}
+
+/* ── MAINTENANCE ── */
+.maint-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f8fafc;}
+.maint-row:last-child{border-bottom:none;}
+.maint-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.maint-title{font-size:13px;font-weight:600;}
+.maint-meta{font-size:11px;color:var(--muted);}
+.maint-status{margin-left:auto;padding:3px 9px;border-radius:12px;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;}
+.ms-open{background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.15);}
+.ms-progress{background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.ms-resolved{background:rgba(5,150,105,0.08);color:var(--success);border:1px solid rgba(5,150,105,0.15);}
+
+/* ── DOCS ── */
+.doc-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:10px;margin-bottom:8px;transition:all 0.2s;}
+.doc-row:hover{border-color:var(--accent2);background:rgba(124,58,237,0.04);}
+.doc-icon{width:36px;height:36px;border-radius:9px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.doc-name{font-size:13px;font-weight:600;}
+.doc-meta{font-size:11px;color:var(--muted);}
+.doc-action{margin-left:auto;font-size:11px;color:var(--accent2);font-weight:600;}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty-icon{font-size:40px;margin-bottom:12px;}
+.empty-title{font-family:'Syne',sans-serif;font-size:16px;color:#0f172a;margin-bottom:6px;font-weight:700;}
+.empty-sub{font-size:12px;line-height:1.7;max-width:280px;margin:0 auto 16px;}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{margin-bottom:16px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;}
+.progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 1s ease;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;padding:12px 18px;border-radius:12px;background:#fff;font-size:12px;z-index:900;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:60px;flex-direction:row;border-right:none;border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,0.08);}
+  .sb-brand,.sb-user,.sb-sec,.sb-logout,.sb-toggle{display:none;}
+  .sb-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;display:flex;}
+  .sb-link{flex-direction:column;padding:6px 10px;min-width:56px;border-left:none;border-top:2px solid transparent;justify-content:center;align-items:center;font-size:9px;gap:2px;}
+  .sb-link.active{border-top-color:var(--accent2);border-left:none;}
+  .sb-link-icon{font-size:18px;width:auto;}
+  .sb-badge{display:none;}
+  .main{margin-left:0;padding-bottom:80px;}
+  .topbar{padding:12px 16px;}
+  .content{padding:16px 16px 80px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .dash-grid{grid-template-columns:1fr;}
+  .welcome-banner{flex-direction:column;gap:16px;text-align:left;}
+  .wb-right{text-align:left;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<aside class="sidebar" id="sidebar">
+  <div style="padding:20px;color:var(--muted);font-size:12px">Loading…</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title" id="page-title">My Dashboard</div>
+      <div class="page-sub" id="page-sub">Welcome back</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" onclick="location.href='singularity-tenant.html'">🏠 Browse Listings</button>
+      <button class="btn btn-primary" onclick="location.href='singularity-payment.html'">💳 Pay Rent</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- WELCOME BANNER -->
+    <div class="welcome-banner" id="welcome-banner">
+      <div class="wb-left">
+        <div class="wb-greeting">Good day</div>
+        <div class="wb-name" id="wb-name">Loading…</div>
+        <div class="wb-sub" id="wb-sub">Loading your rental details…</div>
+      </div>
+      <div class="wb-right">
+        <div class="wb-status" id="wb-status">
+          <div class="wb-dot"></div>
+          <span>Loading…</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-value" id="s-days">—</div><div class="stat-label">Days in Lease</div></div>
+      <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-value" id="s-paid">—</div><div class="stat-label">Payments Made</div></div>
+      <div class="stat-card"><div class="stat-icon">🔧</div><div class="stat-value" id="s-maint">—</div><div class="stat-label">Maintenance Requests</div></div>
+      <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-value" id="s-score">—</div><div class="stat-label">Tenant Score</div></div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="dash-grid">
+
+      <!-- LEFT COLUMN -->
+      <div>
+
+        <!-- MY UNIT -->
+        <div class="card" id="unit-card">
+          <div class="card-header">
+            <div class="card-title">My Unit</div>
+            <span class="card-badge badge-none" id="unit-badge">No Active Lease</span>
+          </div>
+          <div id="unit-content">
+            <div class="empty">
+              <div class="empty-icon">🏠</div>
+              <div class="empty-title">No active lease yet</div>
+              <div class="empty-sub">Browse listings and submit a room request. Once your landlord approves it, your unit details will appear here.</div>
+              <button class="btn btn-primary" onclick="location.href='singularity-tenant.html'">Browse Listings →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEASE PROGRESS -->
+        <div class="card" id="lease-card" style="display:none">
+          <div class="card-header">
+            <div class="card-title">Lease Progress</div>
+            <span class="card-badge badge-active" id="lease-badge">Active</span>
+          </div>
+          <div class="card-body" id="lease-body"></div>
+        </div>
+
+        <!-- MAINTENANCE -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Maintenance Requests</div>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:10px" onclick="location.href='singularity-maintenance.html'">View All →</button>
+          </div>
+          <div class="card-body" id="maint-content">
+            <div class="empty">
+              <div class="empty-icon">🔧</div>
+              <div class="empty-title">No requests yet</div>
+              <div class="empty-sub">Submit a maintenance request for your unit and track its progress here.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+
+        <!-- RENT DUE -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Rent</div>
+            <span class="card-badge badge-none" id="rent-badge">—</span>
+          </div>
+          <div class="card-body" id="rent-content">
+            <div class="empty">
+              <div class="empty-icon">💳</div>
+              <div class="empty-title">No rent due</div>
+              <div class="empty-sub">Your rent schedule will appear once you have an active lease.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT HISTORY -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Payment History</div>
+            <button class="btn btn-ghost" style="padding:6px 12px;font-size:10px" onclick="location.href='singularity-receipt.html'">Receipts →</button>
+          </div>
+          <div class="card-body" id="payment-history">
+            <div class="empty">
+              <div class="empty-icon">🧾</div>
+              <div class="empty-title">No payments yet</div>
+              <div class="empty-sub">Your payment history will appear here once you make your first rent payment.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Documents</div>
+          </div>
+          <div class="card-body" id="docs-content">
+            <div class="empty">
+              <div class="empty-icon">📄</div>
+              <div class="empty-title">No documents yet</div>
+              <div class="empty-sub">Your tenancy agreement and receipts will appear here.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  if(p.role==='landlord'){location.replace('singularity-rentals.html');return;}
+  hideLoader();
+  return p;
+}
+    await initDashboard();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initDashboard(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  currentProfile=p;
+  if(p.role==='landlord'){location.href='singularity-rentals.html';return;}
+
+  buildSidebar(p);
+  loadNotifBadge();
+
+  const fn=p.full_name?.split(' ')[0]||'there';
+  const hour=new Date().getHours();
+  const greeting=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+  document.getElementById('wb-name').textContent=p.full_name||'Tenant';
+  document.getElementById('page-sub').textContent='Welcome back, '+fn;
+
+  // Load everything in parallel
+  const [reqRes, payRes, maintRes] = await Promise.all([
+    sb.from('rental_requests')
+      .select('*,listings(*,profiles:landlord_id(full_name,phone,profile_photo)),profiles:landlord_id(full_name,phone,profile_photo)')
+      .eq('tenant_id',user.id)
+      .order('created_at',{ascending:false})
+      .limit(1),
+    sb.from('payments')
+      .select('*')
+      .eq('tenant_id',user.id)
+      .order('created_at',{ascending:false})
+      .limit(6),
+    sb.from('maintenance_requests')
+      .select('*')
+      .eq('tenant_id',user.id)
+      .order('created_at',{ascending:false})
+      .limit(3)
+  ]);
+
+  const activeReq=reqRes.data?.find(r=>r.status==='approved')||reqRes.data?.[0]||null;
+  const payments=payRes.data||[];
+  const maintenances=maintRes.data||[];
+
+  // Update stats
+  const daysSince=activeReq?.move_in_date
+    ? Math.floor((Date.now()-new Date(activeReq.move_in_date).getTime())/(1000*60*60*24))
+    : 0;
+  document.getElementById('s-days').textContent=activeReq?.status==='approved'?daysSince:'—';
+  document.getElementById('s-paid').textContent=payments.filter(p=>p.status==='paid').length;
+  document.getElementById('s-maint').textContent=maintenances.length;
+  document.getElementById('s-score').textContent='—';
+
+  // Welcome banner status
+  const wbStatus=document.getElementById('wb-status');
+  if(activeReq?.status==='approved'){
+    wbStatus.innerHTML=`<div class="wb-dot"></div><span>Active Tenant</span>`;
+    document.getElementById('wb-sub').textContent='You have an active lease at '+activeReq.listings?.address;
+  } else if(activeReq?.status==='pending'){
+    wbStatus.style.background='rgba(245,158,11,0.15)';
+    wbStatus.style.borderColor='rgba(245,158,11,0.3)';
+    wbStatus.querySelector('.wb-dot').style.background='#fbbf24';
+    wbStatus.innerHTML=`<div class="wb-dot" style="background:#fbbf24"></div><span style="color:#fbbf24">Request Pending</span>`;
+    document.getElementById('wb-sub').textContent='Your room request is awaiting landlord approval';
+  } else {
+    wbStatus.innerHTML=`<div class="wb-dot" style="background:#94a3b8"></div><span style="color:#94a3b8">No Active Lease</span>`;
+    document.getElementById('wb-sub').textContent='Browse listings and find your perfect home';
+  }
+
+  renderUnit(activeReq);
+  renderRent(activeReq,payments);
+  renderPaymentHistory(payments);
+  renderMaintenance(maintenances);
+  renderDocs(activeReq,payments);
+}
+
+function renderUnit(req){
+  const badge=document.getElementById('unit-badge');
+  const content=document.getElementById('unit-content');
+
+  if(!req){
+    badge.textContent='No Active Lease';
+    badge.className='card-badge badge-none';
+    return;
+  }
+
+  const listing=req.listings||{};
+  const landlord=req.profiles||listing.profiles||{};
+  const isApproved=req.status==='approved';
+
+  badge.textContent=isApproved?'Active Lease':'Pending Approval';
+  badge.className='card-badge '+(isApproved?'badge-active':'badge-pending');
+
+  const photos=listing.photos||[];
+  const imgHTML=photos.length
+    ? `<img src="${photos[0]}" alt="${listing.title}" style="width:100%;height:100%;object-fit:cover;">`
+    : `<div style="font-size:72px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);width:100%;height:100%;display:flex;align-items:center;justify-content:center">${listing.emoji||'🏠'}</div>`;
+
+  content.innerHTML=`
+    <div class="unit-hero">${imgHTML}</div>
+    <div class="unit-details">
+      <div class="unit-name">${listing.title||'Rental Property'}</div>
+      <div class="unit-addr">📍 ${listing.address||'—'}${listing.landmark?' · Near '+listing.landmark:''}</div>
+      <div class="unit-meta-grid">
+        <div class="unit-meta-item"><div class="um-label">Type</div><div class="um-value">${listing.type||'—'}</div></div>
+        <div class="unit-meta-item"><div class="um-label">Bedrooms</div><div class="um-value">${listing.beds||'—'}</div></div>
+        <div class="unit-meta-item"><div class="um-label">Monthly Rent</div><div class="um-value">GHS ${(listing.price||0).toLocaleString()}</div></div>
+        <div class="unit-meta-item"><div class="um-label">Lease Duration</div><div class="um-value">${req.lease_duration||'—'}</div></div>
+      </div>
+      ${isApproved&&req.move_in_date?`
+      <div class="unit-meta-item" style="margin-bottom:12px;background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.15);">
+        <div class="um-label" style="color:var(--success)">Move-in Date</div>
+        <div class="um-value" style="color:var(--success)">${new Date(req.move_in_date).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})}</div>
+      </div>`:''}
+      ${!isApproved?`
+      <div style="padding:12px 14px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:10px;margin-bottom:12px;font-size:12px;color:#92400e;line-height:1.6;">
+        ⏳ Your request is pending. The landlord will review and approve it shortly.
+      </div>`:''}
+      <div class="landlord-strip">
+        <div class="ll-av" id="ll-av-unit">${(landlord.full_name||'L')[0].toUpperCase()}</div>
+        <div>
+          <div class="ll-name">${landlord.full_name||'Landlord'}</div>
+          <div class="ll-tag">Property Owner · ✓ Verified</div>
+        </div>
+        <div class="ll-actions">
+          ${landlord.phone?`<div class="ll-btn" onclick="window.open('tel:${landlord.phone}')" title="Call">📞</div>`:''}
+          ${landlord.phone?`<div class="ll-btn" onclick="window.open('https://wa.me/${(landlord.phone||'').replace(/\D/g,'')}')" title="WhatsApp">💬</div>`:''}
+        </div>
+      </div>
+    </div>`;
+
+  // Lease progress
+  if(isApproved&&req.move_in_date){
+    const leaseCard=document.getElementById('lease-card');
+    leaseCard.style.display='';
+    const moveIn=new Date(req.move_in_date);
+    const months=parseInt((req.lease_duration||'12 Months').match(/\d+/)?.[0])||12;
+    const leaseEnd=new Date(moveIn);
+    leaseEnd.setMonth(leaseEnd.getMonth()+months);
+    const totalDays=(leaseEnd-moveIn)/(1000*60*60*24);
+    const elapsedDays=(Date.now()-moveIn)/(1000*60*60*24);
+    const pct=Math.min(Math.max((elapsedDays/totalDays)*100,0),100);
+    document.getElementById('lease-body').innerHTML=`
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Move in: ${moveIn.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>
+          <span>${Math.round(pct)}% complete</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="progress-label" style="margin-top:6px">
+          <span style="color:var(--muted)">Lease ends</span>
+          <span style="color:${pct>80?'var(--warn)':'#0f172a'}">${leaseEnd.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})}</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:4px;">
+        <div style="text-align:center;padding:10px;background:var(--surface2);border-radius:9px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent2)">${Math.max(0,Math.floor((leaseEnd-Date.now())/(1000*60*60*24)))}</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Days Left</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:var(--surface2);border-radius:9px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--success)">${months}</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Month Lease</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:var(--surface2);border-radius:9px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent)">GHS ${(listing.price||0).toLocaleString()}</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Per Month</div>
+        </div>
+      </div>`;
+  }
+}
+
+function renderRent(req,payments){
+  const badge=document.getElementById('rent-badge');
+  const content=document.getElementById('rent-content');
+  if(!req||req.status!=='approved'){return;}
+
+  const listing=req.listings||{};
+  const rent=listing.price||0;
+  const fee=Math.round(rent*0.01);
+  const total=rent+fee;
+  const now=new Date();
+  const nextDue=new Date(now.getFullYear(),now.getMonth()+1,1);
+  const daysUntil=Math.ceil((nextDue-now)/(1000*60*60*24));
+  const dueSoon=daysUntil<=7;
+  const lastPaid=payments.find(p=>p.status==='paid');
+  const thisMonthPaid=payments.some(p=>{
+    const d=new Date(p.created_at);
+    return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()&&p.status==='paid';
+  });
+
+  badge.textContent=thisMonthPaid?'Paid This Month':dueSoon?'Due Soon':'Upcoming';
+  badge.className='card-badge '+(thisMonthPaid?'badge-active':dueSoon?'badge-pending':'badge-none');
+
+  content.innerHTML=`
+    <div class="rent-amount">GHS ${rent.toLocaleString()}</div>
+    <div class="rent-period">per month · Paystack fee GHS ${fee}</div>
+    <div class="rent-due-row ${thisMonthPaid?'ok':dueSoon?'warn':'ok'}">
+      <span class="due-label">${thisMonthPaid?'Last paid':'Next due'}</span>
+      <span class="due-date ${thisMonthPaid?'ok':dueSoon?'warn':'ok'}">
+        ${thisMonthPaid
+          ? new Date(lastPaid?.created_at||now).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+          : nextDue.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})+' ('+daysUntil+' days)'}
+      </span>
+    </div>
+    <button class="pay-btn" onclick="location.href='singularity-payment.html?listing=${listing.id||''}'" ${thisMonthPaid?'disabled':''}>
+      ${thisMonthPaid?'✓ Paid for '+now.toLocaleDateString('en-GB',{month:'long'}):'💳 Pay '+now.toLocaleDateString('en-GB',{month:'long'})+' Rent →'}
+    </button>`;
+}
+
+function renderPaymentHistory(payments){
+  const el=document.getElementById('payment-history');
+  if(!payments.length){return;}
+  const colors=['rgba(124,58,237,0.1)','rgba(14,165,233,0.1)','rgba(5,150,105,0.1)'];
+  el.innerHTML=payments.map((p,i)=>`
+    <div class="pay-hist-row">
+      <div class="ph-left">
+        <div class="ph-icon" style="background:${colors[i%3]}">${p.status==='paid'?'✅':'⏳'}</div>
+        <div>
+          <div class="ph-period">${p.period||'Payment'}</div>
+          <div class="ph-method">${new Date(p.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})} · ${p.method||'—'}</div>
+        </div>
+      </div>
+      <div>
+        <div class="ph-amount ${p.status}">GHS ${(p.total||p.amount||0).toLocaleString()}</div>
+        <div style="font-size:10px;color:${p.status==='paid'?'var(--success)':'var(--warn)'};text-align:right;text-transform:uppercase;letter-spacing:0.08em">${p.status}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderMaintenance(items){
+  const el=document.getElementById('maint-content');
+  if(!items.length){return;}
+  const catColors={'Plumbing':'rgba(14,165,233,0.1)','Electrical':'rgba(245,158,11,0.1)','Security':'rgba(220,38,38,0.1)','Other':'rgba(100,116,139,0.1)'};
+  const catIcons={'Plumbing':'🚿','Electrical':'⚡','Security':'🔒','Structural':'🏗️','Appliance':'🏠','Other':'🔧'};
+  el.innerHTML=items.map(m=>`
+    <div class="maint-row">
+      <div class="maint-icon" style="background:${catColors[m.category]||'rgba(100,116,139,0.1)'}">${catIcons[m.category]||'🔧'}</div>
+      <div>
+        <div class="maint-title">${m.title}</div>
+        <div class="maint-meta">${m.category} · ${new Date(m.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>
+      </div>
+      <span class="maint-status ms-${m.status}">${m.status==='progress'?'In Progress':m.status.charAt(0).toUpperCase()+m.status.slice(1)}</span>
+    </div>`).join('');
+}
+
+function renderDocs(req,payments){
+  const el=document.getElementById('docs-content');
+  const docs=[];
+  if(req?.status==='approved'){
+    docs.push({icon:'📋',name:'Tenancy Agreement',meta:'Signed · Active',action:'View →',url:'singularity-agreement.html'});
+  }
+  if(payments.length){
+    docs.push({icon:'🧾',name:'Payment Receipts',meta:payments.length+' receipts available',action:'View →',url:'singularity-receipt.html'});
+  }
+  if(!docs.length){return;}
+  el.innerHTML=docs.map(d=>`
+    <div class="doc-row" onclick="location.href='${d.url}'">
+      <div class="doc-icon">${d.icon}</div>
+      <div>
+        <div class="doc-name">${d.name}</div>
+        <div class="doc-meta">${d.meta}</div>
+      </div>
+      <div class="doc-action">${d.action}</div>
+    </div>`).join('');
+}
+
+function buildSidebar(p){ buildSharedSidebar(p, 'dashboard'); }
+<div class="sb-sec">${item.sec}</div>`;return;}
+    navHTML+=`<div class="sb-link${item.active?' active':''}" onclick="location.href='${item.url}'">
+      <span class="sb-link-icon">${item.icon}</span>
+      <span>${item.label}</span>
+      ${item.badge?`<span class="sb-badge ${item.badge}">${item.badgeText}</span>`:''}
+    </div>`;
+  });
+  document.getElementById('sidebar').innerHTML=`
+    <div class="sb-brand" onclick="location.href='singularity-tenant.html'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar">${avatarHTML}</div>
+      <div><div class="sb-uname">${fn}</div><div class="sb-urole">Tenant</div></div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  // Toggle
+  const toggle=document.createElement('div');
+  toggle.className='sb-toggle';toggle.id='sb-toggle';toggle.textContent='‹';
+  toggle.onclick=()=>{
+    const sb=document.getElementById('sidebar');
+    const collapsed=sb.classList.toggle('collapsed');
+    toggle.textContent=collapsed?'›':'‹';
+    localStorage.setItem('sidebar-collapsed',collapsed);
+  };
+  document.getElementById('sidebar').appendChild(toggle);
+  if(localStorage.getItem('sidebar-collapsed')==='true'){
+    document.getElementById('sidebar').classList.add('collapsed');
+    toggle.textContent='›';
+  }
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  location.href='index.html';
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── Notification bell ──
+async function loadNotifBadge(){
+  if(!window.sb||!currentUser)return;
+  try{
+    const {count}=await window.sb.from('notifications')
+      .select('*',{count:'exact',head:true})
+      .eq('user_id',currentUser.id)
+      .eq('is_read',false);
+    const badge=document.getElementById('notif-badge');
+    if(badge){
+      if(count>0){badge.textContent=count>9?'9+':count;badge.style.display='flex';}
+      else{badge.style.display='none';}
+    }
+  }catch(e){}
+}
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  if(profile.role==='landlord'){hideLoader();location.replace('singularity-rentals.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

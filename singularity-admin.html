@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--surface:#1e293b;--surface2:#263548;--border:#334155;--accent:#0ea5e9;--accent2:#7c3aed;--text:#e2e8f0;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}button,[onclick]{cursor:pointer!important;}
+input,select{cursor:text!important;}select{cursor:pointer!important;}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(15,23,42,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.2em;color:var(--accent);}
+.nav-badge{padding:4px 12px;border-radius:20px;background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);color:#fca5a5;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.nav-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* LAYOUT */
+.admin-layout{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 60px);}
+.admin-sidebar{background:var(--surface);border-right:1px solid var(--border);padding:16px 0;}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:12px;color:var(--muted);transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;}
+.admin-nav-item:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+.admin-nav-item.active{color:var(--accent);background:rgba(14,165,233,0.08);border-left-color:var(--accent);}
+.admin-content{padding:24px 28px;}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-card:nth-child(1)::before{background:var(--accent);}
+.kpi-card:nth-child(2)::before{background:var(--success);}
+.kpi-card:nth-child(3)::before{background:var(--accent2);}
+.kpi-card:nth-child(4)::before{background:var(--warn);}
+.kpi-icon{font-size:22px;margin-bottom:10px;}
+.kpi-num{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.04em;line-height:1;margin-bottom:4px;}
+.kpi-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+
+/* TABLE */
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px;}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.table-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;}
+.table-search{padding:7px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;width:200px;}
+.table-search::placeholder{color:var(--muted);}
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 16px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);}
+td{padding:12px 16px;font-size:12px;color:var(--text);border-bottom:1px solid rgba(51,65,85,0.5);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+.pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+.pill-landlord{background:rgba(245,158,11,0.12);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.pill-tenant{background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.2);}
+.pill-paid{background:rgba(5,150,105,0.1);color:#6ee7b7;border:1px solid rgba(5,150,105,0.2);}
+.pill-pending{background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);}
+.pill-verified{background:rgba(5,150,105,0.1);color:#6ee7b7;border:1px solid rgba(5,150,105,0.2);}
+.pill-unverified{background:rgba(100,116,139,0.1);color:var(--muted);border:1px solid rgba(100,116,139,0.2);}
+.pill-available{background:rgba(14,165,233,0.1);color:#7dd3fc;border:1px solid rgba(14,165,233,0.2);}
+.pill-occupied{background:rgba(5,150,105,0.1);color:#6ee7b7;border:1px solid rgba(5,150,105,0.2);}
+.action-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;font-weight:600;transition:all 0.2s;margin-right:4px;}
+.action-btn:hover{border-color:var(--accent);color:var(--accent);}
+.action-btn.danger:hover{border-color:var(--danger);color:var(--danger);}
+
+/* SECTION PAGES */
+.section-page{display:none;}
+.section-page.active{display:block;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;box-shadow:0 8px 24px rgba(0,0,0,0.3);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:#6ee7b7;}
+.toast.err{border-color:rgba(220,38,38,0.4);color:#fca5a5;}
+
+@media(max-width:768px){
+  .admin-layout{grid-template-columns:1fr;}
+  .admin-sidebar{display:none;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="nav-logo">Singularity Rentals</div>
+    <span class="nav-badge">Admin Panel</span>
+  </div>
+  <div class="nav-right">
+    <div id="admin-user" style="font-size:12px;color:var(--muted)">Loading…</div>
+    <button class="nav-btn" onclick="doLogout()">🚪 Log Out</button>
+    <button class="nav-btn" onclick="location.href='singularity-rentals.html'">← Dashboard</button>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <div class="admin-sidebar">
+    <div class="admin-nav-item active" onclick="showSection('overview',this)">📊 Overview</div>
+    <div class="admin-nav-item" onclick="showSection('users',this)">👥 Users</div>
+    <div class="admin-nav-item" onclick="showSection('listings',this)">🏠 Listings</div>
+    <div class="admin-nav-item" onclick="showSection('payments',this)">💳 Payments</div>
+    <div class="admin-nav-item" onclick="showSection('verifications',this)">🔐 Verifications</div>
+    <div class="admin-nav-item" onclick="showSection('requests',this)">📋 Rental Requests</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="admin-content">
+
+    <!-- OVERVIEW -->
+    <div class="section-page active" id="sec-overview">
+      <div style="margin-bottom:20px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;margin-bottom:4px;">Platform Overview</div>
+        <div style="font-size:12px;color:var(--muted)" id="overview-date">Loading…</div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-num" id="k-users">—</div><div class="kpi-label">Total Users</div></div>
+        <div class="kpi-card"><div class="kpi-icon">🏠</div><div class="kpi-num" id="k-listings">—</div><div class="kpi-label">Total Listings</div></div>
+        <div class="kpi-card"><div class="kpi-icon">💳</div><div class="kpi-num" id="k-payments">—</div><div class="kpi-label">Total Payments</div></div>
+        <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-num" id="k-revenue">—</div><div class="kpi-label">Total Revenue</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">Recent Users</div></div>
+          <table><thead><tr><th>Name</th><th>Role</th><th>Joined</th></tr></thead>
+          <tbody id="recent-users"></tbody></table>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">Recent Payments</div></div>
+          <table><thead><tr><th>Tenant</th><th>Amount</th><th>Date</th></tr></thead>
+          <tbody id="recent-payments-tbl"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="section-page" id="sec-users">
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">All Users</div>
+          <input type="text" class="table-search" placeholder="Search users…" oninput="filterTable('users-tbl',this.value)">
+        </div>
+        <table>
+          <thead><tr><th>Name</th><th>Role</th><th>Phone</th><th>Verified</th><th>Joined</th><th>Actions</th></tr></thead>
+          <tbody id="users-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LISTINGS -->
+    <div class="section-page" id="sec-listings">
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">All Listings</div>
+          <input type="text" class="table-search" placeholder="Search listings…" oninput="filterTable('listings-tbl',this.value)">
+        </div>
+        <table>
+          <thead><tr><th>Title</th><th>Landlord</th><th>Price</th><th>Status</th><th>Posted</th><th>Actions</th></tr></thead>
+          <tbody id="listings-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="section-page" id="sec-payments">
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">All Payments</div>
+          <input type="text" class="table-search" placeholder="Search payments…" oninput="filterTable('payments-tbl',this.value)">
+        </div>
+        <table>
+          <thead><tr><th>Ref</th><th>Tenant</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="payments-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VERIFICATIONS -->
+    <div class="section-page" id="sec-verifications">
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Verification Submissions</div></div>
+        <table>
+          <thead><tr><th>User</th><th>ID Type</th><th>ID Number</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+          <tbody id="verifications-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RENTAL REQUESTS -->
+    <div class="section-page" id="sec-requests">
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">All Rental Requests</div></div>
+        <table>
+          <thead><tr><th>Tenant</th><th>Property</th><th>Move-in</th><th>Duration</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="req-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let sb,currentUser;
+let allData={users:[],listings:[],payments:[],verifications:[],requests:[]};
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  if(session.user.email!=='agyemanosborn2000@gmail.com'){
+    alert('Access denied.');location.replace('singularity-rentals.html');return;
+  }
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  hideLoader();
+  return p;
+}
+    await initAdmin();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initAdmin(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  document.getElementById('admin-user').textContent=p.full_name||'Admin';
+  document.getElementById('overview-date').textContent='As of '+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  await loadAllData();
+}
+
+async function loadAllData(){
+  const [usersR,listingsR,paymentsR,versR,reqsR]=await Promise.all([
+    sb.from('profiles').select('*').order('created_at',{ascending:false}),
+    sb.from('listings').select('*,profiles:landlord_id(full_name)').order('created_at',{ascending:false}),
+    sb.from('payments').select('*,profiles:tenant_id(full_name)').order('created_at',{ascending:false}),
+    sb.from('verifications').select('*,profiles:user_id(full_name,role)').order('submitted_at',{ascending:false}),
+    sb.from('rental_requests').select('*,listings(title),profiles:tenant_id(full_name)').order('created_at',{ascending:false}),
+  ]);
+
+  allData.users=usersR.data||[];
+  allData.listings=listingsR.data||[];
+  allData.payments=paymentsR.data||[];
+  allData.verifications=versR.data||[];
+  allData.requests=reqsR.data||[];
+
+  renderOverview();
+  renderUsers();
+  renderListings();
+  renderPayments();
+  renderVerifications();
+  renderRequests();
+}
+
+function renderOverview(){
+  document.getElementById('k-users').textContent=allData.users.length;
+  document.getElementById('k-listings').textContent=allData.listings.length;
+  document.getElementById('k-payments').textContent=allData.payments.length;
+  const rev=allData.payments.filter(p=>p.status==='paid').reduce((a,p)=>a+(p.amount||0),0);
+  document.getElementById('k-revenue').textContent='GHS '+rev.toLocaleString();
+
+  document.getElementById('recent-users').innerHTML=allData.users.slice(0,5).map(u=>`
+    <tr>
+      <td>${u.full_name||'—'}</td>
+      <td><span class="pill pill-${u.role}">${u.role}</span></td>
+      <td style="color:var(--muted)">${new Date(u.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</td>
+    </tr>`).join('');
+
+  document.getElementById('recent-payments-tbl').innerHTML=allData.payments.slice(0,5).map(p=>`
+    <tr>
+      <td>${p.profiles?.full_name||'—'}</td>
+      <td style="color:#6ee7b7;font-family:'Bebas Neue',sans-serif;font-size:16px">GHS ${(p.amount||0).toLocaleString()}</td>
+      <td style="color:var(--muted)">${new Date(p.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</td>
+    </tr>`).join('');
+}
+
+function renderUsers(){
+  document.getElementById('users-tbl').innerHTML=allData.users.map(u=>`
+    <tr>
+      <td>${u.full_name||'—'}</td>
+      <td><span class="pill pill-${u.role}">${u.role}</span></td>
+      <td style="color:var(--muted)">${u.phone||'—'}</td>
+      <td><span class="pill ${u.is_verified?'pill-verified':'pill-unverified'}">${u.is_verified?'Verified':'Unverified'}</span></td>
+      <td style="color:var(--muted)">${new Date(u.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</td>
+      <td>
+        <button class="action-btn danger" onclick="deleteUser('${u.id}','${u.full_name||'user'}')">Delete</button>
+      </td>
+    </tr>`).join('');
+}
+
+function renderListings(){
+  document.getElementById('listings-tbl').innerHTML=allData.listings.map(l=>`
+    <tr>
+      <td>${l.title||'—'}</td>
+      <td style="color:var(--muted)">${l.profiles?.full_name||'—'}</td>
+      <td style="color:#7dd3fc;font-family:'Bebas Neue',sans-serif">GHS ${(l.price||0).toLocaleString()}</td>
+      <td><span class="pill pill-${l.status==='available'?'available':'occupied'}">${l.status}</span></td>
+      <td style="color:var(--muted)">${new Date(l.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</td>
+      <td>
+        <button class="action-btn" onclick="location.href='singularity-listing.html?id=${l.id}'">View</button>
+        <button class="action-btn danger" onclick="adminDeleteListing('${l.id}','${(l.title||'').replace(/'/g,'')}')">Delete</button>
+      </td>
+    </tr>`).join('');
+}
+
+function renderPayments(){
+  document.getElementById('payments-tbl').innerHTML=allData.payments.map(p=>`
+    <tr>
+      <td style="font-size:11px;color:var(--accent)">${(p.txn_id||'—').substring(0,16)}…</td>
+      <td>${p.profiles?.full_name||'—'}</td>
+      <td style="color:#6ee7b7;font-family:'Bebas Neue',sans-serif">GHS ${(p.total||p.amount||0).toLocaleString()}</td>
+      <td style="color:var(--muted)">${p.method||'—'}</td>
+      <td><span class="pill pill-${p.status}">${p.status}</span></td>
+      <td style="color:var(--muted)">${new Date(p.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</td>
+    </tr>`).join('');
+}
+
+function renderVerifications(){
+  document.getElementById('verifications-tbl').innerHTML=allData.verifications.length
+    ?allData.verifications.map(v=>`
+    <tr>
+      <td>${v.profiles?.full_name||'—'} <span style="color:var(--muted);font-size:10px">(${v.profiles?.role||'—'})</span></td>
+      <td style="color:var(--muted)">${v.id_type||'—'}</td>
+      <td style="color:var(--muted)">${v.id_number||'—'}</td>
+      <td><span class="pill pill-${v.status==='verified'?'verified':v.status==='pending'?'pending':'unverified'}">${v.status}</span></td>
+      <td style="color:var(--muted)">${new Date(v.submitted_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</td>
+      <td>
+        ${v.status==='pending'?`
+          <button class="action-btn" onclick="approveVerification('${v.id}','${v.user_id}')">✓ Approve</button>
+          <button class="action-btn danger" onclick="rejectVerification('${v.id}')">✕ Reject</button>
+        `:v.status==='verified'?'<span style="color:#6ee7b7;font-size:11px">✓ Verified</span>':'<span style="color:var(--muted);font-size:11px">Rejected</span>'}
+      </td>
+    </tr>`).join('')
+    :'<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--muted)">No verification submissions yet</td></tr>';
+}
+
+function renderRequests(){
+  document.getElementById('req-tbl').innerHTML=allData.requests.length
+    ?allData.requests.map(r=>`
+    <tr>
+      <td>${r.profiles?.full_name||'—'}</td>
+      <td style="color:var(--muted)">${r.listings?.title||'—'}</td>
+      <td style="color:var(--muted)">${r.move_in_date?new Date(r.move_in_date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—'}</td>
+      <td style="color:var(--muted)">${r.lease_duration||'—'}</td>
+      <td><span class="pill pill-${r.status==='approved'?'paid':r.status==='pending'?'pending':'unverified'}">${r.status}</span></td>
+      <td style="color:var(--muted)">${new Date(r.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</td>
+    </tr>`).join('')
+    :'<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--muted)">No rental requests yet</td></tr>';
+}
+
+async function approveVerification(vid,uid){
+  await sb.from('verifications').update({status:'verified'}).eq('id',vid);
+  await sb.from('profiles').update({is_verified:true}).eq('id',uid);
+  showToast('User verified successfully','ok');
+  await loadAllData();
+}
+
+async function rejectVerification(vid){
+  await sb.from('verifications').update({status:'rejected'}).eq('id',vid);
+  showToast('Verification rejected','err');
+  await loadAllData();
+}
+
+async function deleteUser(id,name){
+  if(!confirm(`Delete user "${name}"? This will remove all their data.`))return;
+  await sb.from('profiles').delete().eq('id',id);
+  showToast('User deleted','err');
+  await loadAllData();
+}
+
+async function adminDeleteListing(id,title){
+  if(!confirm(`Delete listing "${title}"?`))return;
+  await sb.from('listings').delete().eq('id',id);
+  showToast('Listing deleted','err');
+  await loadAllData();
+}
+
+function filterTable(tableId,query){
+  const q=query.toLowerCase();
+  document.querySelectorAll(`#${tableId} tr`).forEach(row=>{
+    row.style.display=row.textContent.toLowerCase().includes(q)?'':'none';
+  });
+}
+
+function showSection(name,el){
+  document.querySelectorAll('.section-page').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+async function doLogout(){await sb.auth.signOut();location.href='index.html';}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+const ADMIN_EMAIL='agyemanosborn2000@gmail.com';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  if(session.user.email!==ADMIN_EMAIL){hideLoader();location.replace('singularity-rentals.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

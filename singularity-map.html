@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Map View</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --surface3: #e8eef5;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --accent: #0ea5e9;
+  --accent2: #7c3aed;
+  --accent3: #f59e0b;
+  --text: #0f172a;
+  --muted: #64748b;
+  --success: #059669;
+  --danger: #dc2626;
+  --warn: #f59e0b;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 60px; padding: 0 20px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+.nav-logo { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; }
+.nav-logo-mark { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.2em; color: var(--accent); line-height: 1; }
+.nav-logo-sub { font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+
+.nav-center {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 4px;
+}
+.nav-mode-btn {
+  padding: 7px 16px; border-radius: 9px; border: none;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s; color: var(--muted); background: none;
+  display: flex; align-items: center; gap: 5px;
+}
+.nav-mode-btn.active {
+  background: var(--surface); color: var(--accent);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-user {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.nav-avatar {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 11px; color: #fff;
+}
+.nav-username { font-size: 11px; color: var(--text); }
+.btn-back-nav {
+  padding: 7px 14px; border-radius: 9px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-back-nav:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── MAIN LAYOUT ── */
+.app-shell {
+  position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  display: flex;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  width: 360px; min-width: 360px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden; z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+/* Filter bar */
+.filter-zone {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.search-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.map-search-wrap { flex: 1; position: relative; }
+.map-search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); width: 14px; height: 14px;
+}
+.map-search {
+  width: 100%; padding: 9px 10px 9px 30px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; font-family: 'DM Mono', monospace; font-size: 12px;
+  color: var(--text); outline: none; transition: border-color 0.2s;
+}
+.map-search:focus { border-color: var(--accent); background: var(--surface); }
+.map-search::placeholder { color: var(--muted); }
+
+.filter-btn {
+  padding: 9px 14px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface2);
+  color: var(--muted); font-family: 'DM Mono', monospace;
+  font-size: 11px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 5px;
+}
+.filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.06); }
+
+/* Neighbourhood chips */
+.hood-chips {
+  display: flex; gap: 6px; flex-wrap: nowrap;
+  overflow-x: auto; padding-bottom: 2px;
+  margin-bottom: 10px;
+}
+.hood-chips::-webkit-scrollbar { display: none; }
+.hood-chip {
+  padding: 5px 12px; border-radius: 20px; white-space: nowrap;
+  border: 1px solid var(--border); background: var(--surface2);
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.hood-chip:hover { border-color: var(--accent); color: var(--accent); }
+.hood-chip.active {
+  border-color: var(--accent); color: #fff;
+  background: var(--accent); font-weight: 600;
+}
+
+/* Type + price row */
+.type-price-row { display: flex; gap: 6px; align-items: center; }
+.type-select, .price-select {
+  flex: 1; padding: 7px 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 9px; font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--muted); outline: none; cursor: pointer; transition: border-color 0.2s;
+}
+.type-select:focus, .price-select:focus { border-color: var(--accent); color: var(--text); }
+.type-select option, .price-select option { background: var(--surface); }
+.results-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
+
+/* Listings scroll */
+.listings-scroll {
+  flex: 1; overflow-y: auto; padding: 10px 12px;
+}
+.listings-scroll::-webkit-scrollbar { width: 3px; }
+.listings-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Count bar */
+.count-bar {
+  padding: 8px 16px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.count-text { font-size: 11px; color: var(--muted); }
+.count-text strong { color: var(--text); }
+.sort-sel {
+  padding: 5px 10px; border-radius: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--muted); outline: none; cursor: pointer;
+}
+
+/* ── LISTING CARD (left panel) ── */
+.listing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 8px; cursor: pointer;
+  transition: all 0.22s;
+}
+.listing-card:hover, .listing-card.highlighted {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(14,165,233,0.12);
+  transform: translateY(-1px);
+}
+.listing-card.highlighted { background: rgba(14,165,233,0.03); }
+
+.card-img-wrap {
+  position: relative; height: 130px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-img-wrap::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, transparent 50%);
+}
+.card-emoji { font-size: 44px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
+.card-status-badge {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  padding: 3px 9px; border-radius: 15px; font-size: 9px;
+  font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.badge-available { background: rgba(5,150,105,0.12); color: var(--success); border: 1px solid rgba(5,150,105,0.25); }
+.badge-occupied { background: rgba(220,38,38,0.1); color: var(--danger); border: 1px solid rgba(220,38,38,0.2); }
+.badge-pending { background: rgba(245,158,11,0.12); color: var(--warn); border: 1px solid rgba(245,158,11,0.25); }
+.card-price-float {
+  position: absolute; bottom: 10px; left: 12px; z-index: 2;
+  font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+  color: var(--accent); letter-spacing: 0.04em;
+}
+.card-price-float span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; }
+
+.card-body { padding: 10px 14px 12px; }
+.card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+.card-address { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+.card-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.meta-tag {
+  font-size: 9px; padding: 3px 8px; border-radius: 5px;
+  background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+}
+
+/* ── MAP ── */
+.map-container {
+  flex: 1; position: relative;
+}
+#map {
+  width: 100%; height: 100%;
+}
+
+/* Custom Leaflet marker */
+.custom-marker {
+  background: var(--accent);
+  border: 2px solid #fff;
+  border-radius: 12px 12px 12px 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 3px 10px rgba(14,165,233,0.4);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.custom-marker.occupied { background: var(--danger); box-shadow: 0 3px 10px rgba(220,38,38,0.3); }
+.custom-marker.pending { background: var(--warn); box-shadow: 0 3px 10px rgba(245,158,11,0.3); }
+.custom-marker.selected { transform: rotate(-45deg) scale(1.3); z-index: 1000 !important; }
+
+.marker-price-label {
+  background: #fff;
+  border: 1.5px solid var(--accent);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 11px;
+  color: var(--accent);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.marker-price-label:hover, .marker-price-label.selected {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 4px 16px rgba(14,165,233,0.35);
+  transform: scale(1.1);
+}
+.marker-price-label.occupied { border-color: var(--danger); color: var(--danger); }
+.marker-price-label.occupied:hover, .marker-price-label.occupied.selected { background: var(--danger); color: #fff; }
+.marker-price-label.pending { border-color: var(--warn); color: var(--warn); }
+.marker-price-label.pending:hover, .marker-price-label.pending.selected { background: var(--warn); color: #fff; }
+
+/* Leaflet popup custom styles */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+  border: 1px solid var(--border) !important;
+  padding: 0 !important;
+  overflow: hidden;
+  font-family: 'DM Mono', monospace !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 280px !important;
+}
+.leaflet-popup-tip-container { display: none; }
+.leaflet-popup-close-button {
+  top: 10px !important; right: 10px !important;
+  color: var(--muted) !important; font-size: 18px !important;
+  z-index: 10;
+}
+
+.popup-card { font-family: 'DM Mono', monospace; }
+.popup-img {
+  width: 100%; height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; position: relative;
+}
+.popup-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, transparent 50%);
+}
+.popup-body { padding: 8px 14px 14px; }
+.popup-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.popup-address { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+.popup-price { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 6px; }
+.popup-price span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 400; }
+.popup-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.popup-tag { font-size: 9px; padding: 3px 7px; border-radius: 5px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+.popup-actions { display: flex; gap: 6px; }
+.popup-btn {
+  flex: 1; padding: 8px; border-radius: 8px; border: none;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.popup-btn-ghost { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+.popup-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.popup-btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(14,165,233,0.3); }
+.popup-btn-primary:hover { box-shadow: 0 4px 16px rgba(14,165,233,0.45); }
+
+/* ── MAP CONTROLS OVERLAY ── */
+.map-controls {
+  position: absolute; top: 14px; left: 14px; z-index: 500;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.map-ctrl-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(255,255,255,0.97); border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; cursor: pointer; transition: all 0.2s;
+  color: var(--muted);
+}
+.map-ctrl-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 14px rgba(14,165,233,0.2); }
+
+/* Legend */
+.map-legend {
+  position: absolute; bottom: 24px; left: 14px; z-index: 500;
+  background: rgba(255,255,255,0.97); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.legend-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.legend-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; font-size: 10px; color: var(--text); }
+.legend-row:last-child { margin-bottom: 0; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+/* Stats overlay (top right of map) */
+.map-stats {
+  position: absolute; top: 14px; right: 14px; z-index: 500;
+  display: flex; gap: 8px;
+}
+.map-stat-pill {
+  background: rgba(255,255,255,0.97); border: 1px solid var(--border);
+  border-radius: 20px; padding: 7px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 11px; display: flex; align-items: center; gap: 5px;
+}
+.map-stat-num { font-family: 'Syne', sans-serif; font-weight: 700; }
+
+/* Panel toggle (mobile) */
+.panel-toggle {
+  display: none;
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 600; background: var(--accent); color: #fff;
+  border: none; border-radius: 20px; padding: 10px 24px;
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(14,165,233,0.4);
+  transition: all 0.2s;
+}
+.panel-toggle:hover { box-shadow: 0 6px 28px rgba(14,165,233,0.55); }
+
+/* Empty state */
+.empty-state { padding: 40px 20px; text-align: center; color: var(--muted); }
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+.empty-title { font-family: 'Syne', sans-serif; font-size: 16px; color: var(--text); margin-bottom: 6px; }
+.empty-sub { font-size: 12px; line-height: 1.6; }
+
+/* Tile attribution override */
+.leaflet-control-attribution { font-size: 9px !important; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .navbar { height: 54px; padding: 0 14px; }
+  .nav-center { display: none; }
+  .nav-username { display: none; }
+  .btn-back-nav { padding: 6px 10px; font-size: 9px; }
+
+  .app-shell { flex-direction: column; top: 54px; }
+
+  .left-panel {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    width: 100%; height: 55vh;
+    border-right: none; border-top: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    z-index: 700;
+  }
+  .left-panel.open { transform: translateY(0); }
+
+  /* Drag handle */
+  .left-panel::before {
+    content: ''; display: block;
+    width: 40px; height: 4px; border-radius: 2px;
+    background: var(--border); margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  .map-container { flex: 1; height: calc(100vh - 54px); }
+
+  .panel-toggle { display: flex; align-items: center; gap: 6px; }
+  .panel-toggle.panel-open { background: var(--text); }
+
+  .map-stats { display: none; }
+  .map-legend { bottom: 14px; }
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">Singularity</div>
+    <div class="nav-logo-sub">Rentals</div>
+  </a>
+
+  <div class="nav-center">
+    <button class="nav-mode-btn" onclick="window.location.href='singularity-tenant.html'">
+      ☰ List View
+    </button>
+    <button class="nav-mode-btn active">
+      🗺 Map View
+    </button>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-user">
+      <div class="nav-avatar">AB</div>
+      <span class="nav-username">Landlord</span>
+    </div>
+    <a class="btn-back-nav" href="singularity-tenant.html">← Browse</a>
+    <button class="btn-back-nav" onclick="window.doLogout&&window.doLogout()" style="color:#dc2626;border-color:rgba(220,38,38,0.2)">🚪 Log Out</button>
+  </div>
+</nav>
+
+<!-- ── APP SHELL ── -->
+<div class="app-shell">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="left-panel" id="left-panel">
+
+    <!-- Filter Zone -->
+    <div class="filter-zone">
+      <div class="search-row">
+        <div class="map-search-wrap">
+          <svg class="map-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="map-search" placeholder="Search properties…" id="map-search" oninput="filterListings()">
+        </div>
+        <button class="filter-btn" id="filter-toggle-btn" onclick="toggleFilters()">
+          ⚙ Filters
+        </button>
+      </div>
+
+      <!-- Neighbourhood chips -->
+      <div class="hood-chips" id="hood-chips">
+        <div class="hood-chip active" onclick="selectHood(this,'all')">All Areas</div>
+      </div>
+
+      <!-- Type + price -->
+      <div class="type-price-row">
+        <select class="type-select" id="type-filter" onchange="filterListings()">
+          <option value="">All Types</option>
+          <option>Studio</option>
+          <option>1 Bedroom</option>
+          <option>2 Bedrooms</option>
+          <option>3 Bedrooms</option>
+          <option>Entire House</option>
+        </select>
+        <select class="price-select" id="price-filter" onchange="filterListings()">
+          <option value="">Any Price</option>
+          <option value="2000">Under GHS 2,000</option>
+          <option value="3000">Under GHS 3,000</option>
+          <option value="4000">Under GHS 4,000</option>
+          <option value="6000">Under GHS 6,000</option>
+        </select>
+        <span class="results-label" id="results-label">8 results</span>
+      </div>
+    </div>
+
+    <!-- Count bar -->
+    <div class="count-bar">
+      <div class="count-text"><strong id="count-num">8</strong> properties found</div>
+      <select class="sort-sel" id="sort-sel" onchange="filterListings()">
+        <option value="price-asc">Price ↑</option>
+        <option value="price-desc">Price ↓</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+
+    <!-- Listings -->
+    <div class="listings-scroll" id="listings-scroll"></div>
+
+  </div><!-- end left-panel -->
+
+  <!-- ── MAP ── -->
+  <div class="map-container">
+    <div id="map"></div>
+
+    <!-- Custom map controls -->
+    <div class="map-controls">
+      <div class="map-ctrl-btn" onclick="map.zoomIn()" title="Zoom In">＋</div>
+      <div class="map-ctrl-btn" onclick="map.zoomOut()" title="Zoom Out">－</div>
+      <div class="map-ctrl-btn" onclick="resetView()" title="Reset View">⌖</div>
+      <div class="map-ctrl-btn" onclick="locateUser()" title="My Location">◎</div>
+    </div>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <div class="legend-title">Status</div>
+      <div class="legend-row"><div class="legend-dot" style="background:var(--accent)"></div>Available</div>
+      <div class="legend-row"><div class="legend-dot" style="background:var(--danger)"></div>Occupied</div>
+      <div class="legend-row"><div class="legend-dot" style="background:var(--warn)"></div>Pending</div>
+    </div>
+
+    <!-- Stats pills -->
+    <div class="map-stats">
+      <div class="map-stat-pill">
+        <span style="color:var(--success)">●</span>
+        <span class="map-stat-num" id="stat-avail">5</span>
+        <span style="color:var(--muted)">Available</span>
+      </div>
+      <div class="map-stat-pill">
+        <span style="color:var(--danger)">●</span>
+        <span class="map-stat-num" id="stat-occ">2</span>
+        <span style="color:var(--muted)">Occupied</span>
+      </div>
+      <div class="map-stat-pill">
+        <span style="color:var(--warn)">●</span>
+        <span class="map-stat-num" id="stat-pend">1</span>
+        <span style="color:var(--muted)">Pending</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-shell -->
+
+<!-- Mobile panel toggle -->
+<button class="panel-toggle" id="panel-toggle" onclick="togglePanel()">
+  🏠 Show Listings
+</button>
+
+<!-- Leaflet JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<script>
+/* ═══════════════════════════════════
+   LISTINGS DATA — real Accra coords
+═══════════════════════════════════ */
+const LISTINGS = []; // Loaded from Supabase
+
+
+/* ═══════════════════════════════════
+   MAP INIT
+═══════════════════════════════════ */
+// Centre on Accra
+const ACCRA_CENTER = [5.6037, -0.1870];
+const DEFAULT_ZOOM = 12;
+
+// Disable default Leaflet zoom controls (we have custom ones)
+const map = L.map('map', {
+  center: ACCRA_CENTER,
+  zoom: DEFAULT_ZOOM,
+  zoomControl: false,
+  attributionControl: true,
+});
+
+// Light, clean tile layer — CartoDB Positron (crisp & minimal, no API key needed)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19,
+  minZoom: 10,
+}).addTo(map);
+
+/* ═══════════════════════════════════
+   STATE
+═══════════════════════════════════ */
+let activeHood = 'all';
+let activeListingId = null;
+let markers = {}; // id → leaflet marker
+let filteredListings = [...LISTINGS];
+let panelOpen = false;
+
+/* ═══════════════════════════════════
+   MARKERS
+═══════════════════════════════════ */
+function createMarkerIcon(listing, selected = false) {
+  const cls = `marker-price-label ${listing.status} ${selected ? 'selected' : ''}`;
+  return L.divIcon({
+    className: '',
+    html: `<div class="${cls}">GHS ${listing.priceStr}</div>`,
+    iconAnchor: [0, 0],
+    popupAnchor: [70, -5],
+  });
+}
+
+function buildPopupHTML(l) {
+  return `
+    <div class="popup-card">
+      <div class="popup-img" style="background:${l.bg}">
+        <span style="font-size:36px;position:relative;z-index:1">${l.emoji}</span>
+      </div>
+      <div class="popup-body">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="popup-title">${l.title}</div>
+          <span class="card-status-badge badge-${l.status}" style="position:static">${l.status}</span>
+        </div>
+        <div class="popup-address">📍 ${l.address}</div>
+        <div class="popup-price">GHS ${l.priceStr}<span>/mo</span></div>
+        <div class="popup-tags">
+          <span class="popup-tag">🛏 ${l.beds} bed${l.beds!==1?'s':''}</span>
+          <span class="popup-tag">🚿 ${l.baths} bath${l.baths!==1?'s':''}</span>
+          <span class="popup-tag">${l.type}</span>
+          ${l.tags.slice(0,2).map(t=>`<span class="popup-tag">${t}</span>`).join('')}
+        </div>
+        <div class="popup-actions">
+          <button class="popup-btn popup-btn-ghost" onclick="scrollToCard(${l.id})">Details</button>
+          <button class="popup-btn popup-btn-primary" ${l.status==='occupied'?'disabled style="opacity:0.5;cursor:not-allowed"':''} onclick="selectRoom(${l.id})">
+            ${l.status==='occupied' ? 'Occupied' : 'Select Room →'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function addMarkers(list) {
+  // Clear existing
+  Object.values(markers).forEach(m => map.removeLayer(m));
+  markers = {};
+
+  list.forEach(l => {
+    const marker = L.marker([l.lat, l.lng], {
+      icon: createMarkerIcon(l, false),
+      title: l.title,
+    }).addTo(map);
+
+    marker.bindPopup(buildPopupHTML(l), {
+      maxWidth: 280,
+      minWidth: 280,
+      closeButton: true,
+      className: 'singularity-popup',
+    });
+
+    marker.on('click', () => {
+      selectListing(l.id, false);
+    });
+
+    markers[l.id] = marker;
+  });
+}
+
+/* ═══════════════════════════════════
+   FILTERING
+═══════════════════════════════════ */
+function selectHood(el, hood) {
+  document.querySelectorAll('.hood-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeHood = hood;
+  filterListings();
+
+  // Fly to neighbourhood
+  const centres = {
+    'East Legon':   [5.6347, -0.1628],
+    'Labone':       [5.5754, -0.1684],
+    'Airport Res.': [5.6050, -0.1717],
+    'Cantonments':  [5.5872, -0.1854],
+    'Osu':          [5.5535, -0.1769],
+    'Spintex':      [5.6447, -0.1042],
+    'Adenta':       [5.7003, -0.1617],
+    'Tema':         [5.6698, -0.0166],
+    'Ridge':        [5.5700, -0.2017],
+  };
+  if (hood === 'all') {
+    map.flyTo(ACCRA_CENTER, DEFAULT_ZOOM, { duration: 1.2 });
+  } else if (centres[hood]) {
+    map.flyTo(centres[hood], 14, { duration: 1.2 });
+  }
+}
+
+function filterListings() {
+  const q = document.getElementById('map-search').value.toLowerCase();
+  const type = document.getElementById('type-filter').value;
+  const maxPrice = parseInt(document.getElementById('price-filter').value) || Infinity;
+  const sort = document.getElementById('sort-sel').value;
+
+  let result = LISTINGS.filter(l => {
+    if (activeHood !== 'all' && l.hood !== activeHood) return false;
+    if (type && l.type !== type) return false;
+    if (l.price > maxPrice) return false;
+    if (q && !l.title.toLowerCase().includes(q) && !l.address.toLowerCase().includes(q) && !l.type.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (sort === 'price-asc') result.sort((a,b) => a.price - b.price);
+  else if (sort === 'price-desc') result.sort((a,b) => b.price - a.price);
+  else result.sort((a,b) => a.title.localeCompare(b.title));
+
+  filteredListings = result;
+  renderCards(result);
+  addMarkers(result);
+  updateStats(result);
+
+  document.getElementById('count-num').textContent = result.length;
+  document.getElementById('results-label').textContent = result.length + ' results';
+}
+
+function updateStats(list) {
+  const avail = list.filter(l => l.status === 'available').length;
+  const occ = list.filter(l => l.status === 'occupied').length;
+  const pend = list.filter(l => l.status === 'pending').length;
+  document.getElementById('stat-avail').textContent = avail;
+  document.getElementById('stat-occ').textContent = occ;
+  document.getElementById('stat-pend').textContent = pend;
+}
+
+/* ═══════════════════════════════════
+   CARDS
+═══════════════════════════════════ */
+function renderCards(list) {
+  const scroll = document.getElementById('listings-scroll');
+  if (!list.length) {
+    const noListings = LISTINGS.length === 0;
+    scroll.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">${noListings ? '🏠' : '🔍'}</div>
+        <div class="empty-title">${noListings ? 'No listings yet' : 'No properties found'}</div>
+        <div class="empty-sub">${noListings ? 'Landlords haven't posted any properties yet. Check back soon.' : 'Try adjusting your filters or selecting a different neighbourhood.'}</div>
+      </div>`;
+    return;
+  }
+  scroll.innerHTML = list.map((l, i) => `
+    <div class="listing-card" id="card-${l.id}"
+      onclick="selectListing(${l.id}, true)"
+      style="animation: fadeUp 0.3s ${i*0.04}s ease both">
+      <div class="card-img-wrap" style="background:${l.bg}">
+        <span class="card-emoji">${l.emoji}</span>
+        <span class="card-status-badge badge-${l.status}">${l.status}</span>
+        <div class="card-price-float">GHS ${l.priceStr}<span>/mo</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${l.title}</div>
+        <div class="card-address">📍 ${l.address}</div>
+        <div class="card-meta">
+          <span class="meta-tag">🛏 ${l.beds} bed${l.beds!==1?'s':''}</span>
+          <span class="meta-tag">🚿 ${l.baths} bath${l.baths!==1?'s':''}</span>
+          <span class="meta-tag">${l.type}</span>
+          ${l.tags.slice(0,1).map(t=>`<span class="meta-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════
+   SELECTION
+═══════════════════════════════════ */
+function selectListing(id, flyToIt) {
+  // Deselect previous
+  if (activeListingId) {
+    const prev = LISTINGS.find(l => l.id === activeListingId);
+    if (prev && markers[prev.id]) {
+      markers[prev.id].setIcon(createMarkerIcon(prev, false));
+    }
+    const prevCard = document.getElementById('card-' + activeListingId);
+    if (prevCard) prevCard.classList.remove('highlighted');
+  }
+
+  activeListingId = id;
+  const listing = LISTINGS.find(l => l.id === id);
+  if (!listing) return;
+
+  // Highlight card
+  const card = document.getElementById('card-' + id);
+  if (card) {
+    card.classList.add('highlighted');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Update marker to selected
+  if (markers[id]) {
+    markers[id].setIcon(createMarkerIcon(listing, true));
+    if (flyToIt) {
+      map.flyTo([listing.lat, listing.lng], 15, { duration: 0.8 });
+    }
+    markers[id].openPopup();
+  }
+
+  // On mobile, close panel when marker selected from panel
+  if (flyToIt && window.innerWidth <= 768) {
+    setPanelOpen(false);
+  }
+}
+
+function scrollToCard(id) {
+  const card = document.getElementById('card-' + id);
+  if (card) {
+    if (window.innerWidth <= 768) setPanelOpen(true);
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    card.classList.add('highlighted');
+  }
+}
+
+function selectRoom(id) {
+  window.location.href = 'singularity-tenant.html';
+}
+
+/* ═══════════════════════════════════
+   MAP CONTROLS
+═══════════════════════════════════ */
+function resetView() {
+  map.flyTo(ACCRA_CENTER, DEFAULT_ZOOM, { duration: 1 });
+  // Reset all filters
+  document.getElementById('map-search').value = '';
+  document.getElementById('type-filter').value = '';
+  document.getElementById('price-filter').value = '';
+  document.querySelectorAll('.hood-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('.hood-chip').classList.add('active'); // All Areas
+  activeHood = 'all';
+  filterListings();
+}
+
+function locateUser() {
+  map.locate({ setView: true, maxZoom: 15 });
+  map.on('locationfound', e => {
+    L.circleMarker(e.latlng, {
+      radius: 10, fillColor: var_accent, color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map).bindPopup('📍 You are here').openPopup();
+  });
+  map.on('locationerror', () => {
+    alert('Location access denied or unavailable.');
+  });
+}
+
+function toggleFilters() {
+  const btn = document.getElementById('filter-toggle-btn');
+  btn.classList.toggle('active');
+}
+
+/* ═══════════════════════════════════
+   MOBILE PANEL
+═══════════════════════════════════ */
+function setPanelOpen(open) {
+  panelOpen = open;
+  const panel = document.getElementById('left-panel');
+  const btn = document.getElementById('panel-toggle');
+  panel.classList.toggle('open', open);
+  btn.textContent = open ? '🗺 Show Map' : '🏠 Show Listings (' + filteredListings.length + ')';
+  btn.classList.toggle('panel-open', open);
+}
+
+function togglePanel() {
+  setPanelOpen(!panelOpen);
+}
+
+// Close panel when tapping map
+map.on('click', () => {
+  if (window.innerWidth <= 768 && panelOpen) {
+    setPanelOpen(false);
+  }
+});
+
+/* ═══════════════════════════════════
+   CSS VAR HELPER
+═══════════════════════════════════ */
+const var_accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#0ea5e9';
+
+/* ═══════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════ */
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+`;
+document.head.appendChild(style);
+
+/* ═══════════════════════════════════
+   NEIGHBOURHOOD CENTRES (for fly-to)
+═══════════════════════════════════ */
+const HOOD_CENTRES = {
+  'East Legon':   [5.6347, -0.1628],
+  'Labone':       [5.5754, -0.1684],
+  'Airport Res.': [5.6050, -0.1717],
+  'Cantonments':  [5.5872, -0.1854],
+  'Osu':          [5.5535, -0.1769],
+  'Spintex':      [5.6447, -0.1042],
+  'Adenta':       [5.7003, -0.1617],
+  'Tema':         [5.6698, -0.0166],
+  'Ridge':        [5.5700, -0.2017],
+};
+
+/* ═══════════════════════════════════
+   SUPABASE — Load real listings
+═══════════════════════════════════ */
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sbMap=supabase.createClient(SB_URL,SB_KEY);
+
+    // Auth via getSession - works on all domains
+        var l=document.getElementById('app-loader');
+    if(l){l.style.opacity='0';setTimeout(function(){l.remove();},300);}
+    const {data:{session}}=await sbMap.auth.getSession();
+    const user=session?.user||null;
+    if(!user){location.href='index.html';return;}
+    currentUserMap=user;
+    const {data:p}=await sbMap.from('profiles').select('*').eq('id',user.id).single();
+    if(!p){location.href='index.html';return;}
+    currentProfileMap=p;
+
+    // Update navbar
+    const fn=p.full_name.split(' ')[0];
+    const uname=document.querySelector('.nav-username');
+    const av=document.querySelector('.nav-avatar');
+    if(uname)uname.textContent=fn;
+    if(av){
+      if(p.profile_photo)av.innerHTML=`<img src="${p.profile_photo}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+      else av.textContent=fn[0].toUpperCase();
+    }
+
+    window.doLogout=async()=>{await sbMap.auth.signOut();location.href='index.html';};
+
+    // Load real listings from Supabase
+    const {data:dbListings,error}=await sbMap.from('listings')
+      .select('*,profiles:landlord_id(full_name,phone)')
+      .eq('is_sold',false)
+      .order('created_at',{ascending:false});
+
+    if(!error&&dbListings&&dbListings.length){
+      // Map DB listings to LISTINGS format
+      const bgs=['linear-gradient(135deg,#f5f3ff,#ede9fe)','linear-gradient(135deg,#eff6ff,#dbeafe)','linear-gradient(135deg,#f0fdf4,#dcfce7)','linear-gradient(135deg,#fff7ed,#fed7aa)'];
+      const emojis=['🏠','🏡','🏢','🏙️','🌴','🏗️','✈️','🏛️'];
+
+      // Neighbourhood centre coordinates for listings without GPS
+      const hoodCoords={
+        'East Legon':[5.6347,-0.1628],'Labone':[5.5754,-0.1684],
+        'Airport Res.':[5.6050,-0.1717],'Airport Residential':[5.6050,-0.1717],
+        'Cantonments':[5.5872,-0.1854],'Osu':[5.5535,-0.1769],
+        'Spintex':[5.6447,-0.1042],'Adenta':[5.7003,-0.1617],
+        'Tema':[5.6698,-0.0166],'Ridge':[5.5700,-0.2017],
+        'Accra':[5.6037,-0.1870]
+      };
+
+      const mapped=dbListings.map((l,i)=>{
+        // Try to get coords from listing, else infer from address/neighbourhood
+        let lat=l.lat,lng=l.lng;
+        if(!lat||!lng){
+          const hood=l.neighbourhood||l.address?.split(',')[0]?.trim()||'Accra';
+          const coords=hoodCoords[hood]||[5.6037+(Math.random()-0.5)*0.1,-0.1870+(Math.random()-0.5)*0.1];
+          lat=coords[0]+(Math.random()-0.5)*0.008;
+          lng=coords[1]+(Math.random()-0.5)*0.008;
+        }
+        return {
+          id:l.id,
+          title:l.title,
+          address:l.address,
+          hood:l.neighbourhood||l.address?.split(',')[0]?.trim()||'Accra',
+          lat,lng,
+          price:l.price,
+          priceStr:l.price.toLocaleString(),
+          type:l.type,beds:l.beds,baths:l.baths,
+          status:l.status,
+          emoji:l.emoji||emojis[i%emojis.length],
+          bg:bgs[i%bgs.length],
+          tags:l.features?.slice(0,3)||[],
+          desc:l.description||'A great property in '+l.address,
+          coverPhoto:l.photos?.[0]||null,
+          landlordName:l.profiles?.full_name||'Landlord',
+          landlordId:l.landlord_id,
+        };
+      });
+
+      // Replace sample LISTINGS with real ones
+      LISTINGS.length=0;
+      mapped.forEach(l=>LISTINGS.push(l));
+
+      // Rebuild neighbourhood chips from real data
+      const hoods=[...new Set(mapped.map(l=>l.hood))].filter(Boolean);
+      const chipsEl=document.getElementById('hood-chips');
+      if(chipsEl){
+        chipsEl.innerHTML='<div class="hood-chip active" onclick="selectHood(this,\'all\')">All Areas</div>'
+          +hoods.map(h=>`<div class="hood-chip" onclick="selectHood(this,'${h}')">${h}</div>`).join('');
+      }
+    }
+
+    // Initial render with real data (falls back to samples if DB empty)
+    filterListings();
+    updateStats(LISTINGS);
+  };
+  document.head.appendChild(s);
+})();
+
+// Update panel button count on resize
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    setPanelOpen(false);
+    document.getElementById('left-panel').classList.remove('open');
+  }
+});
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+/* Supabase load with retry - fixes blank page on Vercel */
+function loadSupabaseWithRetry(callback, retries=3){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = callback;
+  s.onerror = () => {
+    if(retries > 0){
+      console.warn('Supabase CDN failed, retrying...');
+      setTimeout(()=>loadSupabaseWithRetry(callback, retries-1), 1500);
+    } else {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;"><div style="font-size:48px">⚠️</div><div style="font-size:18px;color:#64748b">Could not connect. Please check your internet and refresh.</div><button onclick="location.reload()" style="padding:10px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Retry</button></div>';
+    }
+  };
+  document.head.appendChild(s);
+}
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

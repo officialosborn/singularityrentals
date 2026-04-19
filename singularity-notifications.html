@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#f8fafc;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}button,[onclick]{cursor:pointer!important;}
+
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 6px rgba(0,0,0,0.05);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.2em;color:var(--accent);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.nav-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);}
+.nav-btn.primary{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+
+.page{max-width:680px;margin:0 auto;padding:28px 24px 60px;}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.04em;margin-bottom:4px;}
+.page-sub{font-size:12px;color:var(--muted);margin-bottom:24px;}
+
+/* FILTER TABS */
+.filter-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.tabs{display:flex;gap:6px;}
+.tab{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);transition:all 0.2s;}
+.tab:hover{border-color:var(--accent2);color:var(--accent2);}
+.tab.active{border-color:var(--accent2);background:rgba(124,58,237,0.07);color:var(--accent2);font-weight:600;}
+.mark-all-btn{font-size:11px;color:var(--accent);background:none;border:none;font-family:'DM Mono',monospace;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;}
+.mark-all-btn:hover{text-decoration:underline;}
+
+/* NOTIFICATION ITEMS */
+.notif-list{display:flex;flex-direction:column;gap:8px;}
+.notif-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;transition:all 0.2s;position:relative;}
+.notif-item:hover{border-color:rgba(124,58,237,0.2);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.notif-item.unread{background:rgba(124,58,237,0.03);border-color:rgba(124,58,237,0.15);}
+.notif-item.unread::before{content:'';position:absolute;left:-1px;top:16px;bottom:16px;width:3px;background:var(--accent2);border-radius:0 2px 2px 0;}
+
+.notif-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.icon-payment{background:rgba(5,150,105,0.1);}
+.icon-request{background:rgba(14,165,233,0.1);}
+.icon-maintenance{background:rgba(245,158,11,0.1);}
+.icon-success{background:rgba(5,150,105,0.1);}
+.icon-warning{background:rgba(220,38,38,0.08);}
+.icon-info{background:rgba(100,116,139,0.1);}
+
+.notif-body{flex:1;min-width:0;}
+.notif-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:3px;color:#0f172a;}
+.notif-message{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px;}
+.notif-time{font-size:10px;color:var(--muted);letter-spacing:0.05em;}
+.notif-link{display:inline-block;margin-top:6px;font-size:11px;color:var(--accent2);font-weight:600;}
+.notif-link:hover{text-decoration:underline;}
+
+.notif-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.unread-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+.read-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);transition:all 0.2s;}
+.read-btn:hover{border-color:var(--success);color:var(--success);}
+
+/* GROUP HEADER */
+.group-header{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:12px 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;}
+.empty-icon{font-size:48px;margin-bottom:14px;}
+.empty-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;}
+.empty-sub{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+
+@media(max-width:600px){.page{padding:16px;}}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<nav class="navbar">
+  <div class="nav-logo">Singularity Rentals</div>
+  <div class="nav-right">
+    <span id="unread-count" style="font-size:12px;color:var(--muted)"></span>
+    <button class="nav-btn" id="back-btn">← Dashboard</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-title">Notifications</div>
+  <div class="page-sub" id="page-sub">Loading…</div>
+
+  <div class="filter-row">
+    <div class="tabs">
+      <button class="tab active" onclick="setFilter(this,'all')">All</button>
+      <button class="tab" onclick="setFilter(this,'unread')">Unread</button>
+      <button class="tab" onclick="setFilter(this,'payment')">💳 Payments</button>
+      <button class="tab" onclick="setFilter(this,'request')">📋 Requests</button>
+      <button class="tab" onclick="setFilter(this,'maintenance')">🔧 Maintenance</button>
+    </div>
+    <button class="mark-all-btn" onclick="markAllRead()">Mark all as read</button>
+  </div>
+
+  <div class="notif-list" id="notif-list">
+    <div class="empty"><div class="empty-icon">🔔</div><div class="empty-title">Loading…</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+,allNotifs=[],currentFilter='all';
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  currentProfile=p;
+
+  // Set back button destination based on role
+  document.getElementById('back-btn').onclick=()=>{
+    location.href=p.role==='landlord'?'singularity-rentals.html':'singularity-dashboard.html';
+  };
+
+  await loadNotifications();
+
+  // Real-time subscription for new notifications
+  sb.channel('notifications')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:`user_id=eq.${user.id}`},
+      payload=>{
+        allNotifs.unshift(payload.new);
+        renderNotifications();
+        updateUnreadCount();
+      })
+    .subscribe();
+}
+
+async function loadNotifications(){
+  const {data,error}=await sb.from('notifications')
+    .select('*')
+    .eq('user_id',currentUser.id)
+    .order('created_at',{ascending:false})
+    .limit(50);
+
+  if(error){
+    // Table might not exist yet — show empty state
+    renderEmpty();
+    document.getElementById('page-sub').textContent='No notifications yet';
+    return;
+  }
+
+  allNotifs=data||[];
+
+  // If no notifications, create some welcome ones
+  if(!allNotifs.length){
+    await createWelcomeNotification();
+    const {data:fresh}=await sb.from('notifications').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+    allNotifs=fresh||[];
+  }
+
+  updateUnreadCount();
+  renderNotifications();
+}
+
+async function createWelcomeNotification(){
+  try{
+    await sb.from('notifications').insert({
+      user_id:currentUser.id,
+      title:'Welcome to Singularity Rentals! 🎉',
+      message:`Your account has been created successfully. ${currentProfile?.role==='landlord'?'Start by posting your first listing to attract tenants.':'Browse available listings and find your perfect home.'}`,
+      type:'success',
+      link:currentProfile?.role==='landlord'?'singularity-rentals.html':'singularity-tenant.html',
+    });
+  }catch(e){console.warn('Could not create welcome notification:',e);}
+}
+
+function updateUnreadCount(){
+  const unread=allNotifs.filter(n=>!n.is_read).length;
+  const el=document.getElementById('unread-count');
+  el.textContent=unread>0?`${unread} unread`:'All read';
+  el.style.color=unread>0?'var(--accent2)':'var(--muted)';
+  // Update any bell badges on parent pages
+  try{
+    localStorage.setItem('singularity_unread_notifs',unread);
+  }catch(e){}
+}
+
+function setFilter(el,filter){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter=filter;
+  renderNotifications();
+}
+
+function renderNotifications(){
+  const list=document.getElementById('notif-list');
+  let filtered=allNotifs;
+  if(currentFilter==='unread')filtered=allNotifs.filter(n=>!n.is_read);
+  else if(currentFilter!=='all')filtered=allNotifs.filter(n=>n.type===currentFilter);
+
+  if(!filtered.length){
+    renderEmpty(currentFilter);
+    return;
+  }
+
+  // Group by date
+  const today=new Date().toDateString();
+  const yesterday=new Date(Date.now()-86400000).toDateString();
+  const groups={Today:[],Yesterday:[],Earlier:[]};
+
+  filtered.forEach(n=>{
+    const d=new Date(n.created_at).toDateString();
+    if(d===today)groups.Today.push(n);
+    else if(d===yesterday)groups.Yesterday.push(n);
+    else groups.Earlier.push(n);
+  });
+
+  const typeIcons={payment:'💳',request:'📋',maintenance:'🔧',success:'✅',warning:'⚠️',info:'ℹ️'};
+  const typeColors={payment:'icon-payment',request:'icon-request',maintenance:'icon-maintenance',success:'icon-success',warning:'icon-warning',info:'icon-info'};
+
+  let html='';
+  Object.entries(groups).forEach(([group,items])=>{
+    if(!items.length)return;
+    html+=`<div class="group-header">${group}</div>`;
+    items.forEach(n=>{
+      const timeAgo=getTimeAgo(n.created_at);
+      html+=`
+        <div class="notif-item ${n.is_read?'':'unread'}" id="notif-${n.id}">
+          <div class="notif-icon ${typeColors[n.type]||'icon-info'}">${typeIcons[n.type]||'🔔'}</div>
+          <div class="notif-body">
+            <div class="notif-title">${n.title}</div>
+            <div class="notif-message">${n.message}</div>
+            ${n.link?`<a class="notif-link" href="${n.link}">View details →</a>`:''}
+            <div class="notif-time">${timeAgo}</div>
+          </div>
+          <div class="notif-right">
+            ${!n.is_read?`<div class="unread-dot"></div>`:''}
+            <button class="read-btn" title="${n.is_read?'Already read':'Mark as read'}" onclick="markRead('${n.id}',${n.is_read})">
+              ${n.is_read?'✓':'○'}
+            </button>
+          </div>
+        </div>`;
+    });
+  });
+
+  list.innerHTML=html;
+  document.getElementById('page-sub').textContent=`${filtered.length} notification${filtered.length!==1?'s':''}`;
+}
+
+function renderEmpty(filter='all'){
+  const msgs={
+    all:{icon:'🔔',title:'No notifications yet',sub:'You\'ll be notified here about payments, rental requests, maintenance updates and more.'},
+    unread:{icon:'✓',title:'All caught up!',sub:'You have no unread notifications.'},
+    payment:{icon:'💳',title:'No payment notifications',sub:'Payment confirmations and reminders will appear here.'},
+    request:{icon:'📋',title:'No request notifications',sub:'Rental request updates will appear here.'},
+    maintenance:{icon:'🔧',title:'No maintenance notifications',sub:'Maintenance request updates will appear here.'},
+  };
+  const m=msgs[filter]||msgs.all;
+  document.getElementById('notif-list').innerHTML=`
+    <div class="empty">
+      <div class="empty-icon">${m.icon}</div>
+      <div class="empty-title">${m.title}</div>
+      <div class="empty-sub">${m.sub}</div>
+    </div>`;
+}
+
+async function markRead(id,alreadyRead){
+  if(alreadyRead)return;
+  await sb.from('notifications').update({is_read:true}).eq('id',id);
+  const n=allNotifs.find(x=>x.id===id);
+  if(n)n.is_read=true;
+  renderNotifications();
+  updateUnreadCount();
+  showToast('Marked as read','ok');
+}
+
+async function markAllRead(){
+  const unreadIds=allNotifs.filter(n=>!n.is_read).map(n=>n.id);
+  if(!unreadIds.length){showToast('All already read','ok');return;}
+  await sb.from('notifications').update({is_read:true}).in('id',unreadIds);
+  allNotifs.forEach(n=>n.is_read=true);
+  renderNotifications();
+  updateUnreadCount();
+  showToast(`${unreadIds.length} notifications marked as read`,'ok');
+}
+
+function getTimeAgo(dateStr){
+  const diff=Date.now()-new Date(dateStr).getTime();
+  const mins=Math.floor(diff/60000);
+  const hours=Math.floor(diff/3600000);
+  const days=Math.floor(diff/86400000);
+  if(mins<1)return'Just now';
+  if(mins<60)return`${mins}m ago`;
+  if(hours<24)return`${hours}h ago`;
+  if(days<7)return`${days}d ago`;
+  return new Date(dateStr).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent='✓ '+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

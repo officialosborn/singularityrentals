@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Property Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--accent3:#f59e0b;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}
+button,[onclick],a{cursor:pointer!important;}
+input,textarea{cursor:text!important;}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 6px rgba(0,0,0,0.06);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.2em;color:var(--accent);cursor:pointer;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{padding:7px 16px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 0 16px rgba(14,165,233,0.25);}
+.nav-btn.primary:hover{box-shadow:0 0 28px rgba(14,165,233,0.4);}
+
+/* BREADCRUMB */
+.breadcrumb{padding:14px 24px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;background:var(--surface);border-bottom:1px solid var(--border);}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.breadcrumb span{color:var(--muted);}
+
+/* LAYOUT */
+.page-body{display:grid;grid-template-columns:1fr 340px;gap:24px;max-width:1200px;margin:0 auto;padding:24px;}
+
+/* GALLERY */
+.gallery{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px;}
+.gallery-main{position:relative;height:420px;background:#e2e8f0;overflow:hidden;cursor:pointer;}
+.gallery-main img,.gallery-main .gallery-placeholder{width:100%;height:100%;object-fit:cover;}
+.gallery-placeholder{display:flex;align-items:center;justify-content:center;font-size:96px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);}
+.gallery-count{position:absolute;bottom:14px;right:14px;background:rgba(0,0,0,0.6);color:#fff;padding:5px 12px;border-radius:20px;font-size:12px;backdrop-filter:blur(4px);}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:all 0.2s;}
+.gallery-nav:hover{background:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.2);}
+.gallery-nav.prev{left:14px;}
+.gallery-nav.next{right:14px;}
+.gallery-thumbs{display:flex;gap:6px;padding:10px;overflow-x:auto;background:var(--surface2);}
+.gallery-thumb{width:72px;height:54px;border-radius:7px;overflow:hidden;flex-shrink:0;border:2px solid transparent;cursor:pointer;transition:border-color 0.2s;}
+.gallery-thumb.active{border-color:var(--accent);}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;}
+.gallery-thumb .emoji-thumb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--surface2);}
+
+/* PROPERTY INFO */
+.prop-info{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
+.prop-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;}
+.prop-title{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;line-height:1.2;color:#0f172a;}
+.prop-status-badge{padding:5px 12px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;flex-shrink:0;}
+.badge-available{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.25);}
+.badge-occupied{background:rgba(220,38,38,0.08);color:var(--danger);border:1px solid rgba(220,38,38,0.2);}
+.badge-sold{background:#1e293b;color:#fff;}
+
+.prop-location{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:16px;}
+.prop-location svg{width:14px;height:14px;flex-shrink:0;}
+
+.prop-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+.prop-price{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.03em;color:var(--accent);}
+.prop-price-unit{font-size:13px;color:var(--muted);}
+.prop-extra-fees{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.prop-extra-fees span{color:var(--text);font-weight:600;}
+
+.prop-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+.prop-stat{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.ps-icon{font-size:20px;margin-bottom:4px;}
+.ps-val{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#0f172a;}
+.ps-lbl{font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;}
+
+.prop-divider{height:1px;background:var(--border);margin:16px 0;}
+
+.section-heading{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:12px;color:#0f172a;display:flex;align-items:center;gap:8px;}
+.section-heading::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Description */
+.prop-desc{font-size:13px;color:#475569;line-height:1.8;}
+
+/* Features */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.feature-chip{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;font-size:12px;color:#475569;}
+.feature-chip svg{width:14px;height:14px;color:var(--success);flex-shrink:0;}
+
+/* Availability */
+.avail-row{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(5,150,105,0.04);border:1px solid rgba(5,150,105,0.2);border-radius:10px;}
+.avail-dot{width:10px;height:10px;border-radius:50%;background:var(--success);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.avail-text{font-size:13px;color:var(--success);font-weight:600;}
+
+/* SIDEBAR CARD */
+.contact-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;position:sticky;top:80px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+
+.landlord-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.ll-avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#fff;overflow:hidden;flex-shrink:0;}
+.ll-avatar img{width:100%;height:100%;object-fit:cover;}
+.ll-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#0f172a;}
+.ll-tag{font-size:11px;color:var(--muted);margin-top:2px;}
+.ll-verified{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--success);margin-top:4px;}
+
+.price-breakdown{background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:16px;}
+.pb-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px;}
+.pb-row:last-child{margin-bottom:0;padding-top:8px;border-top:1px solid var(--border);font-weight:700;font-size:13px;color:#0f172a;}
+.pb-label{color:var(--muted);}
+.pb-value{color:var(--text);}
+.pb-row:last-child .pb-value{color:var(--accent);}
+
+.cta-btns{display:flex;flex-direction:column;gap:8px;}
+.cta-btn{width:100%;padding:12px;border-radius:10px;border:none;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cta-btn.call{background:var(--accent);color:#fff;box-shadow:0 0 20px rgba(14,165,233,0.25);}
+.cta-btn.call:hover{box-shadow:0 0 32px rgba(14,165,233,0.4);transform:translateY(-1px);}
+.cta-btn.whatsapp{background:#25d366;color:#fff;}
+.cta-btn.whatsapp:hover{box-shadow:0 0 20px rgba(37,211,102,0.35);transform:translateY(-1px);}
+.cta-btn.book{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.cta-btn.book:hover{border-color:var(--accent2);color:var(--accent2);}
+.cta-btn.select-room{background:var(--accent2);color:#fff;box-shadow:0 0 20px rgba(124,58,237,0.25);}
+.cta-btn.select-room:hover{box-shadow:0 0 32px rgba(124,58,237,0.4);transform:translateY(-1px);}
+.cta-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* Safety tips */
+.safety-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.safety-title{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.safety-item{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--muted);margin-bottom:6px;line-height:1.5;}
+.safety-item::before{content:'•';color:var(--accent);margin-top:1px;flex-shrink:0;}
+
+/* Share/save row */
+.share-row{display:flex;gap:6px;margin-top:12px;}
+.share-btn{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:5px;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+.share-btn.saved{background:rgba(220,38,38,0.06);color:var(--danger);border-color:rgba(220,38,38,0.2);}
+
+/* LANDLORD EDIT PANEL */
+.landlord-edit-bar{background:var(--surface);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;background:rgba(245,158,11,0.04);}
+.edit-bar-text{flex:1;font-size:13px;color:#92400e;font-weight:600;}
+.edit-btns{display:flex;gap:8px;}
+.edit-btn{padding:7px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#92400e;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;}
+.edit-btn:hover{background:rgba(245,158,11,0.2);}
+.edit-btn.danger{border-color:rgba(220,38,38,0.3);background:rgba(220,38,38,0.06);color:var(--danger);}
+.edit-btn.danger:hover{background:rgba(220,38,38,0.12);}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;display:none;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;}
+.lb-close{position:absolute;top:20px;right:20px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:9px;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+.lb-close:hover{background:rgba(255,255,255,0.2);}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;width:44px;height:44px;border-radius:50%;color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+.lb-nav:hover{background:rgba(255,255,255,0.2);}
+.lb-prev{left:20px;}
+.lb-next{right:20px;}
+.lb-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.7);font-size:12px;}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;right:28px;padding:13px 20px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+/* Request modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.6);backdrop-filter:blur(6px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{width:480px;max-height:88vh;overflow-y:auto;background:#ffffff;border:1px solid var(--border);border-radius:20px;padding:28px;transform:translateY(20px) scale(0.97);transition:all 0.25s;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.modal-overlay.open .modal{transform:none;}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:4px;}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
+.mfl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.mfi,.mfs{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;color:#0f172a;font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+.mfi:focus,.mfs:focus{border-color:var(--accent2);}
+.mfg{margin-bottom:12px;}
+.mfta{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 13px;color:#0f172a;font-family:'DM Mono',monospace;font-size:12px;outline:none;resize:vertical;min-height:70px;}
+.summary-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px;}
+.sum-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;}
+.sum-row:last-child{margin-bottom:0;padding-top:8px;border-top:1px solid var(--border);font-weight:700;}
+.sum-lbl{color:var(--muted);}
+.sum-val{color:var(--text);}
+.modal-footer{display:flex;gap:8px;margin-top:18px;}
+.m-btn-cancel{flex:1;padding:11px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;}
+.m-btn-cancel:hover{color:var(--text);border-color:var(--text);}
+.m-btn-submit{flex:2;padding:11px;border-radius:9px;background:var(--accent2);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.2s;box-shadow:0 0 20px rgba(124,58,237,0.25);}
+.m-btn-submit:hover{box-shadow:0 0 32px rgba(124,58,237,0.4);}
+
+@media(max-width:900px){
+  .page-body{grid-template-columns:1fr;}
+  .contact-card{position:static;}
+  .features-grid{grid-template-columns:repeat(2,1fr);}
+  .prop-stats{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .gallery-main{height:260px;}
+  .prop-title{font-size:18px;}
+  .prop-price{font-size:28px;}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo" onclick="goBack()">Singularity Rentals</div>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="goBack()">← Back to Listings</button>
+    <button class="nav-btn primary" id="nav-dashboard-btn" onclick="goDashboard()" style="display:none">Dashboard</button>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#" onclick="goBack()">Listings</a>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><polyline points="9 18 15 12 9 6"/></svg>
+  <span id="breadcrumb-title">Loading…</span>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- LEFT COLUMN -->
+  <div>
+    <!-- Landlord edit bar (only shown to landlord owner) -->
+    <div class="landlord-edit-bar" id="edit-bar" style="display:none">
+      <span style="font-size:20px">✏️</span>
+      <span class="edit-bar-text">You own this listing — manage it below</span>
+      <div class="edit-btns">
+        <button class="edit-btn" onclick="markSold()">Mark as Sold</button>
+        <button class="edit-btn danger" onclick="deleteListing()">🗑 Delete</button>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery">
+      <div class="gallery-main" id="gallery-main" onclick="openLightbox(currentPhotoIdx)">
+        <div class="gallery-placeholder" id="gallery-placeholder">🏠</div>
+        <div class="gallery-count" id="gallery-count" style="display:none"></div>
+        <button class="gallery-nav prev" id="btn-prev" onclick="event.stopPropagation();changePhoto(-1)" style="display:none">‹</button>
+        <button class="gallery-nav next" id="btn-next" onclick="event.stopPropagation();changePhoto(1)" style="display:none">›</button>
+      </div>
+      <div class="gallery-thumbs" id="gallery-thumbs" style="display:none"></div>
+    </div>
+
+    <!-- Property info -->
+    <div class="prop-info">
+      <div class="prop-header">
+        <h1 class="prop-title" id="prop-title">Loading…</h1>
+        <span class="prop-status-badge badge-available" id="prop-status">Available</span>
+      </div>
+      <div class="prop-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="prop-location">—</span>
+      </div>
+
+      <div class="prop-price-row">
+        <div class="prop-price" id="prop-price">GHS —</div>
+        <div class="prop-price-unit">/ month</div>
+      </div>
+      <div class="prop-extra-fees" id="prop-fees"></div>
+
+      <div class="prop-stats" id="prop-stats">
+        <div class="prop-stat"><div class="ps-icon">🛏</div><div class="ps-val" id="ps-beds">—</div><div class="ps-lbl">Bedrooms</div></div>
+        <div class="prop-stat"><div class="ps-icon">🚿</div><div class="ps-val" id="ps-baths">—</div><div class="ps-lbl">Bathrooms</div></div>
+        <div class="prop-stat"><div class="ps-icon">🏠</div><div class="ps-val" id="ps-type">—</div><div class="ps-lbl">Type</div></div>
+        <div class="prop-stat"><div class="ps-icon">🪑</div><div class="ps-val" id="ps-furnished">—</div><div class="ps-lbl">Furnishing</div></div>
+      </div>
+
+      <div class="prop-divider"></div>
+
+      <div class="section-heading">Description</div>
+      <p class="prop-desc" id="prop-desc">—</p>
+
+      <div class="prop-divider"></div>
+
+      <div class="section-heading">Features & Amenities</div>
+      <div class="features-grid" id="features-grid"></div>
+
+      <div class="prop-divider"></div>
+
+      <div class="section-heading">Availability</div>
+      <div class="avail-row" id="avail-row">
+        <div class="avail-dot"></div>
+        <span class="avail-text" id="avail-text">Available Now</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <!-- Contact card -->
+    <div class="contact-card">
+      <!-- Landlord info -->
+      <div class="landlord-row">
+        <div class="ll-avatar" id="ll-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">K</div>
+        <div>
+          <div class="ll-name" id="ll-name">—</div>
+          <div class="ll-tag">Property Owner</div>
+          <div class="ll-verified">✓ Verified Landlord</div>
+        </div>
+      </div>
+
+      <!-- Price breakdown -->
+      <div class="price-breakdown" id="price-breakdown"></div>
+
+      <!-- CTAs -->
+      <div class="cta-btns" id="cta-btns">
+        <button class="cta-btn call" id="btn-call">📞 Call Landlord</button>
+        <button class="cta-btn whatsapp" id="btn-wa">💬 WhatsApp</button>
+        <button class="cta-btn book" id="btn-book" onclick="openBookingModal()">📅 Book a Viewing</button>
+        <button class="cta-btn select-room" id="btn-select" onclick="openRequestModal()">🔑 Select This Room</button>
+      </div>
+
+      <!-- Share -->
+      <div class="share-row">
+        <button class="share-btn" id="btn-save" onclick="toggleSave()">🤍 Save</button>
+        <button class="share-btn" onclick="shareProperty()">⤴ Share</button>
+      </div>
+    </div>
+
+    <!-- Safety tips -->
+    <div class="safety-card">
+      <div class="safety-title">🛡 Safety Tips</div>
+      <div class="safety-item">It's safer to see the property in person before paying</div>
+      <div class="safety-item">Ask a friend to accompany you for viewings</div>
+      <div class="safety-item">Never pay before signing a tenancy agreement</div>
+      <div class="safety-item">All payments through Singularity Rentals are secured</div>
+      <div class="safety-item">Report suspicious listings using the share button</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="lbNav(1)">›</button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
+<!-- REQUEST MODAL -->
+<div class="modal-overlay" id="req-modal">
+  <div class="modal">
+    <div class="modal-title">Request This Room</div>
+    <div class="modal-sub">Fill in your details to submit a rental request to the landlord.</div>
+    <div id="req-form-content">
+      <div class="summary-box" id="req-summary"></div>
+      <div class="mfg"><label class="mfl">Full Name</label><input type="text" class="mfi" id="r-name" placeholder="Your full name"></div>
+      <div class="mfg"><label class="mfl">Phone Number</label><input type="tel" class="mfi" id="r-phone" placeholder="+233 XX XXX XXXX"></div>
+      <div class="mfg"><label class="mfl">Email Address</label><input type="email" class="mfi" id="r-email" placeholder="you@email.com"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="mfg"><label class="mfl">Move-in Date</label><input type="date" class="mfi" id="r-date"></div>
+        <div class="mfg"><label class="mfl">Lease Duration</label>
+          <select class="mfs" id="r-duration"><option>3 Months</option><option selected>6 Months</option><option>1 Year</option><option>2 Years</option></select>
+        </div>
+      </div>
+      <div class="mfg"><label class="mfl">Message to Landlord (Optional)</label><textarea class="mfta" id="r-message" placeholder="Tell the landlord a bit about yourself…"></textarea></div>
+      <div class="modal-footer">
+        <button class="m-btn-cancel" onclick="closeModal('req-modal')">Cancel</button>
+        <button class="m-btn-submit" onclick="submitRequest()">Submit Request →</button>
+      </div>
+    </div>
+    <div id="req-success" style="display:none;text-align:center;padding:20px 0">
+      <div style="font-size:56px;margin-bottom:14px">✅</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:8px">Request Sent!</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">Your rental request has been sent to the landlord.<br>Proceed to make your first payment.</div>
+      <button class="m-btn-submit" style="width:100%;padding:12px" onclick="location.href='singularity-payment.html'">💳 Proceed to Payment →</button>
+      <button class="m-btn-cancel" style="width:100%;margin-top:8px" onclick="closeModal('req-modal')">Stay & Browse</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="book-modal">
+  <div class="modal">
+    <div class="modal-title">Book a Viewing</div>
+    <div class="modal-sub">Request a time to visit and view this property in person.</div>
+    <div class="mfg"><label class="mfl">Your Name</label><input type="text" class="mfi" id="b-name" placeholder="Your full name"></div>
+    <div class="mfg"><label class="mfl">Phone Number</label><input type="tel" class="mfi" id="b-phone" placeholder="+233 XX XXX XXXX"></div>
+    <div class="mfg"><label class="mfl">Preferred Date</label><input type="date" class="mfi" id="b-date"></div>
+    <div class="mfg"><label class="mfl">Preferred Time</label>
+      <select class="mfs" id="b-time"><option>Morning (8am–12pm)</option><option>Afternoon (12pm–4pm)</option><option>Evening (4pm–7pm)</option></select>
+    </div>
+    <div class="modal-footer">
+      <button class="m-btn-cancel" onclick="closeModal('book-modal')">Cancel</button>
+      <button class="m-btn-submit" onclick="submitBooking()">📅 Request Viewing →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+,listing,isOwner=false;
+let photos=[],currentPhotoIdx=0,saved=false;
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const {data:{session}}=await sb.auth.getSession();
+  const user=session?.user||null;
+  currentUser=user;
+  if(user){
+    const {data:p}=await sb.from('profiles').select('*').eq('id',user.id).single();
+    currentProfile=p;
+    document.getElementById('nav-dashboard-btn').style.display='';
+  }
+
+  // Get listing ID from URL
+  const params=new URLSearchParams(location.search);
+  const id=params.get('id');
+  if(!id){location.href='singularity-tenant.html';return;}
+
+  // Load listing
+  const {data:l,error}=await sb.from('listings')
+    .select('*,profiles:landlord_id(full_name,phone,profile_photo,is_verified)')
+    .eq('id',id).single();
+
+  if(error||!l){showToast('Listing not found.','err');return;}
+  listing=l;
+
+  // Check if current user is the owner
+  isOwner=currentUser&&currentUser.id===l.landlord_id;
+
+  renderListing(l);
+}
+
+function renderListing(l){
+  const p=l.profiles||{};
+
+  document.title=`${l.title} — Singularity Rentals`;
+  document.getElementById('breadcrumb-title').textContent=l.title;
+  document.getElementById('prop-title').textContent=l.title;
+
+  // Status
+  const sb_el=document.getElementById('prop-status');
+  sb_el.textContent=l.is_sold?'Sold':l.status.charAt(0).toUpperCase()+l.status.slice(1);
+  sb_el.className='prop-status-badge '+(l.is_sold?'badge-sold':l.status==='available'?'badge-available':'badge-occupied');
+
+  // Location
+  const loc=[l.address,l.landmark?`Near ${l.landmark}`:null].filter(Boolean).join(' · ');
+  document.getElementById('prop-location').textContent=loc;
+
+  // Price
+  document.getElementById('prop-price').textContent=`GHS ${l.price.toLocaleString()}`;
+
+  // Extra fees
+  const fees=[];
+  if(l.advance_payment>0)fees.push(`Advance: GHS ${l.advance_payment.toLocaleString()}`);
+  if(l.extra_fees)fees.push(l.extra_fees);
+  document.getElementById('prop-fees').innerHTML=fees.length
+    ? fees.map(f=>`<span>${f}</span>`).join(' &nbsp;·&nbsp; ')
+    :'';
+
+  // Stats
+  document.getElementById('ps-beds').textContent=l.beds;
+  document.getElementById('ps-baths').textContent=l.baths;
+  document.getElementById('ps-type').textContent=l.type;
+  document.getElementById('ps-furnished').textContent=l.furnished||'—';
+
+  // Description
+  document.getElementById('prop-desc').textContent=l.description||'No description provided.';
+
+  // Features
+  const FEATURE_ICONS={
+    'AC':'❄️','Air Conditioning':'❄️','WiFi':'🌐','Security':'🔒','Parking':'🅿️',
+    'Water':'💧','Electricity':'⚡','Wardrobe':'🪟','Kitchen':'🍳','Balcony':'🌿',
+    'Generator':'⚡','CCTV':'📹','Gym':'🏋️','Pool':'🏊','Elevator':'🛗',
+    'Furnished':'🪑','Unfurnished':'📦','Hot Water':'🚿','Garden':'🌳',
+  };
+  const feats=l.features||[];
+  document.getElementById('features-grid').innerHTML=feats.length
+    ? feats.map(f=>`<div class="feature-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+        ${FEATURE_ICONS[f]||'✓'} ${f}
+      </div>`).join('')
+    : '<div style="font-size:12px;color:var(--muted)">No features listed.</div>';
+
+  // Availability
+  document.getElementById('avail-text').textContent=l.availability_date||'Available Now';
+
+  // Landlord
+  document.getElementById('ll-name').textContent=p.full_name||'Landlord';
+  const av=document.getElementById('ll-avatar');
+  if(p.profile_photo){av.innerHTML=`<img src="${p.profile_photo}" alt="">`;}
+  else{av.textContent=(p.full_name||'L')[0].toUpperCase();}
+
+  // Price breakdown
+  const total=(l.price||0)+(l.advance_payment||0);
+  document.getElementById('price-breakdown').innerHTML=`
+    <div class="pb-row"><span class="pb-label">Monthly Rent</span><span class="pb-value">GHS ${(l.price||0).toLocaleString()}</span></div>
+    ${l.advance_payment?`<div class="pb-row"><span class="pb-label">Advance Payment</span><span class="pb-value">GHS ${l.advance_payment.toLocaleString()}</span></div>`:''}
+    ${l.extra_fees?`<div class="pb-row"><span class="pb-label">Extra Fees</span><span class="pb-value">${l.extra_fees}</span></div>`:''}
+    <div class="pb-row"><span>Total to Move In</span><span class="pb-value">GHS ${total.toLocaleString()}</span></div>`;
+
+  // CTA buttons
+  const phone=l.contact_phone||p.phone||'';
+  const wa=l.contact_whatsapp||phone;
+  if(phone)document.getElementById('btn-call').onclick=()=>window.open(`tel:${phone}`);
+  else document.getElementById('btn-call').style.display='none';
+  if(wa)document.getElementById('btn-wa').onclick=()=>window.open(`https://wa.me/${wa.replace(/\D/g,'')}`);
+  else document.getElementById('btn-wa').style.display='none';
+
+  // Landlord sees edit bar, tenant sees select room
+  if(isOwner){
+    document.getElementById('edit-bar').style.display='flex';
+    document.getElementById('btn-select').style.display='none';
+    document.getElementById('btn-book').style.display='none';
+  } else if(currentProfile?.role==='landlord'){
+    // Other landlords can't select rooms
+    document.getElementById('btn-select').style.display='none';
+    document.getElementById('btn-book').style.display='none';
+    document.getElementById('btn-call').style.display='none';
+    document.getElementById('btn-wa').style.display='none';
+  }
+
+  if(l.status==='occupied'||l.is_sold){
+    document.getElementById('btn-select').disabled=true;
+    document.getElementById('btn-select').textContent=l.is_sold?'🔴 Sold':'🔴 Currently Occupied';
+  }
+
+  // Photos
+  photos=l.photos||[];
+  if(photos.length>0){
+    renderGallery();
+  } else {
+    // Show emoji placeholder
+    const em=l.emoji||'🏠';
+    document.getElementById('gallery-placeholder').textContent=em;
+    document.getElementById('gallery-placeholder').style.fontSize='96px';
+  }
+
+  // Fill request modal summary
+  document.getElementById('req-summary').innerHTML=`
+    <div class="sum-row"><span class="sum-lbl">Property</span><span class="sum-val">${l.title}</span></div>
+    <div class="sum-row"><span class="sum-lbl">Location</span><span class="sum-val">${l.address}</span></div>
+    <div class="sum-row"><span class="sum-lbl">Monthly Rent</span><span class="sum-val">GHS ${(l.price||0).toLocaleString()}</span></div>
+    ${l.advance_payment?`<div class="sum-row"><span class="sum-lbl">Advance</span><span class="sum-val">GHS ${l.advance_payment.toLocaleString()}</span></div>`:''}
+    <div class="sum-row"><span>Total to Move In</span><span class="sum-val">GHS ${total.toLocaleString()}</span></div>`;
+
+  // Pre-fill with user info
+  if(currentProfile){
+    document.getElementById('r-name').value=currentProfile.full_name||'';
+    document.getElementById('r-phone').value=currentProfile.phone||'';
+  }
+}
+
+/* GALLERY */
+function renderGallery(){
+  if(!photos.length)return;
+  const main=document.getElementById('gallery-main');
+  main.innerHTML=`
+    <img id="gallery-img" src="${photos[0]}" alt="Property photo" style="width:100%;height:100%;object-fit:cover;">
+    <div class="gallery-count" id="gallery-count">1 / ${photos.length}</div>
+    ${photos.length>1?`
+    <button class="gallery-nav prev" onclick="event.stopPropagation();changePhoto(-1)">‹</button>
+    <button class="gallery-nav next" onclick="event.stopPropagation();changePhoto(1)">›</button>`:''}
+  `;
+  main.onclick=()=>openLightbox(currentPhotoIdx);
+
+  if(photos.length>1){
+    const thumbs=document.getElementById('gallery-thumbs');
+    thumbs.style.display='flex';
+    thumbs.innerHTML=photos.map((p,i)=>`
+      <div class="gallery-thumb ${i===0?'active':''}" id="thumb-${i}" onclick="selectPhoto(${i})">
+        <img src="${p}" alt="">
+      </div>`).join('');
+  }
+}
+
+function changePhoto(dir){
+  selectPhoto((currentPhotoIdx+dir+photos.length)%photos.length);
+}
+
+function selectPhoto(idx){
+  currentPhotoIdx=idx;
+  const img=document.getElementById('gallery-img');
+  const cnt=document.getElementById('gallery-count');
+  if(img)img.src=photos[idx];
+  if(cnt)cnt.textContent=`${idx+1} / ${photos.length}`;
+  document.querySelectorAll('.gallery-thumb').forEach((t,i)=>t.classList.toggle('active',i===idx));
+}
+
+/* LIGHTBOX */
+function openLightbox(idx){
+  if(!photos.length)return;
+  currentPhotoIdx=idx;
+  document.getElementById('lb-img').src=photos[idx];
+  document.getElementById('lb-count').textContent=`${idx+1} / ${photos.length}`;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+function lbNav(dir){
+  currentPhotoIdx=(currentPhotoIdx+dir+photos.length)%photos.length;
+  document.getElementById('lb-img').src=photos[currentPhotoIdx];
+  document.getElementById('lb-count').textContent=`${currentPhotoIdx+1} / ${photos.length}`;
+}
+
+/* OWNER ACTIONS */
+async function markSold(){
+  if(!confirm('Mark this listing as sold? Tenants will no longer be able to select it.'))return;
+  const {error}=await sb.from('listings').update({is_sold:true,status:'occupied'}).eq('id',listing.id);
+  if(!error){showToast('Listing marked as sold.','ok');document.getElementById('prop-status').textContent='Sold';document.getElementById('prop-status').className='prop-status-badge badge-sold';}
+  else showToast('Error: '+error.message,'err');
+}
+
+async function deleteListing(){
+  if(!confirm('Permanently delete this listing? This cannot be undone.'))return;
+  const {error}=await sb.from('listings').delete().eq('id',listing.id);
+  if(!error){showToast('Listing deleted.','ok');setTimeout(()=>goBack(),1500);}
+  else showToast('Error: '+error.message,'err');
+}
+
+/* REQUEST */
+function openRequestModal(){
+  if(!currentUser){showToast('Please log in to select a room.','err');return;}
+  document.getElementById('req-form-content').style.display='';
+  document.getElementById('req-success').style.display='none';
+  document.getElementById('req-modal').classList.add('open');
+}
+function openBookingModal(){
+  if(!currentUser){showToast('Please log in to book a viewing.','err');return;}
+  if(currentProfile)document.getElementById('b-name').value=currentProfile.full_name||'';
+  if(currentProfile)document.getElementById('b-phone').value=currentProfile.phone||'';
+  document.getElementById('book-modal').classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+async function submitRequest(){
+  const name=document.getElementById('r-name').value.trim();
+  const phone=document.getElementById('r-phone').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  if(!name||!phone||!email){showToast('Please fill in all required fields.','err');return;}
+
+  if(sb&&currentUser&&listing){
+    try{
+      await sb.from('rental_requests').insert({
+        listing_id:listing.id,
+        tenant_id:currentUser.id,
+        landlord_id:listing.landlord_id,
+        move_in_date:document.getElementById('r-date').value||null,
+        lease_duration:document.getElementById('r-duration').value,
+        message:document.getElementById('r-message').value||'',
+        status:'pending'
+      });
+    }catch(e){console.warn('DB:',e);}
+  }
+
+  document.getElementById('req-form-content').style.display='none';
+  document.getElementById('req-success').style.display='';
+}
+
+async function submitBooking(){
+  const name=document.getElementById('b-name').value.trim();
+  const phone=document.getElementById('b-phone').value.trim();
+  const date=document.getElementById('b-date').value;
+  const time=document.getElementById('b-time').value;
+  if(!name||!phone||!date){showToast('Please fill in all fields.','err');return;}
+  // Open WhatsApp with booking message
+  const msg=`Hi, I'd like to book a viewing for "${listing?.title}" on ${date} (${time}). My name is ${name}, phone: ${phone}. Please confirm.`;
+  const wa=listing?.contact_whatsapp||listing?.contact_phone||'';
+  if(wa){window.open(`https://wa.me/${wa.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);}
+  closeModal('book-modal');
+  showToast('Viewing request sent!','ok');
+}
+
+function toggleSave(){
+  saved=!saved;
+  document.getElementById('btn-save').className='share-btn'+(saved?' saved':'');
+  document.getElementById('btn-save').textContent=saved?'❤️ Saved':'🤍 Save';
+  showToast(saved?'Added to saved listings':'Removed from saved','ok');
+}
+
+function shareProperty(){
+  const url=location.href;
+  if(navigator.share){navigator.share({title:listing?.title,url});}
+  else{navigator.clipboard?.writeText(url);showToast('Link copied to clipboard!','ok');}
+}
+
+function goBack(){
+  if(currentProfile?.role==='landlord')location.href='singularity-rentals.html';
+  else location.href='singularity-tenant.html';
+}
+
+function goDashboard(){
+  if(currentProfile?.role==='landlord')location.href='singularity-rentals.html';
+  else location.href='singularity-tenant.html';
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Close modals on backdrop click
+['req-modal','book-modal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});
+});
+
+// Keyboard nav for lightbox
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key==='ArrowLeft')lbNav(-1);
+    if(e.key==='ArrowRight')lbNav(1);
+    if(e.key==='Escape')closeLightbox();
+  }
+});
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

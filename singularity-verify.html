@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+(function(){
+  try{var t=localStorage.getItem('singularity-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}
+})();
+window.toggleDarkMode=function(){
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('singularity-theme',next);}catch(e){}
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
+};
+window.applyThemeIcon=function(){
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'☀️':'🌙';
+};
+</script>
+<style>
+/* ── SIDEBAR TOGGLE ── */
+.sidebar{transition:width 0.3s ease;}
+.sidebar.collapsed{width:60px;}
+.sidebar.collapsed .sb-logo-sub,
+.sidebar.collapsed .sb-sub,
+.sidebar.collapsed .sb-uname,
+.sidebar.collapsed .sb-urole,
+.sidebar.collapsed .sb-sec,
+.sidebar.collapsed .sb-link span:not(.sb-link-icon),
+.sidebar.collapsed .sb-badge,
+.sidebar.collapsed .sb-logout span:last-child{display:none;}
+.sidebar.collapsed .sb-link{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user{padding:10px;justify-content:center;}
+.sidebar.collapsed .sb-user > div:last-child{display:none;}
+.sidebar.collapsed .sb-logout{justify-content:center;padding:12px;}
+.sidebar.collapsed + .main{margin-left:60px;}
+.sb-toggle{
+  position:absolute;top:50%;right:-14px;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer!important;z-index:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:all 0.2s;
+  color:var(--muted);
+}
+.sb-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.sidebar{position:relative;}
+
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface2:#263548;
+  --surface3:#2d3f55;
+  --border:#334155;
+  --border2:#475569;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --accent3:#fbbf24;
+  --success:#34d399;
+  --danger:#f87171;
+  --warn:#fbbf24;
+}
+[data-theme="dark"] body{background:var(--bg);color:var(--text);}
+[data-theme="dark"] .navbar,[data-theme="dark"] nav.navbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sidebar{background:#1a2744!important;border-color:var(--border)!important;}
+[data-theme="dark"] .sb-sec{color:#64748b!important;}
+[data-theme="dark"] .sb-brand{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-user{border-color:var(--border)!important;background:#1a2744!important;}
+[data-theme="dark"] .sb-link:hover{background:rgba(255,255,255,0.06)!important;}
+[data-theme="dark"] .sb-link.active{background:rgba(167,139,250,0.12)!important;}
+[data-theme="dark"] .sb-logout{border-color:var(--border)!important;}
+[data-theme="dark"] .sb-toggle{background:#1e293b!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .card,[data-theme="dark"] .stat-card,[data-theme="dark"] .req-card,
+[data-theme="dark"] .listing-card,[data-theme="dark"] .pay-panel,
+[data-theme="dark"] .summary-card,[data-theme="dark"] .table-card{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,0.97)!important;border-color:var(--border)!important;}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .form-input,[data-theme="dark"] .fi,[data-theme="dark"] .fs{background:#1e293b!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .filter-chip,[data-theme="dark"] .tab-btn,[data-theme="dark"] .tab{background:var(--surface)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .filter-chip.active,[data-theme="dark"] .tab-btn.active,[data-theme="dark"] .tab.active{border-color:var(--accent2)!important;color:var(--accent2)!important;background:rgba(167,139,250,0.1)!important;}
+[data-theme="dark"] .skeleton{background:linear-gradient(90deg,#1e293b 25%,#263548 50%,#1e293b 75%)!important;}
+[data-theme="dark"] .listing-card,[data-theme="dark"] .req-card,[data-theme="dark"] .notif-item{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .pay-hist-row,[data-theme="dark"] .maint-row,.doc-row{border-color:var(--border)!important;}
+[data-theme="dark"] .welcome-banner{background:linear-gradient(135deg,#1a1040,#2d1b6e)!important;}
+[data-theme="dark"] table{color:var(--text)!important;}
+[data-theme="dark"] th{background:rgba(255,255,255,0.03)!important;border-color:var(--border)!important;}
+[data-theme="dark"] td{border-color:rgba(51,65,85,0.6)!important;}
+[data-theme="dark"] tr:hover td{background:rgba(255,255,255,0.03)!important;}
+[data-theme="dark"] .modal,[data-theme="dark"] .new-modal,[data-theme="dark"] #modal{background:rgba(0,0,0,0.7)!important;}
+[data-theme="dark"] .modal-card,[data-theme="dark"] .modal-inner{background:var(--surface)!important;border-color:var(--border)!important;}
+[data-theme="dark"] .toast{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;}
+[data-theme="dark"] .sec-badge,[data-theme="dark"] .meta-tag,[data-theme="dark"] .listing-meta span{background:rgba(255,255,255,0.06)!important;border-color:var(--border)!important;color:var(--muted)!important;}
+[data-theme="dark"] .empty-state,[data-theme="dark"] .empty{color:var(--muted)!important;}
+[data-theme="dark"] .unit-meta-item,[data-theme="dark"] .rd-item,[data-theme="dark"] .landlord-strip{background:rgba(255,255,255,0.05)!important;}
+[data-theme="dark"] .progress-bar{background:rgba(255,255,255,0.08)!important;}
+[data-theme="dark"] .sum-total{background:rgba(56,189,248,0.08)!important;border-color:rgba(56,189,248,0.2)!important;}
+
+/* Dark mode toggle button */
+.dark-toggle{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer!important;transition:all 0.2s;
+  flex-shrink:0;
+}
+.dark-toggle:hover{border-color:var(--accent2);background:rgba(124,58,237,0.07);}
+
+/* ── Loading overlay (replaces body-hide) ── */
+#app-loader{
+  position:fixed;inset:0;background:#f8fafc;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+  transition:opacity 0.3s ease;
+}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+#app-loader .loader-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  letter-spacing:0.2em;color:#0ea5e9;
+}
+#app-loader .loader-spinner{
+  width:32px;height:32px;border:3px solid #e2e8f0;
+  border-top-color:#7c3aed;border-radius:50%;
+  animation:spin360 0.8s linear infinite;
+}
+@keyframes spin360{to{transform:rotate(360deg)}}
+
+</style>
+
+<script>
+/* ── DARK MODE LOGIC ── */
+(function(){
+  const saved = localStorage.getItem('singularity-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Update toggle button icon when it appears
+  window.applyThemeIcon = function(){
+    const btn = document.getElementById('dark-toggle');
+    if(btn) btn.textContent = (localStorage.getItem('singularity-theme')==='dark') ? '☀️' : '🌙';
+  };
+  window.toggleDarkMode = function(){
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('singularity-theme', next);
+    window.applyThemeIcon();
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singularity Rentals — Verify Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#0ea5e9;--accent2:#7c3aed;--text:#0f172a;--muted:#64748b;--success:#059669;--danger:#dc2626;--warn:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;}
+*,*:hover{cursor:default;}
+button,[onclick]{cursor:pointer!important;}
+input,input:hover,select,select:hover,textarea,textarea:hover{cursor:text!important;}
+select,select:hover{cursor:pointer!important;}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:400;box-shadow:1px 0 8px rgba(0,0,0,0.04);}
+.sb-brand{padding:24px 20px 20px;border-bottom:1px solid var(--border);cursor:pointer;}
+.sb-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.2em;color:var(--accent);line-height:1;}
+.sb-sub{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.sb-user{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);}
+.sb-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0;overflow:hidden;}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-uname{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-urole{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.sb-nav{flex:1;overflow-y:auto;padding:12px 0;}
+.sb-sec{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);padding:14px 20px 6px;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:12px;color:var(--muted);text-decoration:none;transition:all 0.2s;border-left:2px solid transparent;cursor:pointer;letter-spacing:0.04em;}
+.sb-link:hover{color:var(--text);background:var(--surface2);}
+.sb-link.active{color:var(--accent2);background:rgba(124,58,237,0.06);border-left-color:var(--accent2);}
+.sb-link-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.sb-badge{font-size:9px;padding:2px 7px;border-radius:10px;margin-left:auto;}
+.sb-badge.unverified{background:rgba(245,158,11,0.12);color:var(--warn);border:1px solid rgba(245,158,11,0.25);}
+.sb-badge.verified{background:rgba(5,150,105,0.1);color:var(--success);border:1px solid rgba(5,150,105,0.2);}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:12px;color:var(--danger);cursor:pointer;border-top:1px solid var(--border);transition:background 0.2s;margin-top:auto;}
+.sb-logout:hover{background:#fef2f2;}
+
+/* MAIN */
+.main{margin-left:220px;min-height:100vh;padding:32px 40px 60px;background:var(--bg);}
+
+/* STEPS */
+.steps-bar{display:flex;align-items:center;gap:0;margin-bottom:36px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 24px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.step{display:flex;align-items:center;gap:10px;flex:1;}
+.step-circle{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Syne',sans-serif;border:2px solid var(--border);background:var(--surface2);color:var(--muted);flex-shrink:0;transition:all 0.3s;}
+.step-circle.active{border-color:var(--accent2);background:rgba(124,58,237,0.1);color:var(--accent2);}
+.step-circle.done{border-color:var(--success);background:rgba(5,150,105,0.1);color:var(--success);}
+.step-info{}
+.step-label{font-size:11px;font-weight:600;color:var(--text);}
+.step-label.inactive{color:var(--muted);}
+.step-desc{font-size:10px;color:var(--muted);}
+.step-line{flex:1;height:1px;background:var(--border);margin:0 12px;}
+.step-line.done-line{background:var(--success);}
+
+/* FORM SECTIONS */
+.verify-section{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.vs-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.vs-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.vs-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;}
+.vs-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.fg{margin-bottom:0;}
+.fg.full{grid-column:1/-1;}
+.fl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.fi,.fs{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+.fi:focus,.fs:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(124,58,237,0.07);}
+.fi::placeholder{color:var(--muted);}
+.fs option{background:var(--surface);}
+
+/* ID type cards */
+.id-type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.id-type-card{padding:12px 8px;border-radius:10px;border:2px solid var(--border);background:var(--surface2);cursor:pointer;text-align:center;transition:all 0.2s;}
+.id-type-card:hover{border-color:rgba(124,58,237,0.3);}
+.id-type-card.selected{border-color:var(--accent2);background:rgba(124,58,237,0.06);}
+.id-type-icon{font-size:20px;margin-bottom:4px;}
+.id-type-name{font-size:10px;color:var(--muted);letter-spacing:0.05em;}
+
+/* Camera section */
+.camera-section{text-align:center;padding:20px;}
+.camera-preview{width:200px;height:200px;border-radius:100px;background:var(--surface2);border:3px solid var(--border);margin:0 auto 16px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
+.camera-preview video,.camera-preview img{width:100%;height:100%;object-fit:cover;border-radius:100px;}
+.camera-preview .cam-placeholder{color:var(--muted);}
+.camera-hint{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.cam-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.cam-btn{padding:9px 18px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;}
+.cam-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.cam-btn.primary{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+.cam-btn.primary:hover{box-shadow:0 0 16px rgba(124,58,237,0.35);}
+.cam-btn.danger{background:rgba(220,38,38,0.08);color:var(--danger);border-color:rgba(220,38,38,0.2);}
+
+/* Status banner */
+.status-banner{padding:14px 18px;border-radius:12px;display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.status-banner.warn{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);}
+.status-banner.success{background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.2);}
+.status-banner.pending{background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.15);}
+.sb-icon{font-size:22px;}
+.sb-text{flex:1;}
+.sb-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;}
+.sb-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* Submit btn */
+.submit-row{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+.btn-cancel{padding:11px 22px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s;}
+.btn-cancel:hover{color:var(--text);border-color:var(--text);}
+.btn-submit{padding:11px 28px;border-radius:10px;background:var(--accent2);color:#fff;border:none;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.2s;box-shadow:0 0 20px rgba(124,58,237,0.25);}
+.btn-submit:hover{box-shadow:0 0 32px rgba(124,58,237,0.4);transform:translateY(-1px);}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;right:28px;padding:13px 20px;border-radius:12px;background:var(--surface);font-size:12px;z-index:900;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,0.1);transform:translateY(80px);opacity:0;transition:all 0.3s;border:1px solid var(--border);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(5,150,105,0.4);color:var(--success);}
+.toast.err{border-color:rgba(220,38,38,0.4);color:var(--danger);}
+
+@media(max-width:768px){
+  .sidebar{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:60px;flex-direction:row;border-right:none;border-top:1px solid var(--border);}
+  .sb-brand,.sb-user,.sb-sec,.sb-logout{display:none;}
+  .sb-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0;display:flex;}
+  .sb-link{flex-direction:column;padding:6px 12px;min-width:56px;border-left:none;border-top:2px solid transparent;justify-content:center;align-items:center;font-size:9px;gap:2px;}
+  .sb-link.active{border-top-color:var(--accent2);border-left:none;}
+  .sb-link-icon{font-size:18px;width:auto;}
+  .sb-badge{display:none;}
+  .main{margin-left:0;padding:16px 16px 80px;}
+  .steps-bar{flex-wrap:wrap;gap:8px;}
+  .step-line{display:none;}
+  .form-grid,.form-grid-3{grid-template-columns:1fr;}
+  .id-type-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="app-loader" style="position:fixed;inset:0;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.35s ease;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.2em;color:#0ea5e9;">Singularity</div>
+  <div style="width:28px;height:28px;border:3px solid #e2e8f0;border-top-color:#7c3aed;border-radius:50%;animation:spin360 0.8s linear infinite;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;letter-spacing:0.1em;">Loading…</div>
+</div>
+<style>@keyframes spin360{to{transform:rotate(360deg)}}
+[data-theme="dark"] #app-loader{background:#0f172a;}
+</style>
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand" onclick="goTo('dashboard')">
+    <div class="sb-logo">Singularity</div>
+    <div class="sb-sub">Rentals</div>
+  </div>
+  <div class="sb-user" id="sb-user">
+    <div class="sb-avatar" id="sb-avatar" style="background:linear-gradient(135deg,#7c3aed,#9333ea)">?</div>
+    <div><div class="sb-uname" id="sb-uname">Loading…</div><div class="sb-urole" id="sb-urole">—</div></div>
+  </div>
+  <nav class="sb-nav" id="sb-nav"><!-- injected --></nav>
+  <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner warn" id="status-banner">
+    <div class="sb-icon">🔐</div>
+    <div class="sb-text">
+      <div class="sb-title">Identity Verification Required</div>
+      <div class="sb-desc">Complete verification to access all features and build trust with other users.</div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-bar">
+    <div class="step">
+      <div class="step-circle active" id="sc1">1</div>
+      <div class="step-info"><div class="step-label" id="sl1">Personal Info</div><div class="step-desc">Name & citizenship</div></div>
+    </div>
+    <div class="step-line" id="ln1"></div>
+    <div class="step">
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-info"><div class="step-label inactive" id="sl2">ID Document</div><div class="step-desc">Ghana Card / Passport</div></div>
+    </div>
+    <div class="step-line" id="ln2"></div>
+    <div class="step">
+      <div class="step-circle" id="sc3">3</div>
+      <div class="step-info"><div class="step-label inactive" id="sl3">Live Photo</div><div class="step-desc">Becomes profile photo</div></div>
+    </div>
+    <div class="step-line" id="ln3"></div>
+    <div class="step">
+      <div class="step-circle" id="sc4">4</div>
+      <div class="step-info"><div class="step-label inactive" id="sl4">Review & Submit</div><div class="step-desc">Confirm details</div></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Personal Info -->
+  <div id="step1">
+    <div class="verify-section">
+      <div class="vs-header">
+        <div class="vs-icon" style="background:rgba(124,58,237,0.1)">👤</div>
+        <div><div class="vs-title">Personal Information</div><div class="vs-sub">Enter your details exactly as they appear on your ID document</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="fg full"><label class="fl">Full Legal Name</label>
+          <input type="text" class="fi" id="v-fullname" placeholder="As it appears on your Ghana Card"></div>
+        <div class="fg"><label class="fl">Citizenship</label>
+          <select class="fs" id="v-citizenship">
+            <option value="Ghanaian">🇬🇭 Ghanaian</option>
+            <option value="Nigerian">Nigerian</option>
+            <option value="Other African">Other African</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Occupation <span style="color:var(--muted);font-size:9px">(Optional)</span></label>
+          <input type="text" class="fi" id="v-occupation" placeholder="e.g. Software Engineer, Teacher"></div>
+      </div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-cancel" onclick="goTo('dashboard')">Cancel</button>
+      <button class="btn-submit" onclick="goStep(2)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: ID Document -->
+  <div id="step2" style="display:none">
+    <div class="verify-section">
+      <div class="vs-header">
+        <div class="vs-icon" style="background:rgba(14,165,233,0.1)">🪪</div>
+        <div><div class="vs-title">Identity Document</div><div class="vs-sub">Select your document type and enter the details</div></div>
+      </div>
+      <div class="fg" style="margin-bottom:16px"><label class="fl">Document Type</label>
+        <div class="id-type-grid">
+          <div class="id-type-card selected" id="idt-gc" onclick="selectIDType('Ghana Card','idt-gc')">
+            <div class="id-type-icon">🪪</div><div class="id-type-name">Ghana Card</div>
+          </div>
+          <div class="id-type-card" id="idt-vi" onclick="selectIDType('Voter ID','idt-vi')">
+            <div class="id-type-icon">🗳️</div><div class="id-type-name">Voter ID</div>
+          </div>
+          <div class="id-type-card" id="idt-dl" onclick="selectIDType('Driver License','idt-dl')">
+            <div class="id-type-icon">🚗</div><div class="id-type-name">Driver License</div>
+          </div>
+          <div class="id-type-card" id="idt-pp" onclick="selectIDType('Passport','idt-pp')">
+            <div class="id-type-icon">📕</div><div class="id-type-name">Passport</div>
+          </div>
+        </div>
+      </div>
+      <div class="fg"><label class="fl" id="id-number-label">Ghana Card ID Number</label>
+        <input type="text" class="fi" id="v-idnumber" placeholder="e.g. GHA-XXXXXXXXX-X"></div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-cancel" onclick="goStep(1)">← Back</button>
+      <button class="btn-submit" onclick="goStep(3)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Live Photo -->
+  <div id="step3" style="display:none">
+    <div class="verify-section">
+      <div class="vs-header">
+        <div class="vs-icon" style="background:rgba(5,150,105,0.1)">📸</div>
+        <div><div class="vs-title">Live Photo</div><div class="vs-sub">Take a photo now — this will become your profile picture</div></div>
+      </div>
+      <div class="camera-section">
+        <div class="camera-preview" id="cam-preview">
+          <span class="cam-placeholder">📷</span>
+        </div>
+        <div class="camera-hint">
+          Position your face in the circle and make sure you are in a well-lit area.<br>
+          Remove glasses or hats for best results.
+        </div>
+        <div class="cam-btns">
+          <button class="cam-btn primary" id="btn-start-cam" onclick="startCamera()">📷 Open Camera</button>
+          <button class="cam-btn" id="btn-capture" onclick="capturePhoto()" style="display:none">✓ Take Photo</button>
+          <button class="cam-btn danger" id="btn-retake" onclick="retakePhoto()" style="display:none">↺ Retake</button>
+          <label class="cam-btn" style="cursor:pointer!important">
+            📁 Upload Instead
+            <input type="file" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-cancel" onclick="goStep(2)">← Back</button>
+      <button class="btn-submit" id="btn-step3-next" onclick="goStep(4)" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Review & Submit -->
+  <div id="step4" style="display:none">
+    <div class="verify-section">
+      <div class="vs-header">
+        <div class="vs-icon" style="background:rgba(245,158,11,0.1)">✅</div>
+        <div><div class="vs-title">Review & Submit</div><div class="vs-sub">Confirm your details are correct before submitting</div></div>
+      </div>
+      <div id="review-content" style="display:flex;gap:24px;align-items:flex-start;">
+        <div id="review-photo" style="width:100px;height:100px;border-radius:50px;overflow:hidden;flex-shrink:0;border:3px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:36px;">📷</div>
+        <div style="flex:1;">
+          <div id="review-rows"></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px 16px;background:rgba(124,58,237,0.04);border:1px solid rgba(124,58,237,0.15);border-radius:10px;font-size:12px;color:var(--muted);line-height:1.6;">
+        By submitting, you confirm that all information provided is accurate and matches your identity document. False information may result in account suspension.
+      </div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-cancel" onclick="goStep(3)">← Back</button>
+      <button class="btn-submit" id="btn-submit" onclick="submitVerification()">🔐 Submit Verification</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+let selectedIDType='Ghana Card';
+let photoBlob=null,photoURL=null;
+let videoStream=null;
+let currentStep=1;
+
+(function(){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=async()=>{
+    sb=supabase.createClient(SB_URL,SB_KEY);
+
+,300);}
+}
+// Safety net — always hide after 6 seconds
+
+
+  const {data:p} = await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(!p){location.replace('index.html');return;}
+  hideLoader();
+  return p;
+}
+    await initPage();
+  };
+  document.head.appendChild(s);
+})();
+
+async function initPage(){
+  const p = await initApp();
+  if(!p) return;
+  currentProfile=p;
+  currentProfile=p;
+
+  // Update sidebar
+  const fn=p.full_name||'User';
+  document.getElementById('sb-uname').textContent=fn;
+  document.getElementById('sb-urole').textContent=p.role==='landlord'?'Landlord':'Tenant';
+  const av=document.getElementById('sb-avatar');
+  av.style.background=p.role==='landlord'?'linear-gradient(135deg,#f59e0b,#ef4444)':'linear-gradient(135deg,#7c3aed,#9333ea)';
+  if(p.profile_photo){av.innerHTML=`<img src="${p.profile_photo}" alt="">`;}
+  else{av.textContent=fn[0].toUpperCase();}
+
+  buildSidebar(p.role);
+
+  // Pre-fill name
+  if(p.full_name)document.getElementById('v-fullname').value=p.full_name;
+
+  // Check existing verification
+  const {data:ver}=await sb.from('verifications').select('*').eq('user_id',user.id).maybeSingle();
+  if(ver){
+    if(ver.status==='verified'){
+      document.getElementById('status-banner').className='status-banner success';
+      document.getElementById('status-banner').innerHTML=`<div class="sb-icon">✅</div><div class="sb-text"><div class="sb-title">Identity Verified</div><div class="sb-desc">Your account is verified. You have full access to all platform features.</div></div>`;
+    } else if(ver.status==='pending'){
+      document.getElementById('status-banner').className='status-banner pending';
+      document.getElementById('status-banner').innerHTML=`<div class="sb-icon">⏳</div><div class="sb-text"><div class="sb-title">Verification Under Review</div><div class="sb-desc">Your submission is being reviewed. This usually takes 1–2 business days.</div></div>`;
+    }
+    // Pre-fill existing data
+    if(ver.full_name)document.getElementById('v-fullname').value=ver.full_name;
+    if(ver.citizenship)document.getElementById('v-citizenship').value=ver.citizenship;
+    if(ver.occupation)document.getElementById('v-occupation').value=ver.occupation;
+    if(ver.id_number)document.getElementById('v-idnumber').value=ver.id_number;
+    if(ver.id_type)selectIDType(ver.id_type,null);
+  }
+}
+
+function buildSidebar(role){
+  const isLL=role==='landlord';
+  const links=isLL?[
+    {icon:'🏠',label:'Dashboard',url:'singularity-rentals.html'},
+    {icon:'🗺',label:'Map View',url:'singularity-map.html'},
+    {icon:'💳',label:'Payments',url:'singularity-payment.html'},
+    {icon:'🔧',label:'Maintenance',url:'singularity-maintenance.html'},
+    {icon:'⭐',label:'Ratings',url:'singularity-ratings.html'},
+    {icon:'🧾',label:'Receipts',url:'singularity-receipt.html'},
+    {icon:'📊',label:'Analytics',url:'singularity-analytics.html'},
+    {icon:'🔐',label:'Verification',url:'singularity-verify.html',active:true},
+  ]:[
+    {icon:'🏠',label:'Browse',url:'singularity-tenant.html'},
+    {icon:'🗺',label:'Map View',url:'singularity-map.html'},
+    {icon:'💳',label:'Pay Rent',url:'singularity-payment.html'},
+    {icon:'🧾',label:'Receipts',url:'singularity-receipt.html'},
+    {icon:'🔧',label:'Maintenance',url:'singularity-maintenance.html'},
+    {icon:'🔐',label:'Verification',url:'singularity-verify.html',active:true},
+  ];
+  document.getElementById('sb-nav').innerHTML=links.map(l=>`
+    <div class="sb-link${l.active?' active':''}" onclick="location.href='${l.url}'">
+      <span class="sb-link-icon">${l.icon}</span>
+      <span>${l.label}</span>
+    </div>`).join('');
+}
+
+function goTo(dest){
+  if(!currentProfile)return;
+  location.href=currentProfile.role==='landlord'?'singularity-rentals.html':'singularity-tenant.html';
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  location.href='index.html';
+}
+
+/* STEPS */
+function goStep(n){
+  // Validate current step
+  if(n>currentStep){
+    if(currentStep===1){
+      const name=document.getElementById('v-fullname').value.trim();
+      if(!name){showToast('Please enter your full name.','err');return;}
+    }
+    if(currentStep===2){
+      const id=document.getElementById('v-idnumber').value.trim();
+      if(!id){showToast('Please enter your ID number.','err');return;}
+    }
+    if(currentStep===3&&n===4&&!photoURL){
+      showToast('Please take or upload a photo.','err');return;
+    }
+  }
+
+  // Update circles
+  for(let i=1;i<=4;i++){
+    const c=document.getElementById('sc'+i);
+    const l=document.getElementById('sl'+i);
+    if(i<n){c.className='step-circle done';c.textContent='✓';}
+    else if(i===n){c.className='step-circle active';c.textContent=i;l.className='step-label';}
+    else{c.className='step-circle';c.textContent=i;l.className='step-label inactive';}
+    if(i<4){const ln=document.getElementById('ln'+i);ln.className=i<n?'step-line done-line':'step-line';}
+  }
+
+  // Show/hide steps
+  for(let i=1;i<=4;i++){
+    document.getElementById('step'+i).style.display=i===n?'':'none';
+  }
+  currentStep=n;
+
+  if(n===4) buildReview();
+}
+
+function buildReview(){
+  const name=document.getElementById('v-fullname').value;
+  const cit=document.getElementById('v-citizenship').value;
+  const occ=document.getElementById('v-occupation').value;
+  const idn=document.getElementById('v-idnumber').value;
+
+  const rows=[
+    ['Full Name',name],
+    ['Citizenship',cit],
+    ['Occupation',occ||'—'],
+    ['ID Type',selectedIDType],
+    ['ID Number',idn],
+  ];
+
+  document.getElementById('review-rows').innerHTML=rows.map(([l,v])=>`
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase">${l}</span>
+      <span style="font-size:13px;font-weight:600">${v}</span>
+    </div>`).join('');
+
+  if(photoURL){
+    document.getElementById('review-photo').innerHTML=`<img src="${photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50px;">`;
+  }
+}
+
+/* ID TYPE */
+function selectIDType(type,btnId){
+  selectedIDType=type;
+  const placeholders={
+    'Ghana Card':'GHA-XXXXXXXXX-X',
+    'Voter ID':'Enter Voter ID number',
+    'Driver License':'Enter Driver License number',
+    'Passport':'Enter Passport number'
+  };
+  document.getElementById('v-idnumber').placeholder=placeholders[type]||'Enter ID number';
+  document.getElementById('id-number-label').textContent=type+' Number';
+  // Update cards
+  ['idt-gc','idt-vi','idt-dl','idt-pp'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.remove('selected');
+  });
+  if(btnId){const el=document.getElementById(btnId);if(el)el.classList.add('selected');}
+}
+
+/* CAMERA */
+async function startCamera(){
+  try{
+    videoStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:400},height:{ideal:400}}});
+    const prev=document.getElementById('cam-preview');
+    prev.innerHTML='<video id="cam-video" autoplay playsinline style="width:100%;height:100%;object-fit:cover;border-radius:100px;"></video>';
+    document.getElementById('cam-video').srcObject=videoStream;
+    document.getElementById('btn-start-cam').style.display='none';
+    document.getElementById('btn-capture').style.display='';
+  }catch(e){showToast('Camera not available. Please upload a photo instead.','err');}
+}
+
+function capturePhoto(){
+  const video=document.getElementById('cam-video');
+  if(!video)return;
+  const canvas=document.createElement('canvas');
+  canvas.width=400;canvas.height=400;
+  const ctx=canvas.getContext('2d');
+  // Crop to square from center
+  const vw=video.videoWidth,vh=video.videoHeight;
+  const size=Math.min(vw,vh);
+  const sx=(vw-size)/2,sy=(vh-size)/2;
+  ctx.drawImage(video,sx,sy,size,size,0,0,400,400);
+
+  canvas.toBlob(blob=>{
+    photoBlob=blob;
+    photoURL=URL.createObjectURL(blob);
+    stopCamera();
+    document.getElementById('cam-preview').innerHTML=`<img src="${photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:100px;">`;
+    document.getElementById('btn-capture').style.display='none';
+    document.getElementById('btn-retake').style.display='';
+    document.getElementById('btn-step3-next').disabled=false;
+    showToast('Photo captured! ✓','ok');
+  },'image/jpeg',0.9);
+}
+
+function stopCamera(){
+  if(videoStream){videoStream.getTracks().forEach(t=>t.stop());videoStream=null;}
+}
+
+function retakePhoto(){
+  photoBlob=null;photoURL=null;
+  document.getElementById('cam-preview').innerHTML='<span class="cam-placeholder">📷</span>';
+  document.getElementById('btn-start-cam').style.display='';
+  document.getElementById('btn-retake').style.display='none';
+  document.getElementById('btn-step3-next').disabled=true;
+}
+
+function uploadPhoto(input){
+  if(!input.files[0])return;
+  const file=input.files[0];
+  photoBlob=file;
+  photoURL=URL.createObjectURL(file);
+  document.getElementById('cam-preview').innerHTML=`<img src="${photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:100px;">`;
+  document.getElementById('btn-retake').style.display='';
+  document.getElementById('btn-step3-next').disabled=false;
+  showToast('Photo uploaded! ✓','ok');
+}
+
+/* SUBMIT */
+async function submitVerification(){
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;btn.textContent='⏳ Submitting…';
+
+  try{
+    let livePhotoUrl=null;
+
+    // Upload photo to Supabase Storage
+    if(photoBlob){
+      const ext=photoBlob.type==='image/jpeg'?'jpg':'png';
+      const path=`profiles/${currentUser.id}/live-photo.${ext}`;
+      const {data:up,error:upe}=await sb.storage.from('listings').upload(path,photoBlob,{upsert:true,contentType:photoBlob.type});
+      if(!upe){
+        const {data:{publicUrl}}=sb.storage.from('listings').getPublicUrl(path);
+        livePhotoUrl=publicUrl;
+        // Update profile photo
+        await sb.from('profiles').update({profile_photo:livePhotoUrl}).eq('id',currentUser.id);
+      }
+    }
+
+    const verData={
+      user_id:currentUser.id,
+      full_name:document.getElementById('v-fullname').value.trim(),
+      citizenship:document.getElementById('v-citizenship').value,
+      occupation:document.getElementById('v-occupation').value.trim()||null,
+      id_type:selectedIDType,
+      id_number:document.getElementById('v-idnumber').value.trim(),
+      live_photo_url:livePhotoUrl,
+      status:'pending',
+      submitted_at:new Date().toISOString(),
+    };
+
+    const {error}=await sb.from('verifications').upsert(verData,{onConflict:'user_id'});
+    if(error)throw error;
+
+    // Success
+    document.getElementById('status-banner').className='status-banner pending';
+    document.getElementById('status-banner').innerHTML=`<div class="sb-icon">⏳</div><div class="sb-text"><div class="sb-title">Verification Submitted!</div><div class="sb-desc">Your verification is under review. This usually takes 1–2 business days. We'll notify you when it's complete.</div></div>`;
+
+    document.querySelector('.main').innerHTML=`
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:72px;margin-bottom:20px">✅</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:0.04em;margin-bottom:12px;color:#0f172a">Verification Submitted!</div>
+        <div style="font-size:14px;color:var(--muted);line-height:1.7;max-width:400px;margin:0 auto 32px">Your identity verification is now under review. We'll process it within 1–2 business days.</div>
+        <button onclick="goTo('dashboard')" style="padding:12px 28px;background:var(--accent2);color:#fff;border:none;border-radius:10px;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 20px rgba(124,58,237,0.3)">← Back to Dashboard</button>
+      </div>`;
+
+  }catch(err){
+    showToast('Error: '+err.message,'err');
+    btn.disabled=false;btn.textContent='🔐 Submit Verification';
+  }
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=(type==='ok'?'✓ ':'⚠ ')+msg;
+  t.className='toast show '+(type==='ok'?'ok':'err');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── Sidebar collapse toggle ──
+function initSidebarToggle() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  
+  // Add toggle button
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle';
+  toggle.id = 'sb-toggle';
+  toggle.textContent = '‹';
+  toggle.title = 'Collapse sidebar';
+  toggle.onclick = toggleSidebar;
+  sidebar.appendChild(toggle);
+  
+  // Restore collapsed state
+  if (localStorage.getItem('sidebar-collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    toggle.textContent = '›';
+    toggle.title = 'Expand sidebar';
+  }
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('sb-toggle');
+  if (!sidebar) return;
+  const isCollapsed = sidebar.classList.toggle('collapsed');
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  toggle.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  localStorage.setItem('sidebar-collapsed', isCollapsed);
+}
+
+
+/**
+ * SINGULARITY RENTALS — Shared Sidebar Builder
+ * Call: buildSharedSidebar(profile, activePage)
+ */
+function buildSharedSidebar(profile, activePage) {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const fn = profile.full_name || 'User';
+  const initials = fn.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const isLandlord = profile.role === 'landlord';
+  const avatarHTML = profile.profile_photo
+    ? `<img src="${profile.profile_photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`
+    : initials;
+  const avatarBg = isLandlord
+    ? 'linear-gradient(135deg,#f59e0b,#ef4444)'
+    : 'linear-gradient(135deg,#7c3aed,#9333ea)';
+
+  const landlordNav = [
+    { sec: 'Manage' },
+    { icon: '🏠', label: 'My Listings',     url: 'singularity-rentals.html',     key: 'listings' },
+    { icon: '📋', label: 'Rental Requests', url: 'singularity-requests.html',    key: 'requests' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { icon: '💳', label: 'Payments',        url: 'singularity-payment.html',     key: 'payments' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { icon: '⭐', label: 'Ratings',         url: 'singularity-ratings.html',     key: 'ratings' },
+    { sec: 'Reports' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '📊', label: 'Analytics',       url: 'singularity-analytics.html',   key: 'analytics' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const tenantNav = [
+    { sec: 'My Home' },
+    { icon: '🏠', label: 'Dashboard',       url: 'singularity-dashboard.html',   key: 'dashboard' },
+    { icon: '🔍', label: 'Browse',          url: 'singularity-tenant.html',      key: 'browse' },
+    { icon: '🗺',  label: 'Map View',        url: 'singularity-map.html',         key: 'map' },
+    { sec: 'My Rental' },
+    { icon: '💳', label: 'Pay Rent',        url: 'singularity-payment.html',     key: 'pay' },
+    { icon: '🧾', label: 'Receipts',        url: 'singularity-receipt.html',     key: 'receipts' },
+    { icon: '🔧', label: 'Maintenance',     url: 'singularity-maintenance.html', key: 'maintenance' },
+    { sec: 'Account' },
+    { icon: '🔐', label: 'Verification',    url: 'singularity-verify.html',      key: 'verify',
+      badge: profile.is_verified ? 'verified' : 'unverified',
+      badgeText: profile.is_verified ? '✓' : '!' },
+    { icon: '🔔', label: 'Notifications',   url: 'singularity-notifications.html', key: 'notifications', bell: true },
+  ];
+
+  const nav = isLandlord ? landlordNav : tenantNav;
+  let navHTML = '';
+  nav.forEach(item => {
+    if (item.sec) { navHTML += `<div class="sb-sec">${item.sec}</div>`; return; }
+    const isActive = item.key === activePage;
+    navHTML += `
+      <div class="sb-link${isActive ? ' active' : ''}" onclick="location.href='${item.url}'">
+        <span class="sb-link-icon">${item.icon}</span>
+        <span>${item.label}</span>
+        ${item.bell ? `<span class="notif-badge" id="notif-badge" style="display:none">0</span>` : ''}
+        ${item.badge && !item.bell ? `<span class="sb-badge ${item.badge}">${item.badgeText}</span>` : ''}
+      </div>`;
+  });
+
+  sidebar.innerHTML = `
+    <div class="sb-brand" onclick="location.href='${isLandlord ? 'singularity-rentals.html' : 'singularity-dashboard.html'}'">
+      <div class="sb-logo">Singularity</div>
+      <div class="sb-sub">Rentals</div>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar" style="background:${avatarBg}">${avatarHTML}</div>
+      <div class="sb-user-info">
+        <div class="sb-uname" id="sb-uname">${fn}</div>
+        <div class="sb-urole" id="sb-urole">${isLandlord ? 'Landlord' : 'Tenant'}</div>
+      </div>
+    </div>
+    <nav class="sb-nav">${navHTML}</nav>
+    <div class="sb-logout" onclick="doLogout()"><span>🚪</span><span>Log Out</span></div>`;
+
+  const toggle = document.createElement('div');
+  toggle.className = 'sb-toggle'; toggle.id = 'sb-toggle'; toggle.title = 'Toggle sidebar';
+  const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+  toggle.textContent = isCollapsed ? '›' : '‹';
+  if (isCollapsed) sidebar.classList.add('collapsed');
+  toggle.onclick = () => {
+    const c = sidebar.classList.toggle('collapsed');
+    toggle.textContent = c ? '›' : '‹';
+    localStorage.setItem('sidebar-collapsed', c);
+  };
+  sidebar.appendChild(toggle);
+}
+
+
+function hideLoader(){
+  var l=document.getElementById('app-loader');
+  if(l){l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},350);}
+}
+setTimeout(hideLoader,8000);
+
+const SUPABASE_URL='https://vkmsoseapbofplpegnku.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbXNvc2VhcGJvZnBscGVnbmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MTg4MDAsImV4cCI6MjA5MjA5NDgwMH0.Mv-FmpWAgTgGkCaaZiDfiweoz-PsLfo89saza653B4I';
+let sb, currentUser, currentProfile;
+
+async function initApp(){
+  await new Promise((resolve,reject)=>{
+    if(window.supabase){resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    s.onload=resolve; s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){hideLoader();location.replace('index.html');return;}
+  currentUser=session.user;
+
+  const {data:profile,error:pErr}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  if(pErr||!profile){hideLoader();location.replace('index.html');return;}
+  currentProfile=profile;
+  hideLoader();
+  return profile;
+}
+
+// Auto-start
+window.addEventListener('DOMContentLoaded', async function(){
+  try{
+    const profile = await initApp();
+    if(!profile) return;
+    // Call page-specific init if it exists
+    if(typeof initPage === 'function') await initPage(profile);
+    else if(typeof initDashboard === 'function') await initDashboard(profile);
+    else if(typeof initAnalytics === 'function') await initAnalytics(profile);
+    else if(typeof initMaintenance === 'function') await initMaintenance(profile);
+    else if(typeof initRatings === 'function') await initRatings(profile);
+    else if(typeof initAdmin === 'function') await initAdmin(profile);
+    else if(typeof initTenantPage === 'function') await initTenantPage(profile);
+    else if(typeof initMap === 'function') await initMap(profile);
+    else if(typeof initReceipt === 'function') await initReceipt(profile);
+  }catch(err){
+    console.error('App init error:', err);
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>
